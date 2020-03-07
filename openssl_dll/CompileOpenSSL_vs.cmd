@@ -1,8 +1,8 @@
 ECHO Require Python, 7Zip, PERL and NASM in PATH
 
-SET PATH=D:\Program Files (x86)\7-Zip;C:\Perl64\bin;D:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.16.27023\bin\Hostx64\x64;%PATH% 
+SET PATH=D:\Program Files (x86)\7-Zip;C:\Perl64\bin;D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\bin\Hostx64\x64;%PATH% 
 SET FILENAME=openssl-OpenSSL_1_1_1d.tar.gz
-SET VCVARPATH="D:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
+SET VCVARPATH="D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat"
 
 Rem Set env -----------------------------------------
 @pushd "%~dp0"
