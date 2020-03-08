@@ -348,3 +348,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# OpenSSL lib
+!**/openssl-1_1_1d/x64/
+!**/openssl-1_1_1d/x64/bin
+!**/openssl-1_1_1d/x86/
+!**/openssl-1_1_1d/x86/bin
