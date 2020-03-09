@@ -183,11 +183,14 @@ xcopy /Y $(OutDir)libcrypto-1_1-x64.dll $(SolutionDir)openssl_app\openssl_librar
   <ItemGroup>
     <ClCompile Include="crypto_utils.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NLog.cpp" />
     <ClCompile Include="sha.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="assert.h" />
     <ClInclude Include="crypto_types.h" />
     <ClInclude Include="crypto_utils.h" />
+    <ClInclude Include="NLog.h" />
     <ClInclude Include="sha.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

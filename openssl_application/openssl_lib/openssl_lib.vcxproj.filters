@@ -24,6 +24,9 @@
     <ClCompile Include="crypto_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NLog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sha.h">
@@ -33,6 +36,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="crypto_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NLog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="assert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
