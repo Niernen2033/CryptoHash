@@ -21,9 +21,14 @@ namespace openssl_app
 
     public partial class Form1 : Form
     {
-        [DllImport(@"D:\Repos\CryptoHash\openssl_application\openssl_app\openssl_library\x86\openssl.dll", CallingConvention = CallingConvention.Cdecl)]
+#if PLATFORM_X86
+        const string DLL_PATH = "openssl.dll";
+#else
+        const string DLL_PATH = "openssl-x64.dll";
+#endif
+        [DllImport(DLL_PATH, CallingConvention = CallingConvention.Cdecl)]
         private static extern int nlogDump(int logId, string filePath, uint filePathLen);
-        [DllImport(@"D:\Repos\CryptoHash\openssl_application\openssl_app\openssl_library\x86\openssl.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(DLL_PATH, CallingConvention = CallingConvention.Cdecl)]
         private static extern int computeSha(int shaType, byte[] msg, uint msgBytes, out crypto_buffer_t digset);
 
         public Form1()
