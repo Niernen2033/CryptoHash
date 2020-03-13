@@ -98,7 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)openssl_lib\openssl-1_1_1d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)openssl_lib\openssl-1_1_1d\include;$(SolutionDir)openssl_lib\src\algorithms\include;$(SolutionDir)openssl_lib\src\crypto\include;$(SolutionDir)openssl_lib\src\engine\include;$(SolutionDir)openssl_lib\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)openssl_lib\openssl-1_1_1d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)openssl_lib\openssl-1_1_1d\include;$(SolutionDir)openssl_lib\src\algorithms\include;$(SolutionDir)openssl_lib\src\crypto\include;$(SolutionDir)openssl_lib\src\engine\include;$(SolutionDir)openssl_lib\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,7 +136,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)openssl_lib\openssl-1_1_1d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)openssl_lib\openssl-1_1_1d\include;$(SolutionDir)openssl_lib\src\algorithms\include;$(SolutionDir)openssl_lib\src\crypto\include;$(SolutionDir)openssl_lib\src\engine\include;$(SolutionDir)openssl_lib\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -162,7 +162,7 @@ xcopy /Y $(OutDir)libcrypto-1_1.dll $(SolutionDir)openssl_app\openssl_library\x8
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)openssl_lib\openssl-1_1_1d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)openssl_lib\openssl-1_1_1d\include;$(SolutionDir)openssl_lib\src\algorithms\include;$(SolutionDir)openssl_lib\src\crypto\include;$(SolutionDir)openssl_lib\src\engine\include;$(SolutionDir)openssl_lib\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -181,17 +181,20 @@ xcopy /Y $(OutDir)libcrypto-1_1-x64.dll $(SolutionDir)openssl_app\openssl_librar
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="crypto_utils.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="NLog.cpp" />
-    <ClCompile Include="sha.cpp" />
+    <ClCompile Include="src\algorithms\sha.cpp" />
+    <ClCompile Include="src\crypto\crypto_result.cpp" />
+    <ClCompile Include="src\crypto\crypto_utils.cpp" />
+    <ClCompile Include="src\engine\NLog.cpp" />
+    <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="assert.h" />
-    <ClInclude Include="crypto_types.h" />
-    <ClInclude Include="crypto_utils.h" />
-    <ClInclude Include="NLog.h" />
-    <ClInclude Include="sha.h" />
+    <ClInclude Include="src\algorithms\include\sha.h" />
+    <ClInclude Include="src\crypto\include\crypto_result.h" />
+    <ClInclude Include="src\crypto\include\crypto_types.h" />
+    <ClInclude Include="src\crypto\include\crypto_utils.h" />
+    <ClInclude Include="src\engine\include\e_assert.h" />
+    <ClInclude Include="src\engine\include\NLog.h" />
+    <ClInclude Include="src\include\version.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

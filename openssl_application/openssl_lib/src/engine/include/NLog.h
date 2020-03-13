@@ -2,24 +2,28 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
-typedef struct nlog_status_t
-{
-    uint8_t state;
-    std::string filePath;
-    bool raiseAssertOnFail;
-} nlog_status_t;
-
-typedef enum nlog_log_e
+typedef enum nlog_id_e
 {
     NLOG_ID_ERROR = 0,
     NLOG_ID_INFO,
     NLOG_ID_DEGUB,
 } nlog_id_e;
 
+typedef struct nlog_data_t
+{
+    nlog_id_e id;
+    std::vector<std::string> logs;
+} nlog_data_t;
+
 void NLog_Init();
-void NLog_SetState(uint8_t state, bool raiseAssertOnFail, std::string filePath);
-void NLog_Add(uint8_t logId, const char* file, int line, std::string msg);
+void NLog_Cleanup();
+void NLog_Add(nlog_id_e logId, const char* file, int line, std::string msg);
+bool NLog_Dump(nlog_id_e logId, std::string filePath);
+void NLog_Clear();
+
+#define NLOG_ID_MAX_SIZE        3
 
 #define NLog_Error(str)         NLog_Add(NLOG_ID_ERROR, __FILE__, __LINE__, str)
 #define NLog_Info(str)          NLog_Add(NLOG_ID_INFO, __FILE__, __LINE__, str)

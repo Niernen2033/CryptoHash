@@ -1,30 +1,25 @@
 #include <memory>
 #include <Windows.h>
-#include "sha.h"
-#include "NLog.h"
+#include <sha.h>
+#include <NLog.h>
+#include <crypto_result.h>
 
 #define EXPORT extern "C" __declspec(dllexport)
 
-
-EXPORT int ShaInitialize(int shaType)
+EXPORT int computeSha(int shaType, uint8_t* msg, uint32_t msgBytes, crypto_buffer_t* digset)
 {
-	sha_type_e tmpShaType = static_cast<sha_type_e>(shaType);
-	crypto_status_e status = Sha_Initialize(tmpShaType);
-	return (int)status;
+	sha_type_e tmpShaType = (sha_type_e)shaType;
+	int result = (int)Sha_Generate(tmpShaType, msg, msgBytes, digset);
+	return result;
 }
 
-EXPORT int ShaUpdate(uint8_t* msg, uint32_t msgBytes)
+EXPORT int nlogDump(int logId, const char* filePath, uint32_t filePathLen)
 {
-	crypto_status_e status = Sha_Update(msg, msgBytes);
-	return (int)status;
+	nlog_id_e tmpLogId = (nlog_id_e)logId;
+	std::string tmpFilePath = std::string(filePath, filePathLen);
+	int result = (int)NLog_Dump(tmpLogId, filePath);
+	return result;
 }
-
-EXPORT int ShaFinalize(uint8_t* digset, uint32_t digsetBytes, uint32_t* resultBytes)
-{
-	crypto_status_e status = Sha_Finalize(digset, digsetBytes, resultBytes);
-	return (int)status;
-}
-
 
 extern "C" BOOL WINAPI DllMain(HANDLE hModule, DWORD fdwreason, LPVOID lpReserved)
 {
@@ -33,18 +28,22 @@ extern "C" BOOL WINAPI DllMain(HANDLE hModule, DWORD fdwreason, LPVOID lpReserve
 		// The DLL is being mapped into process's address space
 		// Do any required initialization on a per application basis, return FALSE if failed
 		NLog_Init();
+		CryRes_Init();
 		break;
 	case DLL_THREAD_ATTACH:
 		// A thread is created. Do any required initialization on a per thread basis
 		NLog_Init();
+		CryRes_Init();
 		break;
 	case DLL_THREAD_DETACH:
 		// Thread exits with cleanup
-		Sha_Cleanup();
+		NLog_Cleanup();
+		CryRes_Cleanup();
 		break;
 	case DLL_PROCESS_DETACH:
 		// The DLL unmapped from process's address space. Do necessary cleanup
-		Sha_Cleanup();
+		NLog_Cleanup();
+		CryRes_Cleanup();
 		break;
 	}
 	return TRUE;

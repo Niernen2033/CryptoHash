@@ -21,23 +21,9 @@ typedef enum sha_type_e
     SHA_512
 } sha_type_e;
 
-typedef struct sha_data_t
-{
-    sha_type_e shaType;
-    crypto_buffer_t msg;
-    crypto_buffer_t digset;
-} sha_data_t;
 
-typedef struct sha_runtime_data_t
-{
-    EVP_MD_CTX* ctx;
-    const EVP_MD* evp_md;
-} sha_runtime_data_t;
-
-void Sha_Cleanup();
-crypto_status_e Sha_Initialize(sha_type_e shaType);
-crypto_status_e Sha_Update(uint8_t* msg, uint32_t msgBytes);
-crypto_status_e Sha_Finalize(uint8_t* digset, uint32_t digsetBytes, uint32_t* resultBytes);
+crypto_status_e Sha_Generate(sha_type_e shaType, uint8_t* msg, uint32_t msgBytes);
+crypto_status_e Sha_Generate(sha_type_e shaType, uint8_t* msg, uint32_t msgBytes, crypto_buffer_t* digset);
 
 const EVP_MD* Sha_GetEvpMd(sha_type_e shaType);
 uint32_t Sha_GetDigsetBytes(sha_type_e shaType);

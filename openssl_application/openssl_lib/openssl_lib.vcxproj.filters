@@ -1,48 +1,69 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="src">
+      <UniqueIdentifier>{a7382d32-f86c-40b2-9b1d-2ba7f8c39048}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="src\algorithms">
+      <UniqueIdentifier>{4eca1966-b79c-451e-8ae1-0c5bd14fa8f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="src\algorithms\include">
+      <UniqueIdentifier>{1c29277d-71c7-4baf-bbaf-55b3a41a3a0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\crypto">
+      <UniqueIdentifier>{b8cbced0-9156-4dc3-a167-f9cafc2a65fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine">
+      <UniqueIdentifier>{cebf0818-3ccd-4211-be89-2a5cdbadd813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\include">
+      <UniqueIdentifier>{78356667-044c-4a04-83f2-be48c19207e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\crypto\include">
+      <UniqueIdentifier>{ef8cf980-9763-48a1-8153-54f57f437da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\include">
+      <UniqueIdentifier>{d1bb3834-50c3-406a-9ddf-576bcde8f414}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\algorithms\sha.cpp">
+      <Filter>src\algorithms</Filter>
     </ClCompile>
-    <ClCompile Include="sha.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\engine\NLog.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="crypto_utils.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\crypto\crypto_utils.cpp">
+      <Filter>src\crypto</Filter>
     </ClCompile>
-    <ClCompile Include="NLog.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\crypto\crypto_result.cpp">
+      <Filter>src\crypto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sha.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\algorithms\include\sha.h">
+      <Filter>src\algorithms\include</Filter>
     </ClInclude>
-    <ClInclude Include="crypto_utils.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\engine\include\NLog.h">
+      <Filter>src\engine\include</Filter>
     </ClInclude>
-    <ClInclude Include="crypto_types.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\crypto\include\crypto_types.h">
+      <Filter>src\crypto\include</Filter>
     </ClInclude>
-    <ClInclude Include="NLog.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\crypto\include\crypto_utils.h">
+      <Filter>src\crypto\include</Filter>
     </ClInclude>
-    <ClInclude Include="assert.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\include\version.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\include\e_assert.h">
+      <Filter>src\engine\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\crypto\include\crypto_result.h">
+      <Filter>src\crypto\include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
