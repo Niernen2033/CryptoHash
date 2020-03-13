@@ -23,7 +23,8 @@ EXPORT int nlogDump(int logId, const char* filePath, uint32_t filePathLen)
 
 extern "C" BOOL WINAPI DllMain(HANDLE hModule, DWORD fdwreason, LPVOID lpReserved)
 {
-	switch (fdwreason) {
+	switch (fdwreason)
+	{
 	case DLL_PROCESS_ATTACH:
 		// The DLL is being mapped into process's address space
 		// Do any required initialization on a per application basis, return FALSE if failed

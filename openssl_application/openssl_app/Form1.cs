@@ -39,7 +39,7 @@ namespace openssl_app
             this.listBox1.Items.Add(status);
             this.listBox1.Items.Add(result.bytes);
             string path = @"C:\Users\Michal\Desktop\nlog.txt";
-            nlogDump(0, path, (uint)path.Length);
+            //nlogDump(0, path, (uint)path.Length);
         }
     }
 }

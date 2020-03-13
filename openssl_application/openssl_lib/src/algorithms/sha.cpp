@@ -65,6 +65,7 @@ crypto_status_e Sha_Generate(sha_type_e shaType, uint8_t* msg, uint32_t msgBytes
 
 	if (ctx == NULL)
 	{
+		CryRes_SetLastResult(&result, CRYPTO_NULL_PTR_ERROR);
 		return CRYPTO_NULL_PTR_ERROR;
 	}
 
