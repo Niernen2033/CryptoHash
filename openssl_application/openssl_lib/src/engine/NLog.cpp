@@ -20,7 +20,7 @@ static std::unique_ptr<nlog_data_t> nlogData[NLOG_ID_MAX_SIZE];
 static bool nlogInitStatus = false;
 #endif // ENABLE_NLOG
 
-void NLog_Init()
+bool NLog_Init()
 {
 #if ENABLE_NLOG
 	nlogInitStatus = false;
@@ -30,16 +30,17 @@ void NLog_Init()
 		if (nlogData[i] == nullptr)
 		{
 			ASSERT_M(false, "nlogInitStatus = false");
-			return;
+			return false;
 		}
 		nlogData[i]->id = (nlog_id_e)i;
 		nlogData[i]->logs.clear();
 	}
 	nlogInitStatus = true;
 #endif // ENABLE_NLOG
+	return true;
 }
 
-void NLog_Cleanup()
+bool NLog_Cleanup()
 {
 #if ENABLE_NLOG
 	if (nlogInitStatus)
@@ -51,6 +52,7 @@ void NLog_Cleanup()
 		nlogInitStatus = false;
 	}
 #endif // ENABLE_NLOG
+	return true;
 }
 
 void NLog_Add(nlog_id_e logId, const char* file, int line, std::string msg)

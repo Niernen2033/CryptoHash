@@ -185,6 +185,7 @@ xcopy /Y $(OutDir)libcrypto-1_1-x64.dll $(SolutionDir)openssl_app\openssl_librar
   <ItemGroup>
     <ClCompile Include="src\algorithms\aes.cpp" />
     <ClCompile Include="src\algorithms\hkdf.cpp" />
+    <ClCompile Include="src\algorithms\hmac_drgb.cpp" />
     <ClCompile Include="src\algorithms\hmac_sha.cpp" />
     <ClCompile Include="src\algorithms\rsa.cpp" />
     <ClCompile Include="src\algorithms\sha.cpp" />

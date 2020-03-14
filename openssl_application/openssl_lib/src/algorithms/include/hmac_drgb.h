@@ -14,12 +14,32 @@
 #define MAXIMUM_NUMBER_OF_BITS_PER_REQEUST                  7500
 #define RESEED_INTERVAL                                     10000
 
-/*
 
-crypto_status_e Hmac_Drgb_GenerateNormal(sha_type_e shaType, bool preRes, uint8_t perStr[], uint32_t perStrBytes, uint8_t entInp[], uint32_t entInpBytes,
-	uint8_t nonce[], uint32_t nonceBytes, uint8_t entInpRes[], uint32_t entInpResBytes, uint8_t addInpRes[], uint32_t addInpResBytes,
-	uint8_t addInp1[], uint32_t addInp1Bytes, uint8_t addInp2[], uint32_t addInp2Bytes,
-	uint8_t entInpPr1[], uint32_t entInpPr1Bytes, uint8_t entInpPr2[], uint32_t entInpPr2Bytes,
-	uint32_t returnedBytes);
+bool Hmac_Drgb_Init();
+bool Hmac_Drgb_Cleanup();
 
-*/
+crypto_status_e Hmac_Drgb_Instantiate(bool requestPredictionResistance, sha_type_e shaType,
+	uint8_t* personalizationString, uint32_t personalizationStringBytes,
+	uint8_t* entropy, uint32_t entropyBytes,
+	uint8_t* nonce, uint32_t nonceBytes);
+
+crypto_status_e Hmac_Drgb_Reseed(bool requestPredictionResistance,
+	uint8_t* entropy, uint32_t entropyBytes,
+	uint8_t* additionalInput, uint32_t additionalInputBytes);
+
+crypto_status_e Hmac_Drgb_Generate(uint32_t bytesRequested,
+	uint8_t* entropy, uint32_t entropyBytes,
+	uint8_t* additionalInput, uint32_t additionalInputBytes,
+	crypto_buffer_t* digset);
+
+
+//preRes = FALSE
+//1. Hmac_Drgb_Instantiate
+//2. Hmac_Drgb_Reseed
+//3. Hmac_Drgb_Generate
+//4. Hmac_Drgb_Generate
+
+//preRes = TRUE
+//1. Hmac_Drgb_Instantiate
+//2. Hmac_Drgb_Generate
+//3. Hmac_Drgb_Generate

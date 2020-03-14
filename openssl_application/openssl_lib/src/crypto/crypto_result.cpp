@@ -6,26 +6,28 @@
 static std::unique_ptr<crypto_result_t> resultData;
 static bool resultInitStatus = false;
 
-void CryRes_Init()
+bool CryRes_Init()
 {
     resultInitStatus = false;
     resultData = std::make_unique<crypto_result_t>();
 	if (resultData == nullptr)
 	{
 		ASSERT_M(false, "resultInitStatus = false");
-		return;
+		return false;
 	}
 	memsetAssert(resultData.get(), sizeof(crypto_result_t), 0, sizeof(crypto_result_t));
 	resultInitStatus = true;
+	return true;
 }
 
-void CryRes_Cleanup()
+bool CryRes_Cleanup()
 {
 	if (resultInitStatus)
 	{
 		resultData.reset(nullptr);
 		resultInitStatus = false;
 	}
+	return true;
 }
 
 void CryRes_SetLastResult(crypto_buffer_t* cBuffer, crypto_status_e status)

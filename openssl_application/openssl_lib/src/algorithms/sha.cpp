@@ -100,7 +100,7 @@ crypto_status_e Sha_Generate(sha_type_e shaType, uint8_t* msg, uint32_t msgBytes
 
 		if (digsetBytes != Sha_GetDigsetBytes(shaType))
 		{
-			status = CRYPTO_DIGSET_MISMATCH_ERROR;
+			status = CRYPTO_BUFFER_MISMATCH_ERROR;
 			break;
 		}
 		result.bytes = digsetBytes;

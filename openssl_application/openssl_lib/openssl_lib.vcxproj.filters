@@ -54,6 +54,9 @@
     <ClCompile Include="src\algorithms\rsa.cpp">
       <Filter>src\algorithms</Filter>
     </ClCompile>
+    <ClCompile Include="src\algorithms\hmac_drgb.cpp">
+      <Filter>src\algorithms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\algorithms\include\sha.h">

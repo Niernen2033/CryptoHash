@@ -17,8 +17,8 @@ typedef struct nlog_data_t
     std::vector<std::string> logs;
 } nlog_data_t;
 
-void NLog_Init();
-void NLog_Cleanup();
+bool NLog_Init();
+bool NLog_Cleanup();
 void NLog_Add(nlog_id_e logId, const char* file, int line, std::string msg);
 bool NLog_Dump(nlog_id_e logId, std::string filePath);
 void NLog_Clear();

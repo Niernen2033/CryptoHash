@@ -17,23 +17,63 @@ DLL_MAIN_C DllMain(HANDLE hModule, DWORD fdwreason, LPVOID lpReserved)
 	case DLL_PROCESS_ATTACH:
 		// The DLL is being mapped into process's address space
 		// Do any required initialization on a per application basis, return FALSE if failed
-		NLog_Init();
-		CryRes_Init();
+		if (!NLog_Init())
+		{
+			return FALSE;
+		}
+		if (!CryRes_Init())
+		{
+			return FALSE;
+		}
+		if (!Hmac_Drgb_Init())
+		{
+			return FALSE;
+		}
 		break;
 	case DLL_THREAD_ATTACH:
 		// A thread is created. Do any required initialization on a per thread basis
-		NLog_Init();
-		CryRes_Init();
+		if (!NLog_Init())
+		{
+			return FALSE;
+		}
+		if (!CryRes_Init())
+		{
+			return FALSE;
+		}
+		if (!Hmac_Drgb_Init())
+		{
+			return FALSE;
+		}
 		break;
 	case DLL_THREAD_DETACH:
 		// Thread exits with cleanup
-		NLog_Cleanup();
-		CryRes_Cleanup();
+		if (!NLog_Cleanup())
+		{
+			return FALSE;
+		}
+		if (!CryRes_Cleanup())
+		{
+			return FALSE;
+		}
+		if (!Hmac_Drgb_Cleanup())
+		{
+			return FALSE;
+		}
 		break;
 	case DLL_PROCESS_DETACH:
 		// The DLL unmapped from process's address space. Do necessary cleanup
-		NLog_Cleanup();
-		CryRes_Cleanup();
+		if (!NLog_Cleanup())
+		{
+			return FALSE;
+		}
+		if (!CryRes_Cleanup())
+		{
+			return FALSE;
+		}
+		if (!Hmac_Drgb_Cleanup())
+		{
+			return FALSE;
+		}
 		break;
 	}
 	return TRUE;
@@ -44,6 +84,21 @@ EXPORT_C int computeSha(int shaType, uint8_t* msg, uint32_t msgBytes, crypto_buf
 	sha_type_e tmpShaType = (sha_type_e)shaType;
 	int result = (int)Sha_Generate(tmpShaType, msg, msgBytes, digset);
 	return result;
+}
+
+EXPORT_C int computeHmacDrbg_Instantiate()
+{
+	return 0;
+}
+
+EXPORT_C int computeHmacDrbg_Reseed()
+{
+	return 0;
+}
+
+EXPORT_C int computeHmacDrbg_Generate()
+{
+	return 0;
 }
 
 EXPORT_C int computeHmacSha(int shaType, uint8_t msg[], uint32_t msgBytes, uint8_t key[], uint32_t keyBytes, crypto_buffer_t* digset)
