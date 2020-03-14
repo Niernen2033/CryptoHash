@@ -42,6 +42,18 @@
     <ClCompile Include="src\crypto\crypto_result.cpp">
       <Filter>src\crypto</Filter>
     </ClCompile>
+    <ClCompile Include="src\algorithms\aes.cpp">
+      <Filter>src\algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="src\algorithms\hkdf.cpp">
+      <Filter>src\algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="src\algorithms\hmac_sha.cpp">
+      <Filter>src\algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="src\algorithms\rsa.cpp">
+      <Filter>src\algorithms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\algorithms\include\sha.h">
@@ -64,6 +76,21 @@
     </ClInclude>
     <ClInclude Include="src\crypto\include\crypto_result.h">
       <Filter>src\crypto\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\include\aes.h">
+      <Filter>src\algorithms\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\include\hkdf.h">
+      <Filter>src\algorithms\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\include\hmac_drgb.h">
+      <Filter>src\algorithms\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\include\hmac_sha.h">
+      <Filter>src\algorithms\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\include\rsa.h">
+      <Filter>src\algorithms\include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

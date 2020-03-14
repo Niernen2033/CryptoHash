@@ -183,6 +183,10 @@ xcopy /Y $(OutDir)libcrypto-1_1-x64.dll $(SolutionDir)openssl_app\openssl_librar
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\algorithms\aes.cpp" />
+    <ClCompile Include="src\algorithms\hkdf.cpp" />
+    <ClCompile Include="src\algorithms\hmac_sha.cpp" />
+    <ClCompile Include="src\algorithms\rsa.cpp" />
     <ClCompile Include="src\algorithms\sha.cpp" />
     <ClCompile Include="src\crypto\crypto_result.cpp" />
     <ClCompile Include="src\crypto\crypto_utils.cpp" />
@@ -190,6 +194,11 @@ xcopy /Y $(OutDir)libcrypto-1_1-x64.dll $(SolutionDir)openssl_app\openssl_librar
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\algorithms\include\aes.h" />
+    <ClInclude Include="src\algorithms\include\hkdf.h" />
+    <ClInclude Include="src\algorithms\include\hmac_drgb.h" />
+    <ClInclude Include="src\algorithms\include\hmac_sha.h" />
+    <ClInclude Include="src\algorithms\include\rsa.h" />
     <ClInclude Include="src\algorithms\include\sha.h" />
     <ClInclude Include="src\crypto\include\crypto_result.h" />
     <ClInclude Include="src\crypto\include\crypto_types.h" />
