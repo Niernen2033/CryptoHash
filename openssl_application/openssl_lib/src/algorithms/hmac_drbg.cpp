@@ -6,7 +6,7 @@
 
 typedef enum hmac_drbg_status_e
 {
-	HMAC_DRBG_UNINITIALIZED = 0,
+	HMAC_DRBG_UNINSTANTIATE = 0,
 	HMAC_DRBG_INSTANTIATE,
 	HMAC_DRBG_RESEED,
 	HMAC_DRBG_GENERATE
@@ -130,7 +130,7 @@ crypto_status_e Hmac_Drbg_Reseed(bool requestPredictionResistance,
 		return internalHmacDrbgData->health;
 	}
 
-	if (internalHmacDrbgData->currentStatus == HMAC_DRBG_UNINITIALIZED)
+	if (internalHmacDrbgData->currentStatus == HMAC_DRBG_UNINSTANTIATE)
 	{
 		return CRYPTO_ABORT_ERROR;
 	}
@@ -179,7 +179,7 @@ crypto_status_e Hmac_Drbg_Generate(uint32_t bytesRequested,
 		return internalHmacDrbgData->health;
 	}
 
-	if (internalHmacDrbgData->currentStatus == HMAC_DRBG_UNINITIALIZED)
+	if (internalHmacDrbgData->currentStatus == HMAC_DRBG_UNINSTANTIATE)
 	{
 		return CRYPTO_ABORT_ERROR;
 	}
@@ -235,6 +235,12 @@ crypto_status_e Hmac_Drbg_Generate(uint32_t bytesRequested,
 		internalHmacDrbgData->currentStatus = HMAC_DRBG_GENERATE;
 	}
 	return internalHmacDrbgData->health;
+}
+
+crypto_status_e Hmac_Drbg_Uninstantiate()
+{
+	memsetAssert(internalHmacDrbgData.get(), sizeof(internal_hmac_drbg_state_t), 0x00, sizeof(internal_hmac_drbg_state_t));
+	return CRYPTO_SUCCESS;
 }
 
 static crypto_status_e Hmac_Drbg_Internal_Generate(uint32_t bytesRequested,

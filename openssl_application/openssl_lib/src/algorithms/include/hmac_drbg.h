@@ -32,6 +32,8 @@ crypto_status_e Hmac_Drbg_Generate(uint32_t bytesRequested,
 	uint8_t* additionalInput, uint32_t additionalInputBytes,
 	crypto_buffer_t* bytesReturned);
 
+crypto_status_e Hmac_Drbg_Uninstantiate();
+
 
 //preRes = FALSE
 //1. Hmac_Drgb_Instantiate

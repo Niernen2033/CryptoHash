@@ -92,7 +92,7 @@ EXPORT_C int computeHmacDrbg_Instantiate(bool requestPredictionResistance, int s
 	uint8_t* nonce, uint32_t nonceBytes)
 {
 	sha_type_e tmpShaType = (sha_type_e)shaType;
-	int result = Hmac_Drbg_Instantiate(requestPredictionResistance, tmpShaType,
+	int result = (int)Hmac_Drbg_Instantiate(requestPredictionResistance, tmpShaType,
 		personalizationString, personalizationStringBytes,
 		entropy, entropyBytes,
 		nonce, nonceBytes);
@@ -103,7 +103,7 @@ EXPORT_C int computeHmacDrbg_Reseed(bool requestPredictionResistance,
 	uint8_t* entropy, uint32_t entropyBytes,
 	uint8_t* additionalInput, uint32_t additionalInputBytes)
 {
-	int result = Hmac_Drbg_Reseed(requestPredictionResistance,
+	int result = (int)Hmac_Drbg_Reseed(requestPredictionResistance,
 		entropy, entropyBytes,
 		additionalInput, additionalInputBytes);
 	return result;
@@ -114,10 +114,16 @@ EXPORT_C int computeHmacDrbg_Generate(uint32_t bytesRequested,
 	uint8_t* additionalInput, uint32_t additionalInputBytes,
 	crypto_buffer_t* bytesReturned)
 {
-	int result = Hmac_Drbg_Generate(bytesRequested,
+	int result = (int)Hmac_Drbg_Generate(bytesRequested,
 		entropy, entropyBytes,
 		additionalInput, additionalInputBytes,
 		bytesReturned);
+	return result;
+}
+
+EXPORT_C int computeHmacDrbg_Uninstantiate()
+{
+	int result = (int)Hmac_Drbg_Uninstantiate();
 	return result;
 }
 
