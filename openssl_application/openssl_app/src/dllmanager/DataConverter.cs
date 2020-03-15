@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+
+namespace openssl_app.dllmanager
+{
+    static class DataConverter
+    {
+        public static string HexStringFromBytes(byte[] bytes)
+        {
+            return HexStringFromBytes(bytes, (uint)bytes.Length);
+        }
+
+        public static string HexStringFromBytes(byte[] bytes, uint bytesSize)
+        {
+            byte[] tempBytes = new byte[bytesSize];
+            for (int i = 0; i < bytesSize; i++)
+            {
+                tempBytes[i] = bytes[i];
+            }
+            SoapHexBinary shb = new SoapHexBinary(tempBytes);
+            return shb.ToString().ToLower();
+        }
+
+        public static byte[] BytesFromHexString(string hexString)
+        {
+            SoapHexBinary shb = SoapHexBinary.Parse(hexString);
+            return shb.Value;
+        }
+    }
+}

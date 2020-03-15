@@ -79,6 +79,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\algorithms\AesProvider.cs" />
+    <Compile Include="src\algorithms\HkdfProvider.cs" />
+    <Compile Include="src\algorithms\HmacDrbgProvider.cs" />
+    <Compile Include="src\algorithms\HmacShaProvider.cs" />
+    <Compile Include="src\algorithms\RsaProvider.cs" />
+    <Compile Include="src\algorithms\ShaProvider.cs" />
+    <Compile Include="src\dllmanager\DataConverter.cs" />
+    <Compile Include="src\dllmanager\DllProperties.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

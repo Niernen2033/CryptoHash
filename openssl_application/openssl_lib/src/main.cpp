@@ -91,6 +91,16 @@ EXPORT_C int computeHmacDrbg_Instantiate(bool requestPredictionResistance, int s
 	uint8_t* entropy, uint32_t entropyBytes,
 	uint8_t* nonce, uint32_t nonceBytes)
 {
+	NLog_Info("computeHmacDrbg_Instantiate(...):");
+	NLog_Info("requestPredictionResistance = " + std::to_string(requestPredictionResistance));
+	NLog_Info("shaType = " + std::to_string(shaType));
+	NLog_Info("personalizationString = " + make_hex_string(personalizationString, personalizationStringBytes));
+	NLog_Info("personalizationStringBytes = " + std::to_string(personalizationStringBytes));
+	NLog_Info("entropy = " + make_hex_string(entropy, entropyBytes));
+	NLog_Info("entropyBytes = " + std::to_string(entropyBytes));
+	NLog_Info("nonce = " + make_hex_string(nonce, nonceBytes));
+	NLog_Info("nonceBytes = " + std::to_string(nonceBytes));
+
 	sha_type_e tmpShaType = (sha_type_e)shaType;
 	int result = (int)Hmac_Drbg_Instantiate(requestPredictionResistance, tmpShaType,
 		personalizationString, personalizationStringBytes,
@@ -103,6 +113,13 @@ EXPORT_C int computeHmacDrbg_Reseed(bool requestPredictionResistance,
 	uint8_t* entropy, uint32_t entropyBytes,
 	uint8_t* additionalInput, uint32_t additionalInputBytes)
 {
+	NLog_Info("computeHmacDrbg_Reseed(...):");
+	NLog_Info("requestPredictionResistance = " + std::to_string(requestPredictionResistance));
+	NLog_Info("entropy = " + make_hex_string(entropy, entropyBytes));
+	NLog_Info("entropyBytes = " + std::to_string(entropyBytes));
+	NLog_Info("additionalInput = " + make_hex_string(additionalInput, additionalInputBytes));
+	NLog_Info("additionalInputBytes = " + std::to_string(additionalInputBytes));
+
 	int result = (int)Hmac_Drbg_Reseed(requestPredictionResistance,
 		entropy, entropyBytes,
 		additionalInput, additionalInputBytes);
@@ -114,6 +131,13 @@ EXPORT_C int computeHmacDrbg_Generate(uint32_t bytesRequested,
 	uint8_t* additionalInput, uint32_t additionalInputBytes,
 	crypto_buffer_t* bytesReturned)
 {
+	NLog_Info("computeHmacDrbg_Generate(...):");
+	NLog_Info("bytesRequested = " + std::to_string(bytesRequested));
+	NLog_Info("entropy = " + make_hex_string(entropy, entropyBytes));
+	NLog_Info("entropyBytes = " + std::to_string(entropyBytes));
+	NLog_Info("additionalInput = " + make_hex_string(additionalInput, additionalInputBytes));
+	NLog_Info("additionalInputBytes = " + std::to_string(additionalInputBytes));
+
 	int result = (int)Hmac_Drbg_Generate(bytesRequested,
 		entropy, entropyBytes,
 		additionalInput, additionalInputBytes,
@@ -123,6 +147,8 @@ EXPORT_C int computeHmacDrbg_Generate(uint32_t bytesRequested,
 
 EXPORT_C int computeHmacDrbg_Uninstantiate()
 {
+	NLog_Info("computeHmacDrbg_Instantiate(requestPredictionResistance, shaType, personalizationString, personalizationStringBytes, entInp, entInpBytes, nonce, nonceBytes, entInpRes, entInpResBytes, addInpRes, addInpResBytes, addInp1, addInp1Bytes, addInp2, addInp2Bytes, entInpPr1, entInpPr1Bytes, entInpPr2, entInpPr2Bytes, returnedBytes):");
+
 	int result = (int)Hmac_Drbg_Uninstantiate();
 	return result;
 }
@@ -183,7 +209,14 @@ EXPORT_C int nlogDump(int logId, const char* filePath, uint32_t filePathLen)
 {
 	nlog_id_e tmpLogId = (nlog_id_e)logId;
 	std::string tmpFilePath = std::string(filePath, filePathLen);
-	int result = (int)NLog_Dump(tmpLogId, filePath);
+	int result = (int)NLog_Dump(tmpLogId, tmpFilePath);
+	return result;
+}
+
+EXPORT_C int nlogDumpAll(const char* filePath, uint32_t filePathLen)
+{
+	std::string tmpFilePath = std::string(filePath, filePathLen);
+	int result = (int)NLog_DumpAll(tmpFilePath);
 	return result;
 }
 

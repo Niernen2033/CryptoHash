@@ -3,6 +3,7 @@
 #include <crypto_result.h>
 #include <crypto_utils.h>
 #include <e_assert.h>
+#include <NLog.h>
 
 typedef enum hmac_drbg_status_e
 {
@@ -82,30 +83,35 @@ crypto_status_e Hmac_Drbg_Instantiate(bool requestPredictionResistance, sha_type
 	if ((personalizationStringBytes != 0 && personalizationString == NULL))
 	{
 		internalHmacDrbgData->health = CRYPTO_NULL_PTR_ERROR;
+		NLog_Error("(personalizationStringBytes != 0 && personalizationString == NULL)");
 		return CRYPTO_NULL_PTR_ERROR;
 	}
 
 	if (entropyBytes > ENTROPY_INPUT_MAX_SIZE_BYTES)
 	{
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
+		NLog_Error("entropyBytes > ENTROPY_INPUT_MAX_SIZE_BYTES");
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
 
 	if (nonceBytes > NONCE_MAX_SIZE_BYTES)
 	{
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
+		NLog_Error("nonceBytes > NONCE_MAX_SIZE_BYTES");
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
 
 	if ((entropyBytes * BITS_PER_BYTE) < SECURITY_STRENGTH_BITS)
 	{
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
+		NLog_Error("(entropyBytes * BITS_PER_BYTE) < SECURITY_STRENGTH_BITS");
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
 
 	if (personalizationStringBytes > PERSONALIZATION_STRING_MAX_SIZE_BYTES)
 	{
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
+		NLog_Error("personalizationStringBytes > PERSONALIZATION_STRING_MAX_SIZE_BYTES");
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
 
@@ -232,6 +238,7 @@ crypto_status_e Hmac_Drbg_Generate(uint32_t bytesRequested,
 	}
 	if (internalHmacDrbgData->health == CRYPTO_SUCCESS)
 	{
+		bytesReturned->bytes = bytesRequested;
 		internalHmacDrbgData->currentStatus = HMAC_DRBG_GENERATE;
 	}
 	return internalHmacDrbgData->health;
