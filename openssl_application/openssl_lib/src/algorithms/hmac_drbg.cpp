@@ -1,4 +1,4 @@
-#include <hmac_drgb.h>
+#include <hmac_drbg.h>
 #include <crypto_types.h>
 #include <crypto_result.h>
 #include <crypto_utils.h>
@@ -36,20 +36,20 @@ typedef struct internal_hmac_drbg_state_t
 static std::unique_ptr<internal_hmac_drbg_state_t> internalHmacDrbgData;
 static bool hmacDrbgInitStatus = false;
 
-static crypto_status_e Hmac_Drgb_GenerateHashFromMessage(sha_type_e shaType, uint8_t* key, uint32_t keyBytes,
+static crypto_status_e Hmac_Drbg_GenerateHashFromMessage(sha_type_e shaType, uint8_t* key, uint32_t keyBytes,
 	uint8_t* message, uint32_t messageBytes,
 	uint8_t* digest, uint32_t digestBytes);
-static crypto_status_e Hmac_Drgb_Internal_Update(uint8_t* providedData, uint32_t providedDataBytes);
-static crypto_status_e Hmac_Drgb_Internal_Instantiate(uint8_t* entropy, uint32_t entropyBytes,
+static crypto_status_e Hmac_Drbg_Internal_Update(uint8_t* providedData, uint32_t providedDataBytes);
+static crypto_status_e Hmac_Drbg_Internal_Instantiate(uint8_t* entropy, uint32_t entropyBytes,
 	uint8_t* nonce, uint32_t nonceBytes,
 	uint8_t* personalizationString, uint32_t personalizationStringBytes);
-static crypto_status_e Hmac_Drgb_Internal_Reseed(uint8_t* entropy, uint32_t entropyBytes,
+static crypto_status_e Hmac_Drbg_Internal_Reseed(uint8_t* entropy, uint32_t entropyBytes,
 	uint8_t* additionalInput, uint32_t additionalInputBytes);
-static crypto_status_e Hmac_Drgb_Internal_Generate(uint32_t bytesRequested,
+static crypto_status_e Hmac_Drbg_Internal_Generate(uint32_t bytesRequested,
 	uint8_t* additionalInput, uint32_t additionalInputBytes, crypto_buffer_t* digset);
 
 
-bool Hmac_Drgb_Init()
+bool Hmac_Drbg_Init()
 {
 	hmacDrbgInitStatus = false;
 	internalHmacDrbgData = std::make_unique<internal_hmac_drbg_state_t>();
@@ -62,7 +62,7 @@ bool Hmac_Drgb_Init()
 	hmacDrbgInitStatus = true;
 }
 
-bool Hmac_Drgb_Cleanup()
+bool Hmac_Drbg_Cleanup()
 {
 	if (hmacDrbgInitStatus)
 	{
@@ -72,7 +72,7 @@ bool Hmac_Drgb_Cleanup()
 	return true;
 }
 
-crypto_status_e Hmac_Drgb_Instantiate(bool requestPredictionResistance, sha_type_e shaType,
+crypto_status_e Hmac_Drbg_Instantiate(bool requestPredictionResistance, sha_type_e shaType,
 	uint8_t* personalizationString, uint32_t personalizationStringBytes,
 	uint8_t* entropy, uint32_t entropyBytes,
 	uint8_t* nonce, uint32_t nonceBytes)
@@ -113,7 +113,7 @@ crypto_status_e Hmac_Drgb_Instantiate(bool requestPredictionResistance, sha_type
 	internalHmacDrbgData->shaType = shaType;
 	internalHmacDrbgData->outlenBytes = Sha_GetDigsetBytes(shaType);
 
-	internalHmacDrbgData->health = Hmac_Drgb_Internal_Instantiate(entropy, entropyBytes, nonce, nonceBytes, personalizationString, personalizationStringBytes);
+	internalHmacDrbgData->health = Hmac_Drbg_Internal_Instantiate(entropy, entropyBytes, nonce, nonceBytes, personalizationString, personalizationStringBytes);
 	if (internalHmacDrbgData->health == CRYPTO_SUCCESS)
 	{
 		internalHmacDrbgData->currentStatus = HMAC_DRBG_INSTANTIATE;
@@ -121,7 +121,7 @@ crypto_status_e Hmac_Drgb_Instantiate(bool requestPredictionResistance, sha_type
 	return internalHmacDrbgData->health;
 }
 
-crypto_status_e Hmac_Drgb_Reseed(bool requestPredictionResistance,
+crypto_status_e Hmac_Drbg_Reseed(bool requestPredictionResistance,
 	uint8_t* entropy, uint32_t entropyBytes,
 	uint8_t* additionalInput, uint32_t additionalInputBytes)
 {
@@ -161,7 +161,7 @@ crypto_status_e Hmac_Drgb_Reseed(bool requestPredictionResistance,
 
 	internalHmacDrbgData->predictionResistance = requestPredictionResistance;
 
-	internalHmacDrbgData->health = Hmac_Drgb_Internal_Reseed(entropy, entropyBytes, additionalInput, additionalInputBytes);
+	internalHmacDrbgData->health = Hmac_Drbg_Internal_Reseed(entropy, entropyBytes, additionalInput, additionalInputBytes);
 	if (internalHmacDrbgData->health == CRYPTO_SUCCESS)
 	{
 		internalHmacDrbgData->currentStatus = HMAC_DRBG_RESEED;
@@ -169,10 +169,10 @@ crypto_status_e Hmac_Drgb_Reseed(bool requestPredictionResistance,
 	return internalHmacDrbgData->health;
 }
 
-crypto_status_e Hmac_Drgb_Generate(uint32_t bytesRequested,
+crypto_status_e Hmac_Drbg_Generate(uint32_t bytesRequested,
 	uint8_t* entropy, uint32_t entropyBytes,
 	uint8_t* additionalInput, uint32_t additionalInputBytes,
-	crypto_buffer_t* digset)
+	crypto_buffer_t* bytesReturned)
 {
 	if (internalHmacDrbgData->health != CRYPTO_SUCCESS)
 	{
@@ -216,19 +216,19 @@ crypto_status_e Hmac_Drgb_Generate(uint32_t bytesRequested,
 			return CRYPTO_BUFFER_MISMATCH_ERROR;
 		}
 
-		internalHmacDrbgData->health = Hmac_Drgb_Reseed(internalHmacDrbgData->predictionResistance, entropy, entropyBytes, additionalInput, additionalInputBytes);
+		internalHmacDrbgData->health = Hmac_Drbg_Reseed(internalHmacDrbgData->predictionResistance, entropy, entropyBytes, additionalInput, additionalInputBytes);
 
 		if (internalHmacDrbgData->health != CRYPTO_SUCCESS)
 		{
 			return internalHmacDrbgData->health;
 		}
 
-		internalHmacDrbgData->health = Hmac_Drgb_Internal_Generate(bytesRequested, NULL, 0, digset);
+		internalHmacDrbgData->health = Hmac_Drbg_Internal_Generate(bytesRequested, NULL, 0, bytesReturned);
 	}
 	else
 	{
 
-		internalHmacDrbgData->health = Hmac_Drgb_Internal_Generate(bytesRequested, additionalInput, additionalInputBytes, digset);
+		internalHmacDrbgData->health = Hmac_Drbg_Internal_Generate(bytesRequested, additionalInput, additionalInputBytes, bytesReturned);
 	}
 	if (internalHmacDrbgData->health == CRYPTO_SUCCESS)
 	{
@@ -237,7 +237,7 @@ crypto_status_e Hmac_Drgb_Generate(uint32_t bytesRequested,
 	return internalHmacDrbgData->health;
 }
 
-static crypto_status_e Hmac_Drgb_Internal_Generate(uint32_t bytesRequested,
+static crypto_status_e Hmac_Drbg_Internal_Generate(uint32_t bytesRequested,
 	uint8_t* additionalInput, uint32_t additionalInputBytes, crypto_buffer_t* digset)
 {
 	internalHmacDrbgData->tmpK.bytes = internalHmacDrbgData->outlenBytes;
@@ -255,7 +255,7 @@ static crypto_status_e Hmac_Drgb_Internal_Generate(uint32_t bytesRequested,
 
 	if (additionalInput != NULL && additionalInputBytes != 0)
 	{
-		internalHmacDrbgData->health = Hmac_Drgb_Internal_Update(additionalInput, additionalInputBytes);
+		internalHmacDrbgData->health = Hmac_Drbg_Internal_Update(additionalInput, additionalInputBytes);
 
 		if (internalHmacDrbgData->health != CRYPTO_SUCCESS)
 		{
@@ -267,7 +267,7 @@ static crypto_status_e Hmac_Drgb_Internal_Generate(uint32_t bytesRequested,
 
 	while (bytesGenerated < bytesRequested)
 	{
-		internalHmacDrbgData->health = Hmac_Drgb_GenerateHashFromMessage(internalHmacDrbgData->shaType,
+		internalHmacDrbgData->health = Hmac_Drbg_GenerateHashFromMessage(internalHmacDrbgData->shaType,
 			internalHmacDrbgData->Key, internalHmacDrbgData->outlenBytes,
 			internalHmacDrbgData->tmpV.buffer, internalHmacDrbgData->tmpV.bytes,
 			internalHmacDrbgData->tmpV.buffer, internalHmacDrbgData->tmpV.bytes);
@@ -301,7 +301,7 @@ static crypto_status_e Hmac_Drgb_Internal_Generate(uint32_t bytesRequested,
 
 	memcpyAssert(internalHmacDrbgData->V, sizeof(internalHmacDrbgData->V), internalHmacDrbgData->tmpV.buffer, internalHmacDrbgData->tmpV.bytes);
 
-	internalHmacDrbgData->health = Hmac_Drgb_Internal_Update(additionalInput, additionalInputBytes);
+	internalHmacDrbgData->health = Hmac_Drbg_Internal_Update(additionalInput, additionalInputBytes);
 
 	if (internalHmacDrbgData->health != CRYPTO_SUCCESS)
 	{
@@ -315,7 +315,7 @@ static crypto_status_e Hmac_Drgb_Internal_Generate(uint32_t bytesRequested,
 	return internalHmacDrbgData->health;
 }
 
-static crypto_status_e Hmac_Drgb_Internal_Reseed(uint8_t* entropy, uint32_t entropyBytes,
+static crypto_status_e Hmac_Drbg_Internal_Reseed(uint8_t* entropy, uint32_t entropyBytes,
 	uint8_t* additionalInput, uint32_t additionalInputBytes)
 {
 	if (entropyBytes > ENTROPY_INPUT_MAX_SIZE_BYTES)
@@ -346,13 +346,13 @@ static crypto_status_e Hmac_Drgb_Internal_Reseed(uint8_t* entropy, uint32_t entr
 	memcpyAssert(seedMaterial + seedMaterialBytes, sizeof(seedMaterial) - seedMaterialBytes, additionalInput, additionalInputBytes);
 	seedMaterialBytes += additionalInputBytes;
 
-	internalHmacDrbgData->health = Hmac_Drgb_Internal_Update(seedMaterial, seedMaterialBytes);
+	internalHmacDrbgData->health = Hmac_Drbg_Internal_Update(seedMaterial, seedMaterialBytes);
 	internalHmacDrbgData->reseedCounter = 1;
 
 	return internalHmacDrbgData->health;
 }
 
-static crypto_status_e Hmac_Drgb_Internal_Instantiate(uint8_t* entropy, uint32_t entropyBytes,
+static crypto_status_e Hmac_Drbg_Internal_Instantiate(uint8_t* entropy, uint32_t entropyBytes,
 	uint8_t* nonce, uint32_t nonceBytes,
 	uint8_t* personalizationString, uint32_t personalizationStringBytes)
 {
@@ -399,13 +399,13 @@ static crypto_status_e Hmac_Drgb_Internal_Instantiate(uint8_t* entropy, uint32_t
 	memsetAssert(internalHmacDrbgData->V, sizeof(internalHmacDrbgData->V), 0x01, internalHmacDrbgData->outlenBytes);
 
 
-	internalHmacDrbgData->health = Hmac_Drgb_Internal_Update(seedMaterial, seedMaterialBytes);
+	internalHmacDrbgData->health = Hmac_Drbg_Internal_Update(seedMaterial, seedMaterialBytes);
 	internalHmacDrbgData->reseedCounter = 1;
 
 	return internalHmacDrbgData->health;
 }
 
-static crypto_status_e Hmac_Drgb_Internal_Update(uint8_t* providedData, uint32_t providedDataBytes)
+static crypto_status_e Hmac_Drbg_Internal_Update(uint8_t* providedData, uint32_t providedDataBytes)
 {
 	internalHmacDrbgData->tmpK.bytes = internalHmacDrbgData->outlenBytes;
 	internalHmacDrbgData->tmpV.bytes = internalHmacDrbgData->outlenBytes;
@@ -436,7 +436,7 @@ static crypto_status_e Hmac_Drgb_Internal_Update(uint8_t* providedData, uint32_t
 	memcpyAssert(buffer + bufferBytes, UPDATE_TEMP_BUFFER_BYTES - bufferBytes, providedData, providedDataBytes);
 	bufferBytes += providedDataBytes;
 
-	internalHmacDrbgData->health = Hmac_Drgb_GenerateHashFromMessage(internalHmacDrbgData->shaType, 
+	internalHmacDrbgData->health = Hmac_Drbg_GenerateHashFromMessage(internalHmacDrbgData->shaType, 
 		internalHmacDrbgData->Key, internalHmacDrbgData->outlenBytes, buffer, bufferBytes,
 		internalHmacDrbgData->tmpK.buffer, internalHmacDrbgData->tmpK.bytes);
 
@@ -448,7 +448,7 @@ static crypto_status_e Hmac_Drgb_Internal_Update(uint8_t* providedData, uint32_t
 		return internalHmacDrbgData->health;
 	}
 
-	internalHmacDrbgData->health = Hmac_Drgb_GenerateHashFromMessage(internalHmacDrbgData->shaType, 
+	internalHmacDrbgData->health = Hmac_Drbg_GenerateHashFromMessage(internalHmacDrbgData->shaType, 
 		internalHmacDrbgData->tmpK.buffer, internalHmacDrbgData->tmpK.bytes, 
 		internalHmacDrbgData->V, internalHmacDrbgData->outlenBytes,
 		internalHmacDrbgData->tmpV.buffer, internalHmacDrbgData->tmpV.bytes);
@@ -470,7 +470,7 @@ static crypto_status_e Hmac_Drgb_Internal_Update(uint8_t* providedData, uint32_t
 		memcpyAssert(buffer + bufferBytes, sizeof(buffer) - bufferBytes, providedData, providedDataBytes);
 		bufferBytes += providedDataBytes;
 
-		internalHmacDrbgData->health = Hmac_Drgb_GenerateHashFromMessage(internalHmacDrbgData->shaType, 
+		internalHmacDrbgData->health = Hmac_Drbg_GenerateHashFromMessage(internalHmacDrbgData->shaType, 
 			internalHmacDrbgData->tmpK.buffer, internalHmacDrbgData->tmpK.bytes,
 			buffer, bufferBytes,
 			internalHmacDrbgData->tmpK.buffer, internalHmacDrbgData->tmpK.bytes);
@@ -480,7 +480,7 @@ static crypto_status_e Hmac_Drgb_Internal_Update(uint8_t* providedData, uint32_t
 			return internalHmacDrbgData->health;
 		}
 
-		internalHmacDrbgData->health = Hmac_Drgb_GenerateHashFromMessage(internalHmacDrbgData->shaType, 
+		internalHmacDrbgData->health = Hmac_Drbg_GenerateHashFromMessage(internalHmacDrbgData->shaType, 
 			internalHmacDrbgData->tmpK.buffer, internalHmacDrbgData->tmpK.bytes,
 			internalHmacDrbgData->tmpV.buffer, internalHmacDrbgData->tmpV.bytes,
 			internalHmacDrbgData->tmpV.buffer, internalHmacDrbgData->tmpV.bytes);
@@ -500,7 +500,7 @@ static crypto_status_e Hmac_Drgb_Internal_Update(uint8_t* providedData, uint32_t
 	return internalHmacDrbgData->health;
 }
 
-static crypto_status_e Hmac_Drgb_GenerateHashFromMessage(sha_type_e shaType, uint8_t* key, uint32_t keyBytes,
+static crypto_status_e Hmac_Drbg_GenerateHashFromMessage(sha_type_e shaType, uint8_t* key, uint32_t keyBytes,
 	uint8_t* message, uint32_t messageBytes,
 	uint8_t* digest, uint32_t digestBytes)
 {

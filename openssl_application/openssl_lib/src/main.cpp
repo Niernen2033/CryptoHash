@@ -5,7 +5,7 @@
 #include <crypto_result.h>
 #include <sha.h>
 #include <hmac_sha.h>
-#include <hmac_drgb.h>
+#include <hmac_drbg.h>
 #include <aes.h>
 #include <hkdf.h>
 #include <rsa.h>
@@ -25,7 +25,7 @@ DLL_MAIN_C DllMain(HANDLE hModule, DWORD fdwreason, LPVOID lpReserved)
 		{
 			return FALSE;
 		}
-		if (!Hmac_Drgb_Init())
+		if (!Hmac_Drbg_Init())
 		{
 			return FALSE;
 		}
@@ -40,7 +40,7 @@ DLL_MAIN_C DllMain(HANDLE hModule, DWORD fdwreason, LPVOID lpReserved)
 		{
 			return FALSE;
 		}
-		if (!Hmac_Drgb_Init())
+		if (!Hmac_Drbg_Init())
 		{
 			return FALSE;
 		}
@@ -55,7 +55,7 @@ DLL_MAIN_C DllMain(HANDLE hModule, DWORD fdwreason, LPVOID lpReserved)
 		{
 			return FALSE;
 		}
-		if (!Hmac_Drgb_Cleanup())
+		if (!Hmac_Drbg_Cleanup())
 		{
 			return FALSE;
 		}
@@ -70,7 +70,7 @@ DLL_MAIN_C DllMain(HANDLE hModule, DWORD fdwreason, LPVOID lpReserved)
 		{
 			return FALSE;
 		}
-		if (!Hmac_Drgb_Cleanup())
+		if (!Hmac_Drbg_Cleanup())
 		{
 			return FALSE;
 		}
@@ -86,19 +86,39 @@ EXPORT_C int computeSha(int shaType, uint8_t* msg, uint32_t msgBytes, crypto_buf
 	return result;
 }
 
-EXPORT_C int computeHmacDrbg_Instantiate()
+EXPORT_C int computeHmacDrbg_Instantiate(bool requestPredictionResistance, int shaType,
+	uint8_t* personalizationString, uint32_t personalizationStringBytes,
+	uint8_t* entropy, uint32_t entropyBytes,
+	uint8_t* nonce, uint32_t nonceBytes)
 {
-	return 0;
+	sha_type_e tmpShaType = (sha_type_e)shaType;
+	int result = Hmac_Drbg_Instantiate(requestPredictionResistance, tmpShaType,
+		personalizationString, personalizationStringBytes,
+		entropy, entropyBytes,
+		nonce, nonceBytes);
+	return result;
 }
 
-EXPORT_C int computeHmacDrbg_Reseed()
+EXPORT_C int computeHmacDrbg_Reseed(bool requestPredictionResistance,
+	uint8_t* entropy, uint32_t entropyBytes,
+	uint8_t* additionalInput, uint32_t additionalInputBytes)
 {
-	return 0;
+	int result = Hmac_Drbg_Reseed(requestPredictionResistance,
+		entropy, entropyBytes,
+		additionalInput, additionalInputBytes);
+	return result;
 }
 
-EXPORT_C int computeHmacDrbg_Generate()
+EXPORT_C int computeHmacDrbg_Generate(uint32_t bytesRequested,
+	uint8_t* entropy, uint32_t entropyBytes,
+	uint8_t* additionalInput, uint32_t additionalInputBytes,
+	crypto_buffer_t* bytesReturned)
 {
-	return 0;
+	int result = Hmac_Drbg_Generate(bytesRequested,
+		entropy, entropyBytes,
+		additionalInput, additionalInputBytes,
+		bytesReturned);
+	return result;
 }
 
 EXPORT_C int computeHmacSha(int shaType, uint8_t msg[], uint32_t msgBytes, uint8_t key[], uint32_t keyBytes, crypto_buffer_t* digset)

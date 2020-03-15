@@ -54,7 +54,7 @@
     <ClCompile Include="src\algorithms\rsa.cpp">
       <Filter>src\algorithms</Filter>
     </ClCompile>
-    <ClCompile Include="src\algorithms\hmac_drgb.cpp">
+    <ClCompile Include="src\algorithms\hmac_drbg.cpp">
       <Filter>src\algorithms</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,13 +86,13 @@
     <ClInclude Include="src\algorithms\include\hkdf.h">
       <Filter>src\algorithms\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\algorithms\include\hmac_drgb.h">
-      <Filter>src\algorithms\include</Filter>
-    </ClInclude>
     <ClInclude Include="src\algorithms\include\hmac_sha.h">
       <Filter>src\algorithms\include</Filter>
     </ClInclude>
     <ClInclude Include="src\algorithms\include\rsa.h">
+      <Filter>src\algorithms\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\include\hmac_drbg.h">
       <Filter>src\algorithms\include</Filter>
     </ClInclude>
   </ItemGroup>

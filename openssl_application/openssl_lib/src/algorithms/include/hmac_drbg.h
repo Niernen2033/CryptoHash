@@ -15,22 +15,22 @@
 #define RESEED_INTERVAL                                     10000
 
 
-bool Hmac_Drgb_Init();
-bool Hmac_Drgb_Cleanup();
+bool Hmac_Drbg_Init();
+bool Hmac_Drbg_Cleanup();
 
-crypto_status_e Hmac_Drgb_Instantiate(bool requestPredictionResistance, sha_type_e shaType,
+crypto_status_e Hmac_Drbg_Instantiate(bool requestPredictionResistance, sha_type_e shaType,
 	uint8_t* personalizationString, uint32_t personalizationStringBytes,
 	uint8_t* entropy, uint32_t entropyBytes,
 	uint8_t* nonce, uint32_t nonceBytes);
 
-crypto_status_e Hmac_Drgb_Reseed(bool requestPredictionResistance,
+crypto_status_e Hmac_Drbg_Reseed(bool requestPredictionResistance,
 	uint8_t* entropy, uint32_t entropyBytes,
 	uint8_t* additionalInput, uint32_t additionalInputBytes);
 
-crypto_status_e Hmac_Drgb_Generate(uint32_t bytesRequested,
+crypto_status_e Hmac_Drbg_Generate(uint32_t bytesRequested,
 	uint8_t* entropy, uint32_t entropyBytes,
 	uint8_t* additionalInput, uint32_t additionalInputBytes,
-	crypto_buffer_t* digset);
+	crypto_buffer_t* bytesReturned);
 
 
 //preRes = FALSE
