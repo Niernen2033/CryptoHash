@@ -6,21 +6,21 @@
 
 typedef enum nlog_id_e
 {
-    NLOG_ID_ERROR = 0,
+    NLOG_ID_ERROR = 1,
     NLOG_ID_INFO,
     NLOG_ID_DEGUB,
 } nlog_id_e;
 
 typedef struct nlog_data_t
 {
-    nlog_id_e id;
+    uint8_t id;
     std::string log;
 } nlog_data_t;
 
 bool NLog_Init();
 bool NLog_Cleanup();
 void NLog_Add(nlog_id_e logId, std::string tag, const char* file, int line, std::string msg);
-bool NLog_Dump(nlog_id_e logId, std::string filePath);
+bool NLog_Dump(uint8_t dumpId, std::string filePath);
 bool NLog_DumpAll(std::string filePath);
 void NLog_Clear();
 

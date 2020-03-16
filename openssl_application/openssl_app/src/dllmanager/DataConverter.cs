@@ -14,6 +14,11 @@ namespace openssl_app.dllmanager
             return HexStringFromBytes(bytes, (uint)bytes.Length);
         }
 
+        public static byte[] BytesFromString(string normalString)
+        {
+            return Encoding.ASCII.GetBytes(normalString);
+        }
+
         public static string HexStringFromBytes(byte[] bytes, uint bytesSize)
         {
             byte[] tempBytes = new byte[bytesSize];

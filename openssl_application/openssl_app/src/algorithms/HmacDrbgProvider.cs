@@ -169,6 +169,11 @@ namespace openssl_app.algorithms
 				{
 					return status;
 				}
+				status = this.Uninstantiate();
+				if (status != CRYPTO_STATUS.CRYPTO_SUCCESS)
+				{
+					return status;
+				}
 			}
 			else
 			{
@@ -187,6 +192,11 @@ namespace openssl_app.algorithms
 					return status;
 				}
 				status = this.Generate(this.EntropyInputPR2, this.AdditionalInput2);
+				if (status != CRYPTO_STATUS.CRYPTO_SUCCESS)
+				{
+					return status;
+				}
+				status = this.Uninstantiate();
 				if (status != CRYPTO_STATUS.CRYPTO_SUCCESS)
 				{
 					return status;

@@ -205,11 +205,10 @@ EXPORT_C int computeKeyUnwrap(uint8_t key[], uint32_t keyBytes, uint8_t msg[], u
 	return result;
 }
 
-EXPORT_C int nlogDump(int logId, const char* filePath, uint32_t filePathLen)
+EXPORT_C int nlogDump(uint8_t dumpId, const char* filePath, uint32_t filePathLen)
 {
-	nlog_id_e tmpLogId = (nlog_id_e)logId;
 	std::string tmpFilePath = std::string(filePath, filePathLen);
-	int result = (int)NLog_Dump(tmpLogId, tmpFilePath);
+	int result = (int)NLog_Dump(dumpId, tmpFilePath);
 	return result;
 }
 

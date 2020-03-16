@@ -83,35 +83,10 @@ void NLog_Add(nlog_id_e logId, std::string tag, const char* file, int line, std:
 
 bool NLog_DumpAll(std::string filePath)
 {
-#if ENABLE_NLOG
-	std::ofstream file;
-	file.exceptions(std::ios::failbit | std::ios::badbit);
-	try
-	{
-		file.open(filePath, std::ios::out | std::ios::app);
-		for (int i = 0; i < nlogData->size(); i++)
-		{
-			if (file)
-			{
-				file << nlogData->at(i).log << std::endl;
-			}
-		}
-		file.close();
-	}
-	catch (std::exception const& e)
-	{
-		file.close();
-		ASSERT_M(false, e.what());
-		return false;
-	}
-
-	return true;
-#else // ENABLE_NLOG
-	retrun false;
-#endif // ENABLE_NLOG
+	return NLog_Dump(UINT8_MAX, filePath);
 }
 
-bool NLog_Dump(nlog_id_e logId, std::string filePath)
+bool NLog_Dump(uint8_t dumpId, std::string filePath)
 {
 #if ENABLE_NLOG
 	std::ofstream file;
@@ -123,7 +98,7 @@ bool NLog_Dump(nlog_id_e logId, std::string filePath)
 		{
 			if (file)
 			{
-				if (nlogData->at(i).id == logId)
+				if ((nlogData->at(i).id & dumpId) != 0)
 				{
 					file << nlogData->at(i).log << std::endl;
 				}
