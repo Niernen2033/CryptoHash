@@ -12,20 +12,29 @@ namespace openssl_app.appmanager
     {
         SHA_MANAGER = 0,
         HKDF_MANAGER,
-        HMAC_DRBG_MANAGER,
-        AES_MANAGER,
         HMAC_SHA_MANAGER,
-        RSA_MANAGER
+        RSA_MANAGER,
+        AES_MANAGER,
+        HMAC_DRBG_MANAGER,
     }
 
     abstract class Manager
     {
-        public MANAGER_ALG_TYPE ManagerType { get; private set; }
+        public bool HexInput { get; set; }
+        public string Result { get; private set; }
+        public int Mode { get; set; }
         public abstract CRYPTO_STATUS Generate(int subTarget = 0);
 
-        protected Manager(MANAGER_ALG_TYPE algType)
+        protected Manager()
         {
-            this.ManagerType = algType;
+            this.HexInput = false;
+            this.Result = string.Empty;
+            this.Mode = 0;
+        }
+
+        protected void SetResult(string result)
+        {
+            this.Result = result;
         }
     }
 }

@@ -85,7 +85,11 @@
     <Compile Include="src\algorithms\HmacShaProvider.cs" />
     <Compile Include="src\algorithms\RsaProvider.cs" />
     <Compile Include="src\algorithms\ShaProvider.cs" />
+    <Compile Include="src\appmanager\AesManager.cs" />
+    <Compile Include="src\appmanager\HkdfManager.cs" />
+    <Compile Include="src\appmanager\HmacShaManager.cs" />
     <Compile Include="src\appmanager\Manager.cs" />
+    <Compile Include="src\appmanager\RsaManager.cs" />
     <Compile Include="src\appmanager\ShaManager.cs" />
     <Compile Include="src\dllmanager\DataConverter.cs" />
     <Compile Include="src\dllmanager\DllProperties.cs" />

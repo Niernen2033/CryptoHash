@@ -13,22 +13,27 @@ namespace openssl_app.appmanager
     {
         private ShaProvider shaProvider;
         public RichTextBox Msg { get; set; }
-        public RichTextBox Hash { get; set; }
-        public ComboBox Type { get; set; }
 
-        public ShaManager() : base(MANAGER_ALG_TYPE.SHA_MANAGER)
+        public ShaManager() : base()
         {
             this.shaProvider = new ShaProvider();
         }
 
         public override CRYPTO_STATUS Generate(int subTarget)
         {
-            this.shaProvider.Msg = DataConverter.BytesFromString(this.Msg.Text).ToList();
-            this.shaProvider.Type = (SHA_TYPE)this.Type.SelectedIndex;
+            if(this.HexInput)
+            {
+                this.shaProvider.Msg = DataConverter.BytesFromHexString(this.Msg.Text).ToList();
+            }
+            else
+            {
+                this.shaProvider.Msg = DataConverter.BytesFromString(this.Msg.Text).ToList();
+            }
+            this.shaProvider.Type = (SHA_TYPE)this.Mode;
             CRYPTO_STATUS status = this.shaProvider.ComputeHash();
             if(status == CRYPTO_STATUS.CRYPTO_SUCCESS)
             {
-                this.Hash.Text = DataConverter.HexStringFromBytes(this.shaProvider.Hash.ToArray());
+                this.SetResult(DataConverter.HexStringFromBytes(this.shaProvider.Hash.ToArray()));
             }
             return status;
         }

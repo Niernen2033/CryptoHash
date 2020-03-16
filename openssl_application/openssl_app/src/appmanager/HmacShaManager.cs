@@ -1,0 +1,44 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using openssl_app.dllmanager;
+using openssl_app.algorithms;
+
+namespace openssl_app.appmanager
+{
+    class HmacShaManager : Manager
+    {
+        private HmacShaProvider hmacShaProvider;
+        public RichTextBox Msg { get; set; }
+        public RichTextBox Key { get; set; }
+
+        public HmacShaManager() : base()
+        {
+            this.hmacShaProvider = new HmacShaProvider();
+        }
+
+        public override CRYPTO_STATUS Generate(int subTarget)
+        {
+            if (this.HexInput)
+            {
+                this.hmacShaProvider.Msg = DataConverter.BytesFromHexString(this.Msg.Text).ToList();
+                this.hmacShaProvider.Key = DataConverter.BytesFromHexString(this.Key.Text).ToList();
+            }
+            else
+            {
+                this.hmacShaProvider.Msg = DataConverter.BytesFromString(this.Msg.Text).ToList();
+                this.hmacShaProvider.Key = DataConverter.BytesFromString(this.Key.Text).ToList();
+            }
+            this.hmacShaProvider.Type = (SHA_TYPE)this.Mode;
+            CRYPTO_STATUS status = this.hmacShaProvider.ComputeHash();
+            if (status == CRYPTO_STATUS.CRYPTO_SUCCESS)
+            {
+                this.SetResult(DataConverter.HexStringFromBytes(this.hmacShaProvider.Hash.ToArray()));
+            }
+            return status;
+        }
+    }
+}
