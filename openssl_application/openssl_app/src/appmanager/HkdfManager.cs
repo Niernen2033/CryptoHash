@@ -21,7 +21,7 @@ namespace openssl_app.appmanager
             this.hkdfProvider = new HkdfProvider();
         }
 
-        public override CRYPTO_STATUS Generate(int subTarget)
+        public override CRYPTO_STATUS Generate()
         {
             if(this.HexInput)
             {
@@ -34,7 +34,7 @@ namespace openssl_app.appmanager
                 this.hkdfProvider.Key = DataConverter.BytesFromString(this.Key.Text).ToList();
             }
             this.hkdfProvider.OutputKeyBytes = (uint)this.OutputKeyBytes.Value;
-            this.hkdfProvider.Type = (SHA_TYPE)this.Mode;
+            this.hkdfProvider.Type = (SHA_TYPE)this.Type;
             CRYPTO_STATUS status = this.hkdfProvider.ComputeHash();
             if (status == CRYPTO_STATUS.CRYPTO_SUCCESS)
             {

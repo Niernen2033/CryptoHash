@@ -15,24 +15,48 @@ namespace openssl_app.appmanager
         public RichTextBox Msg { get; set; }
         public RichTextBox Key { get; set; }
         public RichTextBox Iv { get; set; }
+        public ComboBox Mode { get; set; }
 
         public AesManager() : base()
         {
             this.aesProvider = new AesProvider();
         }
 
-        public override CRYPTO_STATUS Generate(int subTarget)
+        public override CRYPTO_STATUS Generate()
         {
             if (this.HexInput)
             {
                 this.aesProvider.Msg = DataConverter.BytesFromHexString(this.Msg.Text).ToList();
+                this.aesProvider.Key = DataConverter.BytesFromHexString(this.Key.Text).ToList();
+                this.aesProvider.Iv = DataConverter.BytesFromHexString(this.Iv.Text).ToList();
             }
             else
             {
                 this.aesProvider.Msg = DataConverter.BytesFromString(this.Msg.Text).ToList();
+                this.aesProvider.Key = DataConverter.BytesFromString(this.Key.Text).ToList();
+                this.aesProvider.Iv = DataConverter.BytesFromString(this.Iv.Text).ToList();
             }
-            this.aesProvider.Type = (AES_TYPE)this.Mode;
-            CRYPTO_STATUS status = this.aesProvider.ComputeDecrypt();
+            this.aesProvider.Type = (AES_TYPE)this.Type;
+            AES_MODE aesMode = (AES_MODE)this.Mode.SelectedIndex;
+            CRYPTO_STATUS status = CRYPTO_STATUS.CRYPTO_ERROR;
+
+            switch(aesMode)
+            {
+                case AES_MODE.AES_DECRYPT:
+                    status = this.aesProvider.ComputeDecrypt();
+                    break;
+                case AES_MODE.AES_ENCRYPT:
+                    status = this.aesProvider.ComputeEncrypt();
+                    break;
+                case AES_MODE.AES_KEY_UNWRAP:
+                    status = this.aesProvider.ComputeKeyUnwrap();
+                    break;
+                case AES_MODE.AES_KEY_WRAP:
+                    status = this.aesProvider.ComputeKeyWrap();
+                    break;
+            }
+
+
             if (status == CRYPTO_STATUS.CRYPTO_SUCCESS)
             {
                 this.SetResult(DataConverter.HexStringFromBytes(this.aesProvider.Hash.ToArray()));

@@ -20,7 +20,7 @@ namespace openssl_app.appmanager
             this.hmacShaProvider = new HmacShaProvider();
         }
 
-        public override CRYPTO_STATUS Generate(int subTarget)
+        public override CRYPTO_STATUS Generate()
         {
             if (this.HexInput)
             {
@@ -32,7 +32,7 @@ namespace openssl_app.appmanager
                 this.hmacShaProvider.Msg = DataConverter.BytesFromString(this.Msg.Text).ToList();
                 this.hmacShaProvider.Key = DataConverter.BytesFromString(this.Key.Text).ToList();
             }
-            this.hmacShaProvider.Type = (SHA_TYPE)this.Mode;
+            this.hmacShaProvider.Type = (SHA_TYPE)this.Type;
             CRYPTO_STATUS status = this.hmacShaProvider.ComputeHash();
             if (status == CRYPTO_STATUS.CRYPTO_SUCCESS)
             {

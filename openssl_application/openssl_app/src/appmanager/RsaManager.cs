@@ -22,7 +22,7 @@ namespace openssl_app.appmanager
             this.rsaProvider = new RsaProvider();
         }
 
-        public override CRYPTO_STATUS Generate(int subTarget)
+        public override CRYPTO_STATUS Generate()
         {
             if (this.HexInput)
             {
@@ -38,7 +38,7 @@ namespace openssl_app.appmanager
                 this.rsaProvider.Modulus = DataConverter.BytesFromString(this.Modulus.Text).ToList();
                 this.rsaProvider.Signature = DataConverter.BytesFromString(this.Signature.Text).ToList();
             }
-            this.rsaProvider.Type = (SHA_TYPE)this.Mode;
+            this.rsaProvider.Type = (SHA_TYPE)this.Type;
             CRYPTO_STATUS status = this.rsaProvider.Verify();
             if (status == CRYPTO_STATUS.CRYPTO_SUCCESS)
             {

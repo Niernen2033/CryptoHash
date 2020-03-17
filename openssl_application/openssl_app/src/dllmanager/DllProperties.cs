@@ -38,6 +38,14 @@ namespace openssl_app.dllmanager
 		CRYPTO_NOT_SUPPORTED
 	}
 
+	public enum AES_MODE
+	{
+		AES_DECRYPT,
+		AES_ENCRYPT,
+		AES_KEY_WRAP,
+		AES_KEY_UNWRAP
+	}
+
 	public enum AES_TYPE
 	{
 		//ECB

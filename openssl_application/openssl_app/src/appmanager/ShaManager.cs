@@ -19,7 +19,7 @@ namespace openssl_app.appmanager
             this.shaProvider = new ShaProvider();
         }
 
-        public override CRYPTO_STATUS Generate(int subTarget)
+        public override CRYPTO_STATUS Generate()
         {
             if(this.HexInput)
             {
@@ -29,7 +29,7 @@ namespace openssl_app.appmanager
             {
                 this.shaProvider.Msg = DataConverter.BytesFromString(this.Msg.Text).ToList();
             }
-            this.shaProvider.Type = (SHA_TYPE)this.Mode;
+            this.shaProvider.Type = (SHA_TYPE)this.Type;
             CRYPTO_STATUS status = this.shaProvider.ComputeHash();
             if(status == CRYPTO_STATUS.CRYPTO_SUCCESS)
             {

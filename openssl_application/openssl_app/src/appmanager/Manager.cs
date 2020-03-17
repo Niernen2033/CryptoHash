@@ -22,19 +22,24 @@ namespace openssl_app.appmanager
     {
         public bool HexInput { get; set; }
         public string Result { get; private set; }
-        public int Mode { get; set; }
-        public abstract CRYPTO_STATUS Generate(int subTarget = 0);
+        public int Type { get; set; }
+        public abstract CRYPTO_STATUS Generate();
 
         protected Manager()
         {
             this.HexInput = false;
             this.Result = string.Empty;
-            this.Mode = 0;
+            this.Type = 0;
         }
 
         protected void SetResult(string result)
         {
             this.Result = result;
+        
+        
+        
+        
+        
         }
     }
 }

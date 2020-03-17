@@ -24,15 +24,16 @@ namespace openssl_app
         private HkdfManager hkdf_manager;
         private HmacShaManager hmac_sha_manager;
         private RsaManager rsa_manager;
+        private AesManager aes_manager;
+        private HmacDrbgManager hmacDrbg_manager;
 
         public CryptoHash()
         {
             this.InitializeComponent();
             this.InitializeManagers();
-            this.LoadModes(true);
+            this.LoadTypes(true);
             this.crypto_manager = sha_manager;
-            this.crypto_manager.Mode = 1;
-            this.comboBox_alg_types.SelectedIndex = 1;
+            this.crypto_manager.Type = 1;
 
             this.tabControl_algorithms.SelectedIndexChanged += TabControl_algorithms_SelectedIndexChanged;
             this.checkBox_hex_input.CheckedChanged += CheckBox_hex_input_CheckedChanged;
@@ -41,7 +42,7 @@ namespace openssl_app
 
         private void ComboBox_alg_types_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.crypto_manager.Mode = this.comboBox_alg_types.SelectedIndex;
+            this.crypto_manager.Type = this.comboBox_alg_types.SelectedIndex;
         }
 
         private void TabControl_algorithms_SelectedIndexChanged(object sender, EventArgs e)
@@ -50,35 +51,31 @@ namespace openssl_app
             switch (algType)
             {
                 case MANAGER_ALG_TYPE.AES_MANAGER:
-                    this.LoadModes(false);
-                    this.comboBox_alg_types.SelectedIndex = 2;
+                    this.crypto_manager = this.aes_manager;
+                    this.LoadTypes(false);
                     break;
                 case MANAGER_ALG_TYPE.HKDF_MANAGER:
                     this.crypto_manager = this.hkdf_manager;
-                    this.LoadModes(true);
-                    this.comboBox_alg_types.SelectedIndex = 1;
+                    this.LoadTypes(true);
                     break;
                 case MANAGER_ALG_TYPE.HMAC_DRBG_MANAGER:
-                    this.LoadModes(true);
-                    this.comboBox_alg_types.SelectedIndex = 1;
+                    this.crypto_manager = this.hmacDrbg_manager;
+                    this.LoadTypes(true);
                     break;
                 case MANAGER_ALG_TYPE.HMAC_SHA_MANAGER:
                     this.crypto_manager = this.hmac_sha_manager;
-                    this.LoadModes(true);
-                    this.comboBox_alg_types.SelectedIndex = 1;
+                    this.LoadTypes(true);
                     break;
                 case MANAGER_ALG_TYPE.RSA_MANAGER:
                     this.crypto_manager = this.rsa_manager;
-                    this.LoadModes(true);
-                    this.comboBox_alg_types.SelectedIndex = 1;
+                    this.LoadTypes(true);
                     break;
                 case MANAGER_ALG_TYPE.SHA_MANAGER:
                     this.crypto_manager = this.sha_manager;
-                    this.LoadModes(true);
-                    this.comboBox_alg_types.SelectedIndex = 1;
+                    this.LoadTypes(true);
                     break;
             }
-            this.crypto_manager.Mode = this.comboBox_alg_types.SelectedIndex;
+            this.crypto_manager.Type = this.comboBox_alg_types.SelectedIndex;
         }
 
         private void CheckBox_hex_input_CheckedChanged(object sender, EventArgs e)
@@ -93,22 +90,34 @@ namespace openssl_app
             }
         }
 
-        private void LoadModes(bool shaModes)
+        private void LoadTypes(bool shaModes)
         {
+            string[] types = null;
             string[] modes = null;
             if (shaModes == true)
             {
-                modes = Enum.GetNames(typeof(SHA_TYPE));
+                types = Enum.GetNames(typeof(SHA_TYPE));
             }
             else
             {
-                modes = Enum.GetNames(typeof(AES_TYPE));
+                types = Enum.GetNames(typeof(AES_TYPE));
+                modes = Enum.GetNames(typeof(AES_MODE));
             }
 
             this.comboBox_alg_types.Items.Clear();
-            for (int i = 0; i < modes.Length; i++)
+            for (int i = 0; i < types.Length; i++)
             {
-                this.comboBox_alg_types.Items.Add(modes[i]);
+                this.comboBox_alg_types.Items.Add(types[i]);
+            }
+            this.comboBox_alg_types.SelectedIndex = 1;
+            if (shaModes == false)
+            {
+                this.comboBox_aes_mode.Items.Clear();
+                for (int i = 0; i < modes.Length; i++)
+                {
+                    this.comboBox_aes_mode.Items.Add(modes[i]);
+                }
+                this.comboBox_aes_mode.SelectedIndex = 0;
             }
         }
 
@@ -118,6 +127,33 @@ namespace openssl_app
             this.InitializeHkdfManager();
             this.InitializeHmacShaManager();
             this.InitializeRsaManager();
+            this.InitializeAesManager();
+            this.InitializeHmacDrbgManager();
+        }
+
+        private void InitializeAesManager()
+        {
+            this.aes_manager = new AesManager();
+            this.aes_manager.Key = this.richTextBox_aes_key;
+            this.aes_manager.Iv = this.richTextBox_aes_iv;
+            this.aes_manager.Msg = this.richTextBox_aes_msg;
+            this.aes_manager.Mode = this.comboBox_aes_mode;
+        }
+
+        private void InitializeHmacDrbgManager()
+        {
+            this.hmacDrbg_manager = new HmacDrbgManager();
+            this.hmacDrbg_manager.PredictionResistance = this.checkBox_hmac_drbg_preRes;
+            this.hmacDrbg_manager.PersonalizationString = this.richTextBox_hmac_drbg_perStr;
+            this.hmacDrbg_manager.EntropyInput = this.richTextBox_hmac_drbg_entInp;
+            this.hmacDrbg_manager.Nonce = this.richTextBox_hmac_drbg_nonce;
+            this.hmacDrbg_manager.EntropyInputReseed = this.richTextBox_hmac_drbg_entInpRes;
+            this.hmacDrbg_manager.AdditionalInputReseed = this.richTextBox_hmac_drbg_addInpRes;
+            this.hmacDrbg_manager.AdditionalInput1 = this.richTextBox_hmac_drbg_addInp1;
+            this.hmacDrbg_manager.AdditionalInput2 = this.richTextBox_hmac_drbg_addInp2;
+            this.hmacDrbg_manager.EntropyInputPR1 = this.richTextBox_hmac_drbg_entInpPR1;
+            this.hmacDrbg_manager.EntropyInputPR2 = this.richTextBox_hmac_drbg_entInpPR2;
+            this.hmacDrbg_manager.ReturnedBytes = this.numericUpDown_hmac_drbg_retByt;
         }
 
         private void InitializeRsaManager()

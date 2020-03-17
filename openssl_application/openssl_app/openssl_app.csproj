@@ -87,6 +87,7 @@
     <Compile Include="src\algorithms\ShaProvider.cs" />
     <Compile Include="src\appmanager\AesManager.cs" />
     <Compile Include="src\appmanager\HkdfManager.cs" />
+    <Compile Include="src\appmanager\HmacDrbgManager.cs" />
     <Compile Include="src\appmanager\HmacShaManager.cs" />
     <Compile Include="src\appmanager\Manager.cs" />
     <Compile Include="src\appmanager\RsaManager.cs" />
