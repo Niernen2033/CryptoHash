@@ -33,7 +33,6 @@ bool NLog_Init()
 	nlogData = std::make_unique< std::vector<nlog_data_t> >();
 	if (nlogData == nullptr)
 	{
-		ASSERT_M(false, "nlogInitStatus = false");
 		return false;
 	}
 	nlogData->clear();
@@ -72,12 +71,15 @@ static std::string NLog_GetTimestamp()
 void NLog_Add(nlog_id_e logId, std::string tag, const char* file, int line, std::string msg)
 {
 #if ENABLE_NLOG
-	nlog_data_t logData;
-	std::string log = tag + "[" + NLog_GetTimestamp() + "] " + path(file).filename().string() + "(" + std::to_string(line) + "): " + msg;
+	if (nlogInitStatus)
+	{
+		nlog_data_t logData;
+		std::string log = tag + "[" + NLog_GetTimestamp() + "] " + path(file).filename().string() + "(" + std::to_string(line) + "): " + msg;
 
-	logData.id = logId;
-	logData.log = log;
-	nlogData->push_back(logData);
+		logData.id = logId;
+		logData.log = log;
+		nlogData->push_back(logData);
+	}
 #endif // ENABLE_NLOG
 }
 
@@ -89,31 +91,38 @@ bool NLog_DumpAll(std::string filePath)
 bool NLog_Dump(uint8_t dumpId, std::string filePath)
 {
 #if ENABLE_NLOG
-	std::ofstream file;
-	file.exceptions(std::ios::failbit | std::ios::badbit);
-	try
+	if (nlogInitStatus)
 	{
-		file.open(filePath, std::ios::out | std::ios::app);
-		for (int i = 0; i < nlogData->size(); i++)
+		std::ofstream file;
+		file.exceptions(std::ios::failbit | std::ios::badbit);
+		try
 		{
-			if (file)
+			file.open(filePath, std::ios::out | std::ios::app);
+			for (int i = 0; i < nlogData->size(); i++)
 			{
-				if ((nlogData->at(i).id & dumpId) != 0)
+				if (file)
 				{
-					file << nlogData->at(i).log << std::endl;
+					if ((nlogData->at(i).id & dumpId) != 0)
+					{
+						file << nlogData->at(i).log << std::endl;
+					}
 				}
 			}
+			file.close();
 		}
-		file.close();
+		catch (std::exception const& e)
+		{
+			file.close();
+			NLog_Error(e.what());
+			return false;
+		}
+
+		return true;
 	}
-	catch (std::exception const& e)
+	else
 	{
-		file.close();
-		ASSERT_M(false, e.what());
 		return false;
 	}
-
-	return true;
 #else // ENABLE_NLOG
 	retrun false;
 #endif // ENABLE_NLOG

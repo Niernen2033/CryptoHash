@@ -32,6 +32,10 @@ namespace openssl_app.dllmanager
 
         public static byte[] BytesFromHexString(string hexString)
         {
+            if((hexString.Length % 2) != 0)
+            {
+                hexString = "0" + hexString;
+            }
             SoapHexBinary shb = SoapHexBinary.Parse(hexString);
             return shb.Value;
         }

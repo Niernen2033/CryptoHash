@@ -31,7 +31,7 @@ namespace openssl_app
         {
             this.InitializeComponent();
             this.InitializeManagers();
-            this.LoadTypes(true);
+            this.LoadTypesAndModes(MANAGER_ALG_TYPE.SHA_MANAGER);
             this.crypto_manager = sha_manager;
             this.crypto_manager.Type = 1;
 
@@ -48,31 +48,26 @@ namespace openssl_app
         private void TabControl_algorithms_SelectedIndexChanged(object sender, EventArgs e)
         {
             MANAGER_ALG_TYPE algType = (MANAGER_ALG_TYPE)this.tabControl_algorithms.SelectedIndex;
+            this.LoadTypesAndModes(algType);
             switch (algType)
             {
                 case MANAGER_ALG_TYPE.AES_MANAGER:
                     this.crypto_manager = this.aes_manager;
-                    this.LoadTypes(false);
                     break;
                 case MANAGER_ALG_TYPE.HKDF_MANAGER:
                     this.crypto_manager = this.hkdf_manager;
-                    this.LoadTypes(true);
                     break;
                 case MANAGER_ALG_TYPE.HMAC_DRBG_MANAGER:
                     this.crypto_manager = this.hmacDrbg_manager;
-                    this.LoadTypes(true);
                     break;
                 case MANAGER_ALG_TYPE.HMAC_SHA_MANAGER:
                     this.crypto_manager = this.hmac_sha_manager;
-                    this.LoadTypes(true);
                     break;
                 case MANAGER_ALG_TYPE.RSA_MANAGER:
                     this.crypto_manager = this.rsa_manager;
-                    this.LoadTypes(true);
                     break;
                 case MANAGER_ALG_TYPE.SHA_MANAGER:
                     this.crypto_manager = this.sha_manager;
-                    this.LoadTypes(true);
                     break;
             }
             this.crypto_manager.Type = this.comboBox_alg_types.SelectedIndex;
@@ -80,7 +75,7 @@ namespace openssl_app
 
         private void CheckBox_hex_input_CheckedChanged(object sender, EventArgs e)
         {
-            if(this.checkBox_hex_input.Checked)
+            if (this.checkBox_hex_input.Checked)
             {
                 this.crypto_manager.HexInput = true;
             }
@@ -90,34 +85,32 @@ namespace openssl_app
             }
         }
 
-        private void LoadTypes(bool shaModes)
+        private void LoadTypesAndModes(MANAGER_ALG_TYPE algType)
         {
-            string[] types = null;
-            string[] modes = null;
-            if (shaModes == true)
-            {
-                types = Enum.GetNames(typeof(SHA_TYPE));
-            }
-            else
-            {
-                types = Enum.GetNames(typeof(AES_TYPE));
-                modes = Enum.GetNames(typeof(AES_MODE));
-            }
-
             this.comboBox_alg_types.Items.Clear();
-            for (int i = 0; i < types.Length; i++)
+            this.comboBox_aes_mode.Items.Clear();
+            this.comboBox_rsa_mode.Items.Clear();
+            switch (algType)
             {
-                this.comboBox_alg_types.Items.Add(types[i]);
-            }
-            this.comboBox_alg_types.SelectedIndex = 1;
-            if (shaModes == false)
-            {
-                this.comboBox_aes_mode.Items.Clear();
-                for (int i = 0; i < modes.Length; i++)
-                {
-                    this.comboBox_aes_mode.Items.Add(modes[i]);
-                }
-                this.comboBox_aes_mode.SelectedIndex = 0;
+                case MANAGER_ALG_TYPE.AES_MANAGER:
+                    this.comboBox_alg_types.Items.AddRange(Enum.GetNames(typeof(AES_TYPE)));
+                    this.comboBox_alg_types.SelectedIndex = 2;
+                    this.comboBox_aes_mode.Items.AddRange(Enum.GetNames(typeof(AES_MODE)));
+                    this.comboBox_aes_mode.SelectedIndex = 0;
+                    break;
+                case MANAGER_ALG_TYPE.SHA_MANAGER:
+                case MANAGER_ALG_TYPE.HKDF_MANAGER:
+                case MANAGER_ALG_TYPE.HMAC_DRBG_MANAGER:
+                case MANAGER_ALG_TYPE.HMAC_SHA_MANAGER:
+                case MANAGER_ALG_TYPE.RSA_MANAGER:
+                    this.comboBox_alg_types.Items.AddRange(Enum.GetNames(typeof(SHA_TYPE)));
+                    this.comboBox_alg_types.SelectedIndex = 1;
+                    if (algType == MANAGER_ALG_TYPE.RSA_MANAGER)
+                    {
+                        this.comboBox_rsa_mode.Items.AddRange(Enum.GetNames(typeof(RSA_MODE)));
+                        this.comboBox_rsa_mode.SelectedIndex = 0;
+                    }
+                    break;
             }
         }
 
@@ -159,10 +152,12 @@ namespace openssl_app
         private void InitializeRsaManager()
         {
             this.rsa_manager = new RsaManager();
-            this.rsa_manager.Exponent = this.richTextBox_rsa_exp;
+            this.rsa_manager.PublicExponent = this.richTextBox_rsa_public_exp;
+            this.rsa_manager.PrivateExponent = this.richTextBox_rsa_private_exp;
             this.rsa_manager.Msg = this.richTextBox_rsa_msg;
             this.rsa_manager.Modulus = this.richTextBox_rsa_mod;
             this.rsa_manager.Signature = this.richTextBox_rsa_sig;
+            this.rsa_manager.Mode = this.comboBox_rsa_mode;
         }
 
         private void InitializeHmacShaManager()

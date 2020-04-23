@@ -2,6 +2,7 @@
 #include <hmac_sha.h>
 #include <crypto_utils.h>
 #include <crypto_result.h>
+#include <NLog.h>
 
 crypto_status_e Hkdf_Generate(sha_type_e shaType, uint8_t key[], uint32_t keyBytes, uint8_t fixedData[], uint32_t fixedDataBytes, uint32_t outputKeyBytes, crypto_buffer_t* digset)
 {
@@ -34,16 +35,19 @@ crypto_status_e Hkdf_Generate(sha_type_e shaType, uint8_t key[], uint32_t keyByt
 		crypto_status_e loopTempHashStatus = Hmac_Sha_Generate(shaType, tmpMsg, acctualTempMsgBytes, key, keyBytes, &loopTempHash);
 		if (loopTempHashStatus != CRYPTO_SUCCESS)
 		{
+			NLog_Error("loopTempHashStatus != CRYPTO_SUCCESS");
 			status = loopTempHashStatus;
 			break;
 		}
 		if (loopTempHash.bytes != shaDigsetBytes)
 		{
+			NLog_Error("loopTempHashBytes != " + std::to_string(shaDigsetBytes));
 			status = CRYPTO_BUFFER_OVERFLOW_ERROR;
 			break;
 		}
 		if ((tempAcctualHashSize + loopTempHash.bytes) > CRYPTO_BUFFER_DEFAULT_BYTES)
 		{
+			NLog_Error("> CRYPTO_BUFFER_DEFAULT_BYTES");
 			status = CRYPTO_BUFFER_OVERFLOW_ERROR;
 			break;
 		}
@@ -55,6 +59,7 @@ crypto_status_e Hkdf_Generate(sha_type_e shaType, uint8_t key[], uint32_t keyByt
 	{
 		if (tempAcctualHashSize > CRYPTO_BUFFER_DEFAULT_BYTES)
 		{
+			NLog_Error("> CRYPTO_BUFFER_DEFAULT_BYTES");
 			CryRes_SetLastResult(&result, CRYPTO_BUFFER_OVERFLOW_ERROR);
 			return CRYPTO_BUFFER_OVERFLOW_ERROR;
 		}

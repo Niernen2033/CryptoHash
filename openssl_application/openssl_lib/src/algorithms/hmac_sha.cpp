@@ -2,6 +2,7 @@
 #include <crypto_result.h>
 #include <openssl/hmac.h>
 #include <openssl/err.h>
+#include <NLog.h>
 
 crypto_status_e Hmac_Sha_Generate(sha_type_e shaType, uint8_t msg[], uint32_t msgBytes, uint8_t key[], uint32_t keyBytes, crypto_buffer_t* digset)
 {
@@ -11,6 +12,7 @@ crypto_status_e Hmac_Sha_Generate(sha_type_e shaType, uint8_t msg[], uint32_t ms
 	HMAC_CTX *ctx = HMAC_CTX_new();
 	if (ctx == NULL)
 	{
+		NLog_Error("ctx == NULL");
 		CryRes_SetLastResult(&result, CRYPTO_NULL_PTR_ERROR);
 		return CRYPTO_NULL_PTR_ERROR;
 	}
@@ -20,24 +22,28 @@ crypto_status_e Hmac_Sha_Generate(sha_type_e shaType, uint8_t msg[], uint32_t ms
 	{
 		if (evp == NULL)
 		{
+			NLog_Error("evp == NULL");
 			status = CRYPTO_NULL_PTR_ERROR;
 			break;
 		}
 
 		if (!HMAC_Init_ex(ctx, key, keyBytes, evp, NULL))
 		{
+			NLog_Error(ERR_error_string(ERR_get_error(), NULL));
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
 
 		if (!HMAC_Update(ctx, msg, msgBytes))
 		{
+			NLog_Error(ERR_error_string(ERR_get_error(), NULL));
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
 
 		if (!HMAC_Final(ctx, result.buffer, &result.bytes))
 		{
+			NLog_Error(ERR_error_string(ERR_get_error(), NULL));
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}

@@ -65,6 +65,7 @@ crypto_status_e Sha_Generate(sha_type_e shaType, uint8_t* msg, uint32_t msgBytes
 
 	if (ctx == NULL)
 	{
+		NLog_Error("ctx == NULL");
 		CryRes_SetLastResult(&result, CRYPTO_NULL_PTR_ERROR);
 		return CRYPTO_NULL_PTR_ERROR;
 	}
@@ -74,12 +75,14 @@ crypto_status_e Sha_Generate(sha_type_e shaType, uint8_t* msg, uint32_t msgBytes
 	{
 		if (evp_md == NULL)
 		{
+			NLog_Error("evp_md == NULL");
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
 
 		if (!EVP_DigestInit_ex(ctx, evp_md, NULL))
 		{
+			NLog_Error(ERR_error_string(ERR_get_error(), NULL));
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
@@ -87,6 +90,7 @@ crypto_status_e Sha_Generate(sha_type_e shaType, uint8_t* msg, uint32_t msgBytes
 
 		if (!EVP_DigestUpdate(ctx, msg, msgBytes))
 		{
+			NLog_Error(ERR_error_string(ERR_get_error(), NULL));
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
@@ -94,12 +98,14 @@ crypto_status_e Sha_Generate(sha_type_e shaType, uint8_t* msg, uint32_t msgBytes
 		unsigned int digsetBytes = 0;
 		if (!EVP_DigestFinal_ex(ctx, result.buffer, &digsetBytes))
 		{
+			NLog_Error(ERR_error_string(ERR_get_error(), NULL));
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
 
 		if (digsetBytes != Sha_GetDigsetBytes(shaType))
 		{
+			NLog_Error("digsetBytes != " + std::to_string(Sha_GetDigsetBytes(shaType)));
 			status = CRYPTO_BUFFER_MISMATCH_ERROR;
 			break;
 		}

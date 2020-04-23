@@ -35,11 +35,6 @@ namespace openssl_app.appmanager
         protected void SetResult(string result)
         {
             this.Result = result;
-        
-        
-        
-        
-        
         }
     }
 }

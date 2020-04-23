@@ -2,13 +2,12 @@
 #include <crypto_utils.h>
 #include <e_assert.h>
 #include <memory>
+#include <NLog.h>
 
 static std::unique_ptr<crypto_result_t> resultData;
-static bool resultInitStatus = false;
 
 bool CryRes_Init()
 {
-    resultInitStatus = false;
     resultData = std::make_unique<crypto_result_t>();
 	if (resultData == nullptr)
 	{
@@ -16,30 +15,20 @@ bool CryRes_Init()
 		return false;
 	}
 	memsetAssert(resultData.get(), sizeof(crypto_result_t), 0, sizeof(crypto_result_t));
-	resultInitStatus = true;
 	return true;
 }
 
 bool CryRes_Cleanup()
 {
-	if (resultInitStatus)
-	{
-		resultData.reset(nullptr);
-		resultInitStatus = false;
-	}
+	resultData.reset(nullptr);
 	return true;
 }
 
 void CryRes_SetLastResult(crypto_buffer_t* cBuffer, crypto_status_e status)
 {
-	if (!resultInitStatus)
-	{
-		ASSERT_M(false, "resultInitStatus = false");
-		return;
-	}
-
 	if (cBuffer == nullptr)
 	{
+		NLog_Error("cBuffer == nullptr");
 		return;
 	}
 
@@ -49,11 +38,5 @@ void CryRes_SetLastResult(crypto_buffer_t* cBuffer, crypto_status_e status)
 
 crypto_result_t* CryRes_GetLastResult()
 {
-	if (!resultInitStatus)
-	{
-		ASSERT_M(false, "resultInitStatus = false");
-		return nullptr;
-	}
-
 	return resultData.get();
 }

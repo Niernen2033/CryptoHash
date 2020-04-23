@@ -13,9 +13,11 @@ namespace openssl_app.appmanager
     {
         private RsaProvider rsaProvider;
         public RichTextBox Msg { get; set; }
-        public RichTextBox Exponent { get; set; }
+        public RichTextBox PublicExponent { get; set; }
+        public RichTextBox PrivateExponent { get; set; }
         public RichTextBox Modulus { get; set; }
         public RichTextBox Signature { get; set; }
+        public ComboBox Mode { get; set; }
 
         public RsaManager() : base()
         {
@@ -27,26 +29,41 @@ namespace openssl_app.appmanager
             if (this.HexInput)
             {
                 this.rsaProvider.Msg = DataConverter.BytesFromHexString(this.Msg.Text).ToList();
-                this.rsaProvider.Exponent = DataConverter.BytesFromHexString(this.Exponent.Text).ToList();
+                this.rsaProvider.PublicExponent = DataConverter.BytesFromHexString(this.PublicExponent.Text).ToList();
+                this.rsaProvider.PrivateExponent = DataConverter.BytesFromHexString(this.PrivateExponent.Text).ToList();
                 this.rsaProvider.Modulus = DataConverter.BytesFromHexString(this.Modulus.Text).ToList();
                 this.rsaProvider.Signature = DataConverter.BytesFromHexString(this.Signature.Text).ToList();
             }
             else
             {
                 this.rsaProvider.Msg = DataConverter.BytesFromString(this.Msg.Text).ToList();
-                this.rsaProvider.Exponent = DataConverter.BytesFromString(this.Exponent.Text).ToList();
+                this.rsaProvider.PublicExponent = DataConverter.BytesFromString(this.PublicExponent.Text).ToList();
+                this.rsaProvider.PrivateExponent = DataConverter.BytesFromString(this.PrivateExponent.Text).ToList();
                 this.rsaProvider.Modulus = DataConverter.BytesFromString(this.Modulus.Text).ToList();
                 this.rsaProvider.Signature = DataConverter.BytesFromString(this.Signature.Text).ToList();
             }
             this.rsaProvider.Type = (SHA_TYPE)this.Type;
-            CRYPTO_STATUS status = this.rsaProvider.Verify();
-            if (status == CRYPTO_STATUS.CRYPTO_SUCCESS)
+            RSA_MODE rsaMode = (RSA_MODE)this.Mode.SelectedIndex;
+            CRYPTO_STATUS status = CRYPTO_STATUS.CRYPTO_ERROR;
+            if (rsaMode == RSA_MODE.RSA_VERIFY)
             {
-                this.SetResult("TRUE");
+                status = this.rsaProvider.Verify();
+                if (status == CRYPTO_STATUS.CRYPTO_SUCCESS)
+                {
+                    this.SetResult("TRUE");
+                }
+                else
+                {
+                    this.SetResult("FALSE");
+                }
             }
             else
             {
-                this.SetResult("FALSE");
+                status = this.rsaProvider.Sign();
+                if (status == CRYPTO_STATUS.CRYPTO_SUCCESS)
+                {
+                    this.SetResult(DataConverter.HexStringFromBytes(this.rsaProvider.Signature.ToArray()));
+                }
             }
             return status;
         }

@@ -46,6 +46,12 @@ namespace openssl_app.dllmanager
 		AES_KEY_UNWRAP
 	}
 
+	public enum RSA_MODE
+	{
+		RSA_VERIFY,
+		RSA_SIGN
+	}
+
 	public enum AES_TYPE
 	{
 		//ECB

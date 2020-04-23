@@ -2,6 +2,7 @@
 #include <crypto_result.h>
 #include <openssl/err.h>
 #include <crypto_utils.h>
+#include <NLog.h>
 
 static const uint8_t AES_Key_Wrap_Default_IV[AES_KEY_WRAP_IV_BYTES] = { 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6 };
 
@@ -89,6 +90,7 @@ static crypto_status_e Aes_Normal_Generate(aes_type_e aesType, bool encrypt, uin
 	EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
 	if (ctx == NULL)
 	{
+		NLog_Error("ctx == NULL");
 		CryRes_SetLastResult(&result, CRYPTO_NULL_PTR_ERROR);
 		return CRYPTO_NULL_PTR_ERROR;
 	}
@@ -98,36 +100,42 @@ static crypto_status_e Aes_Normal_Generate(aes_type_e aesType, bool encrypt, uin
 		const EVP_CIPHER* evp = Aes_GetEvpCipher(aesType);
 		if (evp == NULL)
 		{
+			NLog_Error("evp == NULL");
 			status = CRYPTO_NOT_SUPPORTED;
 			break;
 		}
 
 		if (!EVP_CipherInit_ex(ctx, evp, NULL, NULL, NULL, encrypt))
 		{
+			NLog_Error(ERR_error_string(ERR_get_error(), NULL));
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
 
 		if (!EVP_CipherInit_ex(ctx, NULL, NULL, key, iv, encrypt))
 		{
+			NLog_Error(ERR_error_string(ERR_get_error(), NULL));
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
 
 		if (EVP_CIPHER_CTX_key_length(ctx) > EVP_MAX_KEY_LENGTH)
 		{
+			NLog_Error(ERR_error_string(ERR_get_error(), NULL));
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
 
 		if (EVP_CIPHER_CTX_iv_length(ctx) > EVP_MAX_IV_LENGTH)
 		{
+			NLog_Error(ERR_error_string(ERR_get_error(), NULL));
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
 
 		if (!EVP_CIPHER_CTX_set_padding(ctx, 0))
 		{
+			NLog_Error(ERR_error_string(ERR_get_error(), NULL));
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
@@ -135,6 +143,7 @@ static crypto_status_e Aes_Normal_Generate(aes_type_e aesType, bool encrypt, uin
 		int tmpHashBytes = 0;
 		if (!EVP_CipherUpdate(ctx, result.buffer, &tmpHashBytes, msg, msgBytes))
 		{
+			NLog_Error(ERR_error_string(ERR_get_error(), NULL));
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
@@ -146,6 +155,7 @@ static crypto_status_e Aes_Normal_Generate(aes_type_e aesType, bool encrypt, uin
 		int tempFinalBytes = 0;
 		if (!EVP_CipherFinal_ex(ctx, result.buffer, &tempFinalBytes))
 		{
+			NLog_Error(ERR_error_string(ERR_get_error(), NULL));
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
@@ -201,6 +211,7 @@ static crypto_status_e Aes_Kw_Ku_Generate(bool wrap, aes_type_e aesType, uint8_t
 
 	if (aesType != AES_ECB_256)
 	{
+		NLog_Error("aesType != AES_ECB_256");
 		CryRes_SetLastResult(&result, CRYPTO_NOT_SUPPORTED);
 		return CRYPTO_NOT_SUPPORTED;
 	}
@@ -210,6 +221,7 @@ static crypto_status_e Aes_Kw_Ku_Generate(bool wrap, aes_type_e aesType, uint8_t
 	{
 		if (ivBytes != AES_KEY_WRAP_IV_BYTES)
 		{
+			NLog_Error("ivBytes != " + std::to_string(AES_KEY_WRAP_IV_BYTES));
 			CryRes_SetLastResult(&result, CRYPTO_ALG_ERROR);
 			return CRYPTO_ALG_ERROR;
 		}
@@ -222,6 +234,7 @@ static crypto_status_e Aes_Kw_Ku_Generate(bool wrap, aes_type_e aesType, uint8_t
 	{
 		if (sizeof(AES_Key_Wrap_Default_IV) != AES_KEY_WRAP_IV_BYTES)
 		{
+			NLog_Error("ivBytes != " + std::to_string(AES_KEY_WRAP_IV_BYTES));
 			CryRes_SetLastResult(&result, CRYPTO_ALG_ERROR);
 			return CRYPTO_ALG_ERROR;
 		}
@@ -245,6 +258,7 @@ static crypto_status_e Aes_Kw_Ku_Generate(bool wrap, aes_type_e aesType, uint8_t
 	{
 		if ((msgBytes + AES_KEY_WRAP_IV_BYTES) > CRYPTO_BUFFER_DEFAULT_BYTES)
 		{
+			NLog_Error("> CRYPTO_BUFFER_DEFAULT_BYTES");
 			CryRes_SetLastResult(&result, CRYPTO_BUFFER_OVERFLOW_ERROR);
 			return CRYPTO_BUFFER_OVERFLOW_ERROR;
 		}
@@ -264,6 +278,7 @@ static crypto_status_e Aes_Kw_Ku_Generate(bool wrap, aes_type_e aesType, uint8_t
 
 				if (tempHashStatus != CRYPTO_SUCCESS)
 				{
+					NLog_Error("tempHashStatus != CRYPTO_SUCCESS");
 					status = tempHashStatus;
 					break;
 				}
@@ -271,6 +286,7 @@ static crypto_status_e Aes_Kw_Ku_Generate(bool wrap, aes_type_e aesType, uint8_t
 				{
 					if (tempHash.bytes > AES_KEY_WRAP_ENCRYPTION_BUFFER_BYTES)
 					{
+						NLog_Error("tempHashBytes != AES_KEY_WRAP_ENCRYPTION_BUFFER_BYTES");
 						status = CRYPTO_BUFFER_OVERFLOW_ERROR;
 						break;
 					}
@@ -298,6 +314,7 @@ static crypto_status_e Aes_Kw_Ku_Generate(bool wrap, aes_type_e aesType, uint8_t
 	{
 		if ((msgBytes - AES_KEY_WRAP_IV_BYTES) > CRYPTO_BUFFER_DEFAULT_BYTES)
 		{
+			NLog_Error("> CRYPTO_BUFFER_DEFAULT_BYTES");
 			CryRes_SetLastResult(&result, CRYPTO_BUFFER_OVERFLOW_ERROR);
 			return CRYPTO_BUFFER_OVERFLOW_ERROR;
 		}
@@ -321,6 +338,7 @@ static crypto_status_e Aes_Kw_Ku_Generate(bool wrap, aes_type_e aesType, uint8_t
 
 				if (tempHashStatus != CRYPTO_SUCCESS)
 				{
+					NLog_Error("tempHashStatus != CRYPTO_SUCCESS");
 					status = tempHashStatus;
 					break;
 				}
@@ -328,6 +346,7 @@ static crypto_status_e Aes_Kw_Ku_Generate(bool wrap, aes_type_e aesType, uint8_t
 				{
 					if (tempHash.bytes > AES_KEY_WRAP_ENCRYPTION_BUFFER_BYTES)
 					{
+						NLog_Error("tempHashBytes != AES_KEY_WRAP_ENCRYPTION_BUFFER_BYTES");
 						status = CRYPTO_BUFFER_OVERFLOW_ERROR;
 						break;
 					}
@@ -346,6 +365,7 @@ static crypto_status_e Aes_Kw_Ku_Generate(bool wrap, aes_type_e aesType, uint8_t
 			result.bytes = msgBytes - AES_KEY_WRAP_IV_BYTES;
 			if (memcpyAssert((void*)initialization_vector, AES_KEY_WRAP_IV_BYTES, tmpEncryptBuffer1, AES_KEY_WRAP_IV_BYTES != 0))
 			{
+				NLog_Debug("CRYPTO_INTEGRITY_ERROR");
 				CryRes_SetLastResult(&result, CRYPTO_INTEGRITY_ERROR);
 				return CRYPTO_INTEGRITY_ERROR;
 			}

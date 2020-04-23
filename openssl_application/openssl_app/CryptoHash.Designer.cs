@@ -34,23 +34,48 @@
             this.label2 = new System.Windows.Forms.Label();
             this.richTextBox_sha_msg = new System.Windows.Forms.RichTextBox();
             this.tabPage_hkdf = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.richTextBox_hkdf_key = new System.Windows.Forms.RichTextBox();
             this.richTextBox_hkdf_fixedData = new System.Windows.Forms.RichTextBox();
             this.numericUpDown_hkdf_outputKeyBytes = new System.Windows.Forms.NumericUpDown();
             this.tabPage_hmac_sha = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.richTextBox_hmac_sha_key = new System.Windows.Forms.RichTextBox();
             this.richTextBox_hmac_sha_msg = new System.Windows.Forms.RichTextBox();
             this.tabPage_rsa = new System.Windows.Forms.TabPage();
+            this.label25 = new System.Windows.Forms.Label();
+            this.comboBox_rsa_mode = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.richTextBox_rsa_sig = new System.Windows.Forms.RichTextBox();
             this.richTextBox_rsa_mod = new System.Windows.Forms.RichTextBox();
-            this.richTextBox_rsa_exp = new System.Windows.Forms.RichTextBox();
+            this.richTextBox_rsa_public_exp = new System.Windows.Forms.RichTextBox();
             this.richTextBox_rsa_msg = new System.Windows.Forms.RichTextBox();
             this.tabPage_aes = new System.Windows.Forms.TabPage();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.comboBox_aes_mode = new System.Windows.Forms.ComboBox();
             this.richTextBox_aes_iv = new System.Windows.Forms.RichTextBox();
             this.richTextBox_aes_key = new System.Windows.Forms.RichTextBox();
             this.richTextBox_aes_msg = new System.Windows.Forms.RichTextBox();
             this.tabPage_hmac_drbg = new System.Windows.Forms.TabPage();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.richTextBox_hmac_drbg_entInpPR2 = new System.Windows.Forms.RichTextBox();
             this.richTextBox_hmac_drbg_entInpPR1 = new System.Windows.Forms.RichTextBox();
             this.richTextBox_hmac_drbg_addInp2 = new System.Windows.Forms.RichTextBox();
@@ -65,29 +90,8 @@
             this.checkBox_hex_input = new System.Windows.Forms.CheckBox();
             this.comboBox_alg_types = new System.Windows.Forms.ComboBox();
             this.richTextBox_alg_result = new System.Windows.Forms.RichTextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
+            this.richTextBox_rsa_private_exp = new System.Windows.Forms.RichTextBox();
+            this.label26 = new System.Windows.Forms.Label();
             this.tabControl_algorithms.SuspendLayout();
             this.tabPage_sha.SuspendLayout();
             this.tabPage_hkdf.SuspendLayout();
@@ -175,6 +179,40 @@
             this.tabPage_hkdf.Text = "Hkdf";
             this.tabPage_hkdf.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label4.Location = new System.Drawing.Point(24, 204);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(34, 15);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Key:";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label3.Location = new System.Drawing.Point(6, 90);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(76, 15);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "FixedData:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.Location = new System.Drawing.Point(6, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(110, 15);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "OutputKeyBytes:";
+            // 
             // richTextBox_hkdf_key
             // 
             this.richTextBox_hkdf_key.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -231,6 +269,30 @@
             this.tabPage_hmac_sha.Text = "Hmac_Sha";
             this.tabPage_hmac_sha.UseVisualStyleBackColor = true;
             // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label6.Location = new System.Drawing.Point(11, 198);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(34, 15);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Key:";
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label5.Location = new System.Drawing.Point(7, 63);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(38, 15);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Msg:";
+            // 
             // richTextBox_hmac_sha_key
             // 
             this.richTextBox_hmac_sha_key.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -253,13 +315,17 @@
             // 
             // tabPage_rsa
             // 
+            this.tabPage_rsa.Controls.Add(this.label26);
+            this.tabPage_rsa.Controls.Add(this.richTextBox_rsa_private_exp);
+            this.tabPage_rsa.Controls.Add(this.label25);
+            this.tabPage_rsa.Controls.Add(this.comboBox_rsa_mode);
             this.tabPage_rsa.Controls.Add(this.label10);
             this.tabPage_rsa.Controls.Add(this.label9);
             this.tabPage_rsa.Controls.Add(this.label8);
             this.tabPage_rsa.Controls.Add(this.label7);
             this.tabPage_rsa.Controls.Add(this.richTextBox_rsa_sig);
             this.tabPage_rsa.Controls.Add(this.richTextBox_rsa_mod);
-            this.tabPage_rsa.Controls.Add(this.richTextBox_rsa_exp);
+            this.tabPage_rsa.Controls.Add(this.richTextBox_rsa_public_exp);
             this.tabPage_rsa.Controls.Add(this.richTextBox_rsa_msg);
             this.tabPage_rsa.Location = new System.Drawing.Point(4, 22);
             this.tabPage_rsa.Name = "tabPage_rsa";
@@ -268,32 +334,101 @@
             this.tabPage_rsa.Text = "Rsa";
             this.tabPage_rsa.UseVisualStyleBackColor = true;
             // 
+            // label25
+            // 
+            this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label25.Location = new System.Drawing.Point(729, 221);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(47, 15);
+            this.label25.TabIndex = 10;
+            this.label25.Text = "Mode:";
+            // 
+            // comboBox_rsa_mode
+            // 
+            this.comboBox_rsa_mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_rsa_mode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_rsa_mode.FormattingEnabled = true;
+            this.comboBox_rsa_mode.Location = new System.Drawing.Point(729, 248);
+            this.comboBox_rsa_mode.Name = "comboBox_rsa_mode";
+            this.comboBox_rsa_mode.Size = new System.Drawing.Size(144, 21);
+            this.comboBox_rsa_mode.TabIndex = 9;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label10.Location = new System.Drawing.Point(3, 232);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(73, 15);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "Signature:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label9.Location = new System.Drawing.Point(3, 166);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(66, 15);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "Modulus:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label8.Location = new System.Drawing.Point(3, 80);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(63, 15);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "Exp pub:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label7.Location = new System.Drawing.Point(13, 28);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(38, 15);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "Msg:";
+            // 
             // richTextBox_rsa_sig
             // 
+            this.richTextBox_rsa_sig.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox_rsa_sig.Location = new System.Drawing.Point(77, 206);
             this.richTextBox_rsa_sig.Name = "richTextBox_rsa_sig";
-            this.richTextBox_rsa_sig.Size = new System.Drawing.Size(796, 63);
+            this.richTextBox_rsa_sig.Size = new System.Drawing.Size(646, 63);
             this.richTextBox_rsa_sig.TabIndex = 3;
             this.richTextBox_rsa_sig.Text = "";
             // 
             // richTextBox_rsa_mod
             // 
+            this.richTextBox_rsa_mod.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox_rsa_mod.Location = new System.Drawing.Point(77, 142);
             this.richTextBox_rsa_mod.Name = "richTextBox_rsa_mod";
             this.richTextBox_rsa_mod.Size = new System.Drawing.Size(796, 58);
             this.richTextBox_rsa_mod.TabIndex = 2;
             this.richTextBox_rsa_mod.Text = "";
             // 
-            // richTextBox_rsa_exp
+            // richTextBox_rsa_public_exp
             // 
-            this.richTextBox_rsa_exp.Location = new System.Drawing.Point(77, 75);
-            this.richTextBox_rsa_exp.Name = "richTextBox_rsa_exp";
-            this.richTextBox_rsa_exp.Size = new System.Drawing.Size(796, 60);
-            this.richTextBox_rsa_exp.TabIndex = 1;
-            this.richTextBox_rsa_exp.Text = "";
+            this.richTextBox_rsa_public_exp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox_rsa_public_exp.Location = new System.Drawing.Point(77, 75);
+            this.richTextBox_rsa_public_exp.Name = "richTextBox_rsa_public_exp";
+            this.richTextBox_rsa_public_exp.Size = new System.Drawing.Size(796, 28);
+            this.richTextBox_rsa_public_exp.TabIndex = 1;
+            this.richTextBox_rsa_public_exp.Text = "";
             // 
             // richTextBox_rsa_msg
             // 
+            this.richTextBox_rsa_msg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox_rsa_msg.Location = new System.Drawing.Point(77, 3);
             this.richTextBox_rsa_msg.Name = "richTextBox_rsa_msg";
             this.richTextBox_rsa_msg.Size = new System.Drawing.Size(796, 63);
@@ -316,6 +451,52 @@
             this.tabPage_aes.TabIndex = 4;
             this.tabPage_aes.Text = "Aes";
             this.tabPage_aes.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label14.Location = new System.Drawing.Point(15, 12);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(47, 15);
+            this.label14.TabIndex = 12;
+            this.label14.Text = "Mode:";
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label13.Location = new System.Drawing.Point(18, 234);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(21, 15);
+            this.label13.TabIndex = 11;
+            this.label13.Text = "Iv:";
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label12.Location = new System.Drawing.Point(18, 160);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(34, 15);
+            this.label12.TabIndex = 10;
+            this.label12.Text = "Key:";
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label11.Location = new System.Drawing.Point(18, 77);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(38, 15);
+            this.label11.TabIndex = 9;
+            this.label11.Text = "Msg:";
             // 
             // comboBox_aes_mode
             // 
@@ -385,6 +566,116 @@
             this.tabPage_hmac_drbg.TabIndex = 5;
             this.tabPage_hmac_drbg.Text = "Hmac_Drbg";
             this.tabPage_hmac_drbg.UseVisualStyleBackColor = true;
+            // 
+            // label24
+            // 
+            this.label24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label24.Location = new System.Drawing.Point(712, 9);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(104, 15);
+            this.label24.TabIndex = 20;
+            this.label24.Text = "ReturnedBytes:";
+            // 
+            // label23
+            // 
+            this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label23.Location = new System.Drawing.Point(432, 218);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(79, 15);
+            this.label23.TabIndex = 19;
+            this.label23.Text = "EntInpPR2:";
+            // 
+            // label22
+            // 
+            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label22.Location = new System.Drawing.Point(440, 182);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(63, 15);
+            this.label22.TabIndex = 18;
+            this.label22.Text = "AddInp2:";
+            // 
+            // label21
+            // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label21.Location = new System.Drawing.Point(431, 142);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(80, 15);
+            this.label21.TabIndex = 17;
+            this.label21.Text = "AddInpRes:";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label20.Location = new System.Drawing.Point(3, 218);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(79, 15);
+            this.label20.TabIndex = 16;
+            this.label20.Text = "EntInpPR1:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label19.Location = new System.Drawing.Point(14, 182);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(63, 15);
+            this.label19.TabIndex = 15;
+            this.label19.Text = "AddInp1:";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label18.Location = new System.Drawing.Point(3, 142);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(77, 15);
+            this.label18.TabIndex = 14;
+            this.label18.Text = "EntInpRes:";
+            // 
+            // label17
+            // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label17.Location = new System.Drawing.Point(14, 102);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(52, 15);
+            this.label17.TabIndex = 13;
+            this.label17.Text = "Nonce:";
+            // 
+            // label16
+            // 
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label16.Location = new System.Drawing.Point(17, 64);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(52, 15);
+            this.label16.TabIndex = 12;
+            this.label16.Text = "EntInp:";
+            // 
+            // label15
+            // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label15.Location = new System.Drawing.Point(18, 22);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(51, 15);
+            this.label15.TabIndex = 11;
+            this.label15.Text = "PerStr:";
             // 
             // richTextBox_hmac_drbg_entInpPR2
             // 
@@ -527,259 +818,25 @@
             this.richTextBox_alg_result.TabIndex = 5;
             this.richTextBox_alg_result.Text = "";
             // 
-            // label1
+            // richTextBox_rsa_private_exp
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(6, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(110, 15);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "OutputKeyBytes:";
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.richTextBox_rsa_private_exp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label3.Location = new System.Drawing.Point(6, 90);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 15);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "FixedData:";
+            this.richTextBox_rsa_private_exp.Location = new System.Drawing.Point(77, 108);
+            this.richTextBox_rsa_private_exp.Name = "richTextBox_rsa_private_exp";
+            this.richTextBox_rsa_private_exp.Size = new System.Drawing.Size(796, 28);
+            this.richTextBox_rsa_private_exp.TabIndex = 11;
+            this.richTextBox_rsa_private_exp.Text = "";
             // 
-            // label4
+            // label26
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label4.Location = new System.Drawing.Point(24, 204);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(34, 15);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Key:";
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label5.Location = new System.Drawing.Point(7, 63);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(38, 15);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "Msg:";
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label6.Location = new System.Drawing.Point(11, 198);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(34, 15);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "Key:";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label7.Location = new System.Drawing.Point(13, 28);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(38, 15);
-            this.label7.TabIndex = 4;
-            this.label7.Text = "Msg:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label8.Location = new System.Drawing.Point(3, 100);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(71, 15);
-            this.label8.TabIndex = 5;
-            this.label8.Text = "Exponent:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label9.Location = new System.Drawing.Point(3, 166);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(66, 15);
-            this.label9.TabIndex = 6;
-            this.label9.Text = "Modulus:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label10.Location = new System.Drawing.Point(3, 232);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(73, 15);
-            this.label10.TabIndex = 7;
-            this.label10.Text = "Signature:";
-            // 
-            // label11
-            // 
-            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label11.Location = new System.Drawing.Point(18, 77);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(38, 15);
-            this.label11.TabIndex = 9;
-            this.label11.Text = "Msg:";
-            // 
-            // label12
-            // 
-            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label12.Location = new System.Drawing.Point(18, 160);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(34, 15);
-            this.label12.TabIndex = 10;
-            this.label12.Text = "Key:";
-            // 
-            // label13
-            // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label13.Location = new System.Drawing.Point(18, 234);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(21, 15);
-            this.label13.TabIndex = 11;
-            this.label13.Text = "Iv:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label14.Location = new System.Drawing.Point(15, 12);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(47, 15);
-            this.label14.TabIndex = 12;
-            this.label14.Text = "Mode:";
-            // 
-            // label15
-            // 
-            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label15.Location = new System.Drawing.Point(18, 22);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(51, 15);
-            this.label15.TabIndex = 11;
-            this.label15.Text = "PerStr:";
-            // 
-            // label16
-            // 
-            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label16.Location = new System.Drawing.Point(17, 64);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(52, 15);
-            this.label16.TabIndex = 12;
-            this.label16.Text = "EntInp:";
-            // 
-            // label17
-            // 
-            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label17.Location = new System.Drawing.Point(14, 102);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(52, 15);
-            this.label17.TabIndex = 13;
-            this.label17.Text = "Nonce:";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label18.Location = new System.Drawing.Point(3, 142);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(77, 15);
-            this.label18.TabIndex = 14;
-            this.label18.Text = "EntInpRes:";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label19.Location = new System.Drawing.Point(14, 182);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(63, 15);
-            this.label19.TabIndex = 15;
-            this.label19.Text = "AddInp1:";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label20.Location = new System.Drawing.Point(3, 218);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(79, 15);
-            this.label20.TabIndex = 16;
-            this.label20.Text = "EntInpPR1:";
-            // 
-            // label21
-            // 
-            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label21.Location = new System.Drawing.Point(431, 142);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(80, 15);
-            this.label21.TabIndex = 17;
-            this.label21.Text = "AddInpRes:";
-            // 
-            // label22
-            // 
-            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label22.Location = new System.Drawing.Point(440, 182);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(63, 15);
-            this.label22.TabIndex = 18;
-            this.label22.Text = "AddInp2:";
-            // 
-            // label23
-            // 
-            this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label23.Location = new System.Drawing.Point(432, 218);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(79, 15);
-            this.label23.TabIndex = 19;
-            this.label23.Text = "EntInpPR2:";
-            // 
-            // label24
-            // 
-            this.label24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label24.Location = new System.Drawing.Point(712, 9);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(104, 15);
-            this.label24.TabIndex = 20;
-            this.label24.Text = "ReturnedBytes:";
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label26.Location = new System.Drawing.Point(3, 115);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(62, 15);
+            this.label26.TabIndex = 12;
+            this.label26.Text = "Exp priv:";
             // 
             // CryptoHash
             // 
@@ -835,7 +892,7 @@
         private System.Windows.Forms.RichTextBox richTextBox_hmac_sha_msg;
         private System.Windows.Forms.RichTextBox richTextBox_rsa_sig;
         private System.Windows.Forms.RichTextBox richTextBox_rsa_mod;
-        private System.Windows.Forms.RichTextBox richTextBox_rsa_exp;
+        private System.Windows.Forms.RichTextBox richTextBox_rsa_public_exp;
         private System.Windows.Forms.RichTextBox richTextBox_rsa_msg;
         private System.Windows.Forms.RichTextBox richTextBox_aes_iv;
         private System.Windows.Forms.RichTextBox richTextBox_aes_key;
@@ -875,6 +932,10 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox comboBox_rsa_mode;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.RichTextBox richTextBox_rsa_private_exp;
+        private System.Windows.Forms.Label label26;
     }
 }
 

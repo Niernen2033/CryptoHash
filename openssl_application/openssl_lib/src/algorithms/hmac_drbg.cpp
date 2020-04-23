@@ -35,7 +35,6 @@ typedef struct internal_hmac_drbg_state_t
 } internal_hmac_drbg_state_t;
 
 static std::unique_ptr<internal_hmac_drbg_state_t> internalHmacDrbgData;
-static bool hmacDrbgInitStatus = false;
 
 static crypto_status_e Hmac_Drbg_GenerateHashFromMessage(sha_type_e shaType, uint8_t* key, uint32_t keyBytes,
 	uint8_t* message, uint32_t messageBytes,
@@ -52,7 +51,6 @@ static crypto_status_e Hmac_Drbg_Internal_Generate(uint32_t bytesRequested,
 
 bool Hmac_Drbg_Init()
 {
-	hmacDrbgInitStatus = false;
 	internalHmacDrbgData = std::make_unique<internal_hmac_drbg_state_t>();
 	if (internalHmacDrbgData == nullptr)
 	{
@@ -60,16 +58,11 @@ bool Hmac_Drbg_Init()
 		return false;
 	}
 	memsetAssert(internalHmacDrbgData.get(), sizeof(internal_hmac_drbg_state_t), 0x00, sizeof(internal_hmac_drbg_state_t));
-	hmacDrbgInitStatus = true;
 }
 
 bool Hmac_Drbg_Cleanup()
 {
-	if (hmacDrbgInitStatus)
-	{
-		internalHmacDrbgData.reset(nullptr);
-		hmacDrbgInitStatus = false;
-	}
+	internalHmacDrbgData.reset(nullptr);
 	return true;
 }
 
@@ -138,29 +131,34 @@ crypto_status_e Hmac_Drbg_Reseed(bool requestPredictionResistance,
 
 	if (internalHmacDrbgData->currentStatus == HMAC_DRBG_UNINSTANTIATE)
 	{
+		NLog_Debug("currentStatus == HMAC_DRBG_UNINSTANTIATE");
 		return CRYPTO_ABORT_ERROR;
 	}
 
 	if (additionalInputBytes != 0 && additionalInput == NULL)
 	{
+		NLog_Error("additionalInputBytes != 0 && additionalInput == NULL");
 		internalHmacDrbgData->health = CRYPTO_NULL_PTR_ERROR;
 		return CRYPTO_NULL_PTR_ERROR;
 	}
 
 	if (entropyBytes > ENTROPY_INPUT_MAX_SIZE_BYTES)
 	{
+		NLog_Error("entropyBytes > ENTROPY_INPUT_MAX_SIZE_BYTES");
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
 
 	if (additionalInputBytes > ADDITIONAL_INPUT_MAX_SIZE_BYTES)
 	{
+		NLog_Error("additionalInputBytes > ADDITIONAL_INPUT_MAX_SIZE_BYTES");
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
 
 	if ((entropyBytes * BITS_PER_BYTE) < SECURITY_STRENGTH_BITS)
 	{
+		NLog_Error("entropyBytes * 8 > SECURITY_STRENGTH_BITS");
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
@@ -187,23 +185,27 @@ crypto_status_e Hmac_Drbg_Generate(uint32_t bytesRequested,
 
 	if (internalHmacDrbgData->currentStatus == HMAC_DRBG_UNINSTANTIATE)
 	{
+		NLog_Debug("currentStatus == HMAC_DRBG_UNINSTANTIATE");
 		return CRYPTO_ABORT_ERROR;
 	}
 
 	if (additionalInputBytes != 0 && additionalInput == NULL)
 	{
+		NLog_Error("additionalInputBytes != 0 && additionalInput == NULL");
 		internalHmacDrbgData->health = CRYPTO_NULL_PTR_ERROR;
 		return CRYPTO_NULL_PTR_ERROR;
 	}
 
 	if (additionalInputBytes > ADDITIONAL_INPUT_MAX_SIZE_BYTES)
 	{
+		NLog_Error("additionalInputBytes > ADDITIONAL_INPUT_MAX_SIZE_BYTES");
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
 
 	if (bytesRequested > BITS_TO_BYTES(MAXIMUM_NUMBER_OF_BITS_PER_REQEUST))
 	{
+		NLog_Error("bytesRequested > BITS_TO_BYTES(MAXIMUM_NUMBER_OF_BITS_PER_REQEUST)");
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
@@ -212,12 +214,14 @@ crypto_status_e Hmac_Drbg_Generate(uint32_t bytesRequested,
 	{
 		if (entropyBytes != 0 && entropy == NULL)
 		{
+			NLog_Error("entropyBytes != 0 && entropy == NULL");
 			internalHmacDrbgData->health = CRYPTO_NULL_PTR_ERROR;
 			return CRYPTO_NULL_PTR_ERROR;
 		}
 
 		if (entropyBytes > ENTROPY_INPUT_MAX_SIZE_BYTES)
 		{
+			NLog_Error("entropyBytes > ENTROPY_INPUT_MAX_SIZE_BYTES");
 			internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 			return CRYPTO_BUFFER_MISMATCH_ERROR;
 		}
@@ -262,6 +266,7 @@ static crypto_status_e Hmac_Drbg_Internal_Generate(uint32_t bytesRequested,
 
 	if (internalHmacDrbgData->reseedCounter > RESEED_INTERVAL)
 	{
+		NLog_Error("reseedCounter > RESEED_INTERVAL");
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
@@ -294,6 +299,7 @@ static crypto_status_e Hmac_Drbg_Internal_Generate(uint32_t bytesRequested,
 		{
 			if ((bytesGenerated + internalHmacDrbgData->tmpV.bytes) > CRYPTO_BUFFER_DEFAULT_BYTES)
 			{
+				NLog_Error("> CRYPTO_BUFFER_DEFAULT_BYTES");
 				internalHmacDrbgData->health = CRYPTO_BUFFER_OVERFLOW_ERROR;
 				return CRYPTO_BUFFER_OVERFLOW_ERROR;
 			}
@@ -304,6 +310,7 @@ static crypto_status_e Hmac_Drbg_Internal_Generate(uint32_t bytesRequested,
 			uint32_t bytesRemaining = bytesRequested - bytesGenerated;
 			if ((bytesGenerated + bytesRemaining) > CRYPTO_BUFFER_DEFAULT_BYTES)
 			{
+				NLog_Error("> CRYPTO_BUFFER_DEFAULT_BYTES");
 				internalHmacDrbgData->health = CRYPTO_BUFFER_OVERFLOW_ERROR;
 				return CRYPTO_BUFFER_OVERFLOW_ERROR;
 			}
@@ -333,18 +340,21 @@ static crypto_status_e Hmac_Drbg_Internal_Reseed(uint8_t* entropy, uint32_t entr
 {
 	if (entropyBytes > ENTROPY_INPUT_MAX_SIZE_BYTES)
 	{
+		NLog_Error("entropyBytes > ENTROPY_INPUT_MAX_SIZE_BYTES");
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
 
 	if (additionalInputBytes > ADDITIONAL_INPUT_MAX_SIZE_BYTES)
 	{
+		NLog_Error("additionalInputBytes > ADDITIONAL_INPUT_MAX_SIZE_BYTES");
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
 
 	if (entropyBytes + additionalInputBytes > HMAC_DRBG_SEED_MATERIAL_BYTES)
 	{
+		NLog_Error("entropyBytes + additionalInputBytes > HMAC_DRBG_SEED_MATERIAL_BYTES");
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
@@ -375,18 +385,21 @@ static crypto_status_e Hmac_Drbg_Internal_Instantiate(uint8_t* entropy, uint32_t
 	memsetAssert(seedMaterial, sizeof(seedMaterial), 0x00, HMAC_DRBG_SEED_MATERIAL_BYTES);
 	if (entropyBytes > ENTROPY_INPUT_MAX_SIZE_BYTES)
 	{
+		NLog_Error("entropyBytes > ENTROPY_INPUT_MAX_SIZE_BYTES");
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
 
 	if (personalizationStringBytes > PERSONALIZATION_STRING_MAX_SIZE_BYTES)
 	{
+		NLog_Error("personalizationStringBytes > PERSONALIZATION_STRING_MAX_SIZE_BYTES");
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
 
 	if (nonceBytes > NONCE_MAX_SIZE_BYTES)
 	{
+		NLog_Error("nonceBytes > NONCE_MAX_SIZE_BYTES");
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
@@ -394,6 +407,7 @@ static crypto_status_e Hmac_Drbg_Internal_Instantiate(uint8_t* entropy, uint32_t
 	uint32_t totalBytes = entropyBytes + nonceBytes + personalizationStringBytes;
 	if (totalBytes > HMAC_DRBG_SEED_MATERIAL_BYTES)
 	{
+		NLog_Error("totalBytes > HMAC_DRBG_SEED_MATERIAL_BYTES");
 		internalHmacDrbgData->health = CRYPTO_BUFFER_MISMATCH_ERROR;
 		return CRYPTO_BUFFER_MISMATCH_ERROR;
 	}
@@ -435,6 +449,7 @@ static crypto_status_e Hmac_Drbg_Internal_Update(uint8_t* providedData, uint32_t
 
 	if (providedDataBytes > 0 && providedData == NULL)
 	{
+		NLog_Error("providedDataBytes > 0 && providedData == NULL");
 		internalHmacDrbgData->health = CRYPTO_NULL_PTR_ERROR;
 		return CRYPTO_NULL_PTR_ERROR;
 	}
@@ -525,6 +540,7 @@ static crypto_status_e Hmac_Drbg_GenerateHashFromMessage(sha_type_e shaType, uin
 	}
 	if (digestBytes < internalHmacDrbgData->tmpHashData.bytes)
 	{
+		NLog_Error("digestBytes < internalHmacDrbgData->tmpHashData.bytes");
 		return CRYPTO_BUFFER_OVERFLOW_ERROR;
 	}
 	else
