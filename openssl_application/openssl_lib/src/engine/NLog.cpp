@@ -62,7 +62,7 @@ static std::string NLog_GetTimestamp()
 	std::time_t time_now = std::time(nullptr);
 	localtime_s(&gmtm, &time_now);
 	//"%y-%m-%d %OH:%OM:%OS"
-	timestamp << std::put_time(&gmtm, "%OH:%OM:%OS");
+	timestamp << std::put_time(&gmtm, "%y-%m-%d %OH:%OM:%OS");
 	return timestamp.str();
 }
 #endif // ENABLE_NLOG
@@ -73,6 +73,11 @@ void NLog_Add(nlog_id_e logId, std::string tag, const char* file, int line, std:
 #if ENABLE_NLOG
 	if (nlogInitStatus)
 	{
+		if (nlogData->size() >= MAX_NLOG_LOGS_SIZE)
+		{
+			nlogData->clear();
+		}
+
 		nlog_data_t logData;
 		std::string log = tag + "[" + NLog_GetTimestamp() + "] " + path(file).filename().string() + "(" + std::to_string(line) + "): " + msg;
 

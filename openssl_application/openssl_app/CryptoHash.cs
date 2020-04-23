@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using openssl_app.dllmanager;
@@ -30,6 +31,7 @@ namespace openssl_app
         public CryptoHash()
         {
             this.InitializeComponent();
+            this.InitializeDebugComponents();
             this.InitializeManagers();
             this.LoadTypesAndModes(MANAGER_ALG_TYPE.SHA_MANAGER);
             this.crypto_manager = sha_manager;
@@ -38,6 +40,15 @@ namespace openssl_app
             this.tabControl_algorithms.SelectedIndexChanged += TabControl_algorithms_SelectedIndexChanged;
             this.checkBox_hex_input.CheckedChanged += CheckBox_hex_input_CheckedChanged;
             this.comboBox_alg_types.SelectedIndexChanged += ComboBox_alg_types_SelectedIndexChanged;
+        }
+
+        private void InitializeDebugComponents()
+        {
+            this.comboBox_nlog_id.Items.AddRange(Enum.GetNames(typeof(NLOG_ID)));
+            this.comboBox_nlog_id.SelectedIndex = 3;
+#if !DEBUG
+            this.groupBox_nlog_debug.Visible = false;
+#endif // !DEBUG
         }
 
         private void ComboBox_alg_types_SelectedIndexChanged(object sender, EventArgs e)
@@ -181,10 +192,57 @@ namespace openssl_app
             this.hkdf_manager.FixedData = this.richTextBox_hkdf_fixedData;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button_calculate_Click(object sender, EventArgs e)
         {
             this.crypto_manager.Generate();
             this.richTextBox_alg_result.Text = this.crypto_manager.Result;
+        }
+
+        private void button_nlog_dump_Click(object sender, EventArgs e)
+        {
+#if DEBUG
+            bool dumpStatus = false;
+            DialogResult dialogResult = DialogResult.None;
+            string filePath = string.Empty;
+
+            if (this.checkBox_nlog_default_path.Checked == false)
+            {
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    dialogResult = openFileDialog.ShowDialog();
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        filePath = openFileDialog.FileName;
+                        if (!File.Exists(filePath))
+                        {
+                            MessageBox.Show("File doesnt exist");
+                            return;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                filePath = @"C:\Users\Michal\Desktop\nlog.txt";
+            }
+
+            try
+            {
+                NLOG_ID nlogId = (NLOG_ID)(this.comboBox_nlog_id.SelectedIndex + 1);
+                dumpStatus = DllNLogManager.DllNlogDump(nlogId, filePath);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+                return;
+            }
+
+            if ((dumpStatus == false) && (dialogResult == DialogResult.OK))
+            {
+                MessageBox.Show("Nlog dump FAILED");
+            }
+
+#endif // DEBUG
         }
     }
 }

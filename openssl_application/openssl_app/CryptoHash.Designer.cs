@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.button_calculate = new System.Windows.Forms.Button();
             this.tabControl_algorithms = new System.Windows.Forms.TabControl();
             this.tabPage_sha = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,6 +46,8 @@
             this.richTextBox_hmac_sha_key = new System.Windows.Forms.RichTextBox();
             this.richTextBox_hmac_sha_msg = new System.Windows.Forms.RichTextBox();
             this.tabPage_rsa = new System.Windows.Forms.TabPage();
+            this.label26 = new System.Windows.Forms.Label();
+            this.richTextBox_rsa_private_exp = new System.Windows.Forms.RichTextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.comboBox_rsa_mode = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -90,8 +92,10 @@
             this.checkBox_hex_input = new System.Windows.Forms.CheckBox();
             this.comboBox_alg_types = new System.Windows.Forms.ComboBox();
             this.richTextBox_alg_result = new System.Windows.Forms.RichTextBox();
-            this.richTextBox_rsa_private_exp = new System.Windows.Forms.RichTextBox();
-            this.label26 = new System.Windows.Forms.Label();
+            this.groupBox_nlog_debug = new System.Windows.Forms.GroupBox();
+            this.comboBox_nlog_id = new System.Windows.Forms.ComboBox();
+            this.button_nlog_dump = new System.Windows.Forms.Button();
+            this.checkBox_nlog_default_path = new System.Windows.Forms.CheckBox();
             this.tabControl_algorithms.SuspendLayout();
             this.tabPage_sha.SuspendLayout();
             this.tabPage_hkdf.SuspendLayout();
@@ -101,19 +105,20 @@
             this.tabPage_aes.SuspendLayout();
             this.tabPage_hmac_drbg.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_hmac_drbg_retByt)).BeginInit();
+            this.groupBox_nlog_debug.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // button_calculate
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button1.Location = new System.Drawing.Point(738, 446);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(159, 33);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Calculate";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button_calculate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_calculate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_calculate.Location = new System.Drawing.Point(738, 475);
+            this.button_calculate.Name = "button_calculate";
+            this.button_calculate.Size = new System.Drawing.Size(159, 47);
+            this.button_calculate.TabIndex = 0;
+            this.button_calculate.Text = "Calculate";
+            this.button_calculate.UseVisualStyleBackColor = true;
+            this.button_calculate.Click += new System.EventHandler(this.button_calculate_Click);
             // 
             // tabControl_algorithms
             // 
@@ -333,6 +338,26 @@
             this.tabPage_rsa.TabIndex = 3;
             this.tabPage_rsa.Text = "Rsa";
             this.tabPage_rsa.UseVisualStyleBackColor = true;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label26.Location = new System.Drawing.Point(3, 115);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(62, 15);
+            this.label26.TabIndex = 12;
+            this.label26.Text = "Exp priv:";
+            // 
+            // richTextBox_rsa_private_exp
+            // 
+            this.richTextBox_rsa_private_exp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox_rsa_private_exp.Location = new System.Drawing.Point(77, 108);
+            this.richTextBox_rsa_private_exp.Name = "richTextBox_rsa_private_exp";
+            this.richTextBox_rsa_private_exp.Size = new System.Drawing.Size(796, 28);
+            this.richTextBox_rsa_private_exp.TabIndex = 11;
+            this.richTextBox_rsa_private_exp.Text = "";
             // 
             // label25
             // 
@@ -814,40 +839,63 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox_alg_result.Location = new System.Drawing.Point(12, 346);
             this.richTextBox_alg_result.Name = "richTextBox_alg_result";
-            this.richTextBox_alg_result.Size = new System.Drawing.Size(885, 94);
+            this.richTextBox_alg_result.Size = new System.Drawing.Size(885, 123);
             this.richTextBox_alg_result.TabIndex = 5;
             this.richTextBox_alg_result.Text = "";
             // 
-            // richTextBox_rsa_private_exp
+            // groupBox_nlog_debug
             // 
-            this.richTextBox_rsa_private_exp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox_rsa_private_exp.Location = new System.Drawing.Point(77, 108);
-            this.richTextBox_rsa_private_exp.Name = "richTextBox_rsa_private_exp";
-            this.richTextBox_rsa_private_exp.Size = new System.Drawing.Size(796, 28);
-            this.richTextBox_rsa_private_exp.TabIndex = 11;
-            this.richTextBox_rsa_private_exp.Text = "";
+            this.groupBox_nlog_debug.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox_nlog_debug.Controls.Add(this.checkBox_nlog_default_path);
+            this.groupBox_nlog_debug.Controls.Add(this.comboBox_nlog_id);
+            this.groupBox_nlog_debug.Controls.Add(this.button_nlog_dump);
+            this.groupBox_nlog_debug.Location = new System.Drawing.Point(12, 475);
+            this.groupBox_nlog_debug.Name = "groupBox_nlog_debug";
+            this.groupBox_nlog_debug.Size = new System.Drawing.Size(246, 47);
+            this.groupBox_nlog_debug.TabIndex = 8;
+            this.groupBox_nlog_debug.TabStop = false;
             // 
-            // label26
+            // comboBox_nlog_id
             // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label26.Location = new System.Drawing.Point(3, 115);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(62, 15);
-            this.label26.TabIndex = 12;
-            this.label26.Text = "Exp priv:";
+            this.comboBox_nlog_id.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_nlog_id.FormattingEnabled = true;
+            this.comboBox_nlog_id.Location = new System.Drawing.Point(87, 18);
+            this.comboBox_nlog_id.Name = "comboBox_nlog_id";
+            this.comboBox_nlog_id.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_nlog_id.TabIndex = 1;
+            // 
+            // button_nlog_dump
+            // 
+            this.button_nlog_dump.Location = new System.Drawing.Point(6, 18);
+            this.button_nlog_dump.Name = "button_nlog_dump";
+            this.button_nlog_dump.Size = new System.Drawing.Size(75, 23);
+            this.button_nlog_dump.TabIndex = 0;
+            this.button_nlog_dump.Text = "NlogDump";
+            this.button_nlog_dump.UseVisualStyleBackColor = true;
+            this.button_nlog_dump.Click += new System.EventHandler(this.button_nlog_dump_Click);
+            // 
+            // checkBox_nlog_default_path
+            // 
+            this.checkBox_nlog_default_path.AutoSize = true;
+            this.checkBox_nlog_default_path.Checked = true;
+            this.checkBox_nlog_default_path.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_nlog_default_path.Location = new System.Drawing.Point(214, 21);
+            this.checkBox_nlog_default_path.Name = "checkBox_nlog_default_path";
+            this.checkBox_nlog_default_path.Size = new System.Drawing.Size(15, 14);
+            this.checkBox_nlog_default_path.TabIndex = 2;
+            this.checkBox_nlog_default_path.UseVisualStyleBackColor = true;
             // 
             // CryptoHash
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(917, 491);
+            this.ClientSize = new System.Drawing.Size(917, 534);
+            this.Controls.Add(this.groupBox_nlog_debug);
             this.Controls.Add(this.richTextBox_alg_result);
             this.Controls.Add(this.checkBox_hex_input);
             this.Controls.Add(this.comboBox_alg_types);
             this.Controls.Add(this.tabControl_algorithms);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button_calculate);
             this.Name = "CryptoHash";
             this.Text = "CryptoHash";
             this.tabControl_algorithms.ResumeLayout(false);
@@ -865,6 +913,8 @@
             this.tabPage_hmac_drbg.ResumeLayout(false);
             this.tabPage_hmac_drbg.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_hmac_drbg_retByt)).EndInit();
+            this.groupBox_nlog_debug.ResumeLayout(false);
+            this.groupBox_nlog_debug.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -872,7 +922,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_calculate;
         private System.Windows.Forms.TabControl tabControl_algorithms;
         private System.Windows.Forms.TabPage tabPage_sha;
         private System.Windows.Forms.TabPage tabPage_hkdf;
@@ -936,6 +986,10 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.RichTextBox richTextBox_rsa_private_exp;
         private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.GroupBox groupBox_nlog_debug;
+        private System.Windows.Forms.ComboBox comboBox_nlog_id;
+        private System.Windows.Forms.Button button_nlog_dump;
+        private System.Windows.Forms.CheckBox checkBox_nlog_default_path;
     }
 }
 

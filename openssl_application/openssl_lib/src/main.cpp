@@ -27,21 +27,21 @@ DLL_MAIN_C DllMain(HANDLE hModule, DWORD fdwreason, LPVOID lpReserved)
 		}
 		if (!CryRes_Init())
 		{
-			NLog_Debug("CryRes_Init PASSED");
+			NLog_Debug("CryRes_Init FAILED");
 			return FALSE;
 		}
 		else
 		{
-			NLog_Debug("CryRes_Init FAILED");
+			NLog_Debug("CryRes_Init PASSED");
 		}
 		if (!Hmac_Drbg_Init())
 		{
-			NLog_Debug("Hmac_Drbg_Init PASSED");
+			NLog_Debug("Hmac_Drbg_Init FAILED");
 			return FALSE;
 		}
 		else
 		{
-			NLog_Debug("Hmac_Drbg_Init FAILED");
+			NLog_Debug("Hmac_Drbg_Init PASSED");
 		}
 		break;
 	case DLL_THREAD_ATTACH:
@@ -56,21 +56,21 @@ DLL_MAIN_C DllMain(HANDLE hModule, DWORD fdwreason, LPVOID lpReserved)
 		}
 		if (!CryRes_Init())
 		{
-			NLog_Debug("CryRes_Init PASSED");
+			NLog_Debug("CryRes_Init FAILED");
 			return FALSE;
 		}
 		else
 		{
-			NLog_Debug("CryRes_Init FAILED");
+			NLog_Debug("CryRes_Init PASSED");
 		}
 		if (!Hmac_Drbg_Init())
 		{
-			NLog_Debug("Hmac_Drbg_Init PASSED");
+			NLog_Debug("Hmac_Drbg_Init FAILED");
 			return FALSE;
 		}
 		else
 		{
-			NLog_Debug("Hmac_Drbg_Init FAILED");
+			NLog_Debug("Hmac_Drbg_Init PASSED");
 		}
 		break;
 	case DLL_THREAD_DETACH:

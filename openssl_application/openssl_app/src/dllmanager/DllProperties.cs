@@ -83,4 +83,11 @@ namespace openssl_app.dllmanager
 		SHA_512
 	}
 
+	public enum NLOG_ID
+	{
+		NLOG_ID_ERROR = 1,
+		NLOG_ID_INFO,
+		NLOG_ID_DEGUB,
+		NLOG_ID_ALL,
+	}
 }

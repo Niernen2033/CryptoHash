@@ -93,6 +93,7 @@
     <Compile Include="src\appmanager\RsaManager.cs" />
     <Compile Include="src\appmanager\ShaManager.cs" />
     <Compile Include="src\dllmanager\DataConverter.cs" />
+    <Compile Include="src\dllmanager\DllNLogManager.cs" />
     <Compile Include="src\dllmanager\DllProperties.cs" />
     <EmbeddedResource Include="CryptoHash.resx">
       <DependentUpon>CryptoHash.cs</DependentUpon>

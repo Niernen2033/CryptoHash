@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#define MAX_NLOG_LOGS_SIZE                      2048
+
 typedef enum nlog_id_e
 {
     NLOG_ID_ERROR = 1,
