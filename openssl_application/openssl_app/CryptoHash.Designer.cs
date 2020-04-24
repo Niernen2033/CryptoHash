@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CryptoHash));
             this.button_calculate = new System.Windows.Forms.Button();
             this.tabControl_algorithms = new System.Windows.Forms.TabControl();
             this.tabPage_sha = new System.Windows.Forms.TabPage();
@@ -908,6 +909,7 @@
             this.Controls.Add(this.comboBox_alg_types);
             this.Controls.Add(this.tabControl_algorithms);
             this.Controls.Add(this.button_calculate);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CryptoHash";
             this.Text = "CryptoHash";
             this.tabControl_algorithms.ResumeLayout(false);
