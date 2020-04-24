@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using openssl_app.dllmanager;
-using System.Collections.ObjectModel;
+using openssl_app.logmanager;
 
 namespace openssl_app.algorithms
 {
@@ -17,28 +17,27 @@ namespace openssl_app.algorithms
             byte[] fixedData, uint fixedDataBytes,
             uint outputKeyBytes, out crypto_buffer_t digset);
 
-        private List<byte> m_hash;
+        public byte[] Hash { get; private set; }
         public SHA_TYPE Type { get; set; }
-        public List<byte> Key { get; set; }
-        public List<byte> FixedData { get; set; }
+        public byte[] Key { get; set; }
+        public byte[] FixedData { get; set; }
         public uint OutputKeyBytes { get; set; }
-        public ReadOnlyCollection<byte> Hash { get { return this.m_hash.AsReadOnly(); } }
 
         public HkdfProvider()
         {
-            this.m_hash = new List<byte>();
+            this.Hash = null;
             this.Type = SHA_TYPE.SHA_256;
-            this.Key = new List<byte>();
-            this.FixedData = new List<byte>();
+            this.Key = null;
+            this.FixedData = null;
             this.OutputKeyBytes = 0;
         }
 
         public HkdfProvider(SHA_TYPE type)
         {
-            this.m_hash = new List<byte>();
+            this.Hash = null;
             this.Type = type;
-            this.Key = new List<byte>();
-            this.FixedData = new List<byte>();
+            this.Key = null;
+            this.FixedData = null;
             this.OutputKeyBytes = 0;
         }
 
@@ -48,18 +47,18 @@ namespace openssl_app.algorithms
             crypto_buffer_t hash = new crypto_buffer_t();
             try
             {
-                int computeStatus = computeHkdf((int)this.Type, this.Key.ToArray(), (uint)this.Key.Count,
-                    this.FixedData.ToArray(), (uint)this.FixedData.Count, this.OutputKeyBytes, out hash);
+                int computeStatus = computeHkdf((int)this.Type, this.Key, (uint)this.Key.Length,
+                    this.FixedData, (uint)this.FixedData.Length, this.OutputKeyBytes, out hash);
                 result = (CRYPTO_STATUS)computeStatus;
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
-
+                LogManager.ShowMessageBox("Error", "HkdfHash failed", exc.Message);
             }
 
             if (result == CRYPTO_STATUS.CRYPTO_SUCCESS)
             {
-                this.m_hash = new List<byte>(hash.buffer.Take((int)hash.bytes));
+                this.Hash = hash.buffer.Take((int)hash.bytes).ToArray();
             }
 
             return result;

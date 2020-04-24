@@ -54,10 +54,10 @@ bool Hmac_Drbg_Init()
 	internalHmacDrbgData = std::make_unique<internal_hmac_drbg_state_t>();
 	if (internalHmacDrbgData == nullptr)
 	{
-		ASSERT_M(false, "hmacDrbgInitStatus = false");
 		return false;
 	}
 	memsetAssert(internalHmacDrbgData.get(), sizeof(internal_hmac_drbg_state_t), 0x00, sizeof(internal_hmac_drbg_state_t));
+	return true;
 }
 
 bool Hmac_Drbg_Cleanup()

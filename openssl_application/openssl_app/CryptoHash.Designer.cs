@@ -93,9 +93,10 @@
             this.comboBox_alg_types = new System.Windows.Forms.ComboBox();
             this.richTextBox_alg_result = new System.Windows.Forms.RichTextBox();
             this.groupBox_nlog_debug = new System.Windows.Forms.GroupBox();
+            this.checkBox_nlog_default_path = new System.Windows.Forms.CheckBox();
             this.comboBox_nlog_id = new System.Windows.Forms.ComboBox();
             this.button_nlog_dump = new System.Windows.Forms.Button();
-            this.checkBox_nlog_default_path = new System.Windows.Forms.CheckBox();
+            this.button_load_file = new System.Windows.Forms.Button();
             this.tabControl_algorithms.SuspendLayout();
             this.tabPage_sha.SuspendLayout();
             this.tabPage_hkdf.SuspendLayout();
@@ -855,6 +856,17 @@
             this.groupBox_nlog_debug.TabIndex = 8;
             this.groupBox_nlog_debug.TabStop = false;
             // 
+            // checkBox_nlog_default_path
+            // 
+            this.checkBox_nlog_default_path.AutoSize = true;
+            this.checkBox_nlog_default_path.Checked = true;
+            this.checkBox_nlog_default_path.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_nlog_default_path.Location = new System.Drawing.Point(214, 21);
+            this.checkBox_nlog_default_path.Name = "checkBox_nlog_default_path";
+            this.checkBox_nlog_default_path.Size = new System.Drawing.Size(15, 14);
+            this.checkBox_nlog_default_path.TabIndex = 2;
+            this.checkBox_nlog_default_path.UseVisualStyleBackColor = true;
+            // 
             // comboBox_nlog_id
             // 
             this.comboBox_nlog_id.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -874,22 +886,22 @@
             this.button_nlog_dump.UseVisualStyleBackColor = true;
             this.button_nlog_dump.Click += new System.EventHandler(this.button_nlog_dump_Click);
             // 
-            // checkBox_nlog_default_path
+            // button_load_file
             // 
-            this.checkBox_nlog_default_path.AutoSize = true;
-            this.checkBox_nlog_default_path.Checked = true;
-            this.checkBox_nlog_default_path.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_nlog_default_path.Location = new System.Drawing.Point(214, 21);
-            this.checkBox_nlog_default_path.Name = "checkBox_nlog_default_path";
-            this.checkBox_nlog_default_path.Size = new System.Drawing.Size(15, 14);
-            this.checkBox_nlog_default_path.TabIndex = 2;
-            this.checkBox_nlog_default_path.UseVisualStyleBackColor = true;
+            this.button_load_file.Location = new System.Drawing.Point(632, 475);
+            this.button_load_file.Name = "button_load_file";
+            this.button_load_file.Size = new System.Drawing.Size(81, 47);
+            this.button_load_file.TabIndex = 9;
+            this.button_load_file.Text = "OpenFile";
+            this.button_load_file.UseVisualStyleBackColor = true;
+            this.button_load_file.Click += new System.EventHandler(this.button_load_file_Click);
             // 
             // CryptoHash
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(917, 534);
+            this.Controls.Add(this.button_load_file);
             this.Controls.Add(this.groupBox_nlog_debug);
             this.Controls.Add(this.richTextBox_alg_result);
             this.Controls.Add(this.checkBox_hex_input);
@@ -990,6 +1002,7 @@
         private System.Windows.Forms.ComboBox comboBox_nlog_id;
         private System.Windows.Forms.Button button_nlog_dump;
         private System.Windows.Forms.CheckBox checkBox_nlog_default_path;
+        private System.Windows.Forms.Button button_load_file;
     }
 }
 

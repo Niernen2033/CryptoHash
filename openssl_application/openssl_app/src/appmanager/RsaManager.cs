@@ -28,19 +28,19 @@ namespace openssl_app.appmanager
         {
             if (this.HexInput)
             {
-                this.rsaProvider.Msg = DataConverter.BytesFromHexString(this.Msg.Text).ToList();
-                this.rsaProvider.PublicExponent = DataConverter.BytesFromHexString(this.PublicExponent.Text).ToList();
-                this.rsaProvider.PrivateExponent = DataConverter.BytesFromHexString(this.PrivateExponent.Text).ToList();
-                this.rsaProvider.Modulus = DataConverter.BytesFromHexString(this.Modulus.Text).ToList();
-                this.rsaProvider.Signature = DataConverter.BytesFromHexString(this.Signature.Text).ToList();
+                this.rsaProvider.Msg = DataConverter.BytesFromHexString(this.Msg.Text);
+                this.rsaProvider.PublicExponent = DataConverter.BytesFromHexString(this.PublicExponent.Text);
+                this.rsaProvider.PrivateExponent = DataConverter.BytesFromHexString(this.PrivateExponent.Text);
+                this.rsaProvider.Modulus = DataConverter.BytesFromHexString(this.Modulus.Text);
+                this.rsaProvider.Signature = DataConverter.BytesFromHexString(this.Signature.Text);
             }
             else
             {
-                this.rsaProvider.Msg = DataConverter.BytesFromString(this.Msg.Text).ToList();
-                this.rsaProvider.PublicExponent = DataConverter.BytesFromString(this.PublicExponent.Text).ToList();
-                this.rsaProvider.PrivateExponent = DataConverter.BytesFromString(this.PrivateExponent.Text).ToList();
-                this.rsaProvider.Modulus = DataConverter.BytesFromString(this.Modulus.Text).ToList();
-                this.rsaProvider.Signature = DataConverter.BytesFromString(this.Signature.Text).ToList();
+                this.rsaProvider.Msg = DataConverter.BytesFromString(this.Msg.Text);
+                this.rsaProvider.PublicExponent = DataConverter.BytesFromString(this.PublicExponent.Text);
+                this.rsaProvider.PrivateExponent = DataConverter.BytesFromString(this.PrivateExponent.Text);
+                this.rsaProvider.Modulus = DataConverter.BytesFromString(this.Modulus.Text);
+                this.rsaProvider.Signature = DataConverter.BytesFromString(this.Signature.Text);
             }
             this.rsaProvider.Type = (SHA_TYPE)this.Type;
             RSA_MODE rsaMode = (RSA_MODE)this.Mode.SelectedIndex;
@@ -62,7 +62,7 @@ namespace openssl_app.appmanager
                 status = this.rsaProvider.Sign();
                 if (status == CRYPTO_STATUS.CRYPTO_SUCCESS)
                 {
-                    this.SetResult(DataConverter.HexStringFromBytes(this.rsaProvider.Signature.ToArray()));
+                    this.SetResult(DataConverter.HexStringFromBytes(this.rsaProvider.Signature));
                 }
             }
             return status;

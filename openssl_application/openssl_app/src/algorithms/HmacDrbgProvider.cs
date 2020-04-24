@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using openssl_app.dllmanager;
-using System.Collections.ObjectModel;
+using openssl_app.logmanager;
 
 namespace openssl_app.algorithms
 {
@@ -32,35 +32,34 @@ namespace openssl_app.algorithms
 		private static extern int computeHmacDrbg_Uninstantiate();
 
 
-		private List<byte> m_randomData;
+		public byte[] RandomData { get; private set; }
 		public SHA_TYPE Type { get; set; }
 		public bool PredictionResistance { get; set; }
-		public List<byte> PersonalizationString { get; set; }
-		public List<byte> EntropyInput { get; set; }
-		public List<byte> Nonce { get; set; }
-		public List<byte> EntropyInputReseed { get; set; }
-		public List<byte> AdditionalInputReseed { get; set; }
-		public List<byte> AdditionalInput1 { get; set; }
-		public List<byte> AdditionalInput2 { get; set; }
-		public List<byte> EntropyInputPR1 { get; set; }
-		public List<byte> EntropyInputPR2 { get; set; }
+		public byte[] PersonalizationString { get; set; }
+		public byte[] EntropyInput { get; set; }
+		public byte[] Nonce { get; set; }
+		public byte[] EntropyInputReseed { get; set; }
+		public byte[] AdditionalInputReseed { get; set; }
+		public byte[] AdditionalInput1 { get; set; }
+		public byte[] AdditionalInput2 { get; set; }
+		public byte[] EntropyInputPR1 { get; set; }
+		public byte[] EntropyInputPR2 { get; set; }
 		public uint ReturnedBytes { get; set; }
-		public ReadOnlyCollection<byte> RandomData { get { return this.m_randomData.AsReadOnly(); } }
 
 		public HmacDrbgProvider()
 		{
-			this.m_randomData = new List<byte>();
+			this.RandomData = null;
 			this.Type = SHA_TYPE.SHA_256;
 			this.PredictionResistance = true;
-			this.PersonalizationString = new List<byte>();
-			this.EntropyInput = new List<byte>();
-			this.Nonce = new List<byte>();
-			this.EntropyInputReseed = new List<byte>();
-			this.AdditionalInputReseed = new List<byte>();
-			this.AdditionalInput1 = new List<byte>();
-			this.AdditionalInput2 = new List<byte>();
-			this.EntropyInputPR1 = new List<byte>();
-			this.EntropyInputPR2 = new List<byte>();
+			this.PersonalizationString = null;
+			this.EntropyInput = null;
+			this.Nonce = null;
+			this.EntropyInputReseed = null;
+			this.AdditionalInputReseed = null;
+			this.AdditionalInput1 = null;
+			this.AdditionalInput2 = null;
+			this.EntropyInputPR1 = null;
+			this.EntropyInputPR2 = null;
 			this.ReturnedBytes = 0;
 		}
 
@@ -70,14 +69,14 @@ namespace openssl_app.algorithms
 			try
 			{
 				int computeStatus = computeHmacDrbg_Instantiate(this.PredictionResistance, (int)this.Type,
-					this.PersonalizationString.ToArray(), (uint)this.PersonalizationString.Count,
-					this.EntropyInput.ToArray(), (uint)this.EntropyInput.Count,
-					this.Nonce.ToArray(), (uint)this.Nonce.Count);
+					this.PersonalizationString, (uint)this.PersonalizationString.Length,
+					this.EntropyInput, (uint)this.EntropyInput.Length,
+					this.Nonce, (uint)this.Nonce.Length);
 				result = (CRYPTO_STATUS)computeStatus;
 			}
-			catch (Exception e)
+			catch (Exception exc)
 			{
-
+				LogManager.ShowMessageBox("Error", "DrbgInstantiate failed", exc.Message);
 			}
 			return result;
 		}
@@ -88,38 +87,38 @@ namespace openssl_app.algorithms
 			try
 			{
 				int computeStatus = computeHmacDrbg_Reseed(this.PredictionResistance,
-					this.EntropyInput.ToArray(), (uint)this.EntropyInput.Count,
-					this.AdditionalInputReseed.ToArray(), (uint)this.AdditionalInputReseed.Count);
+					this.EntropyInput, (uint)this.EntropyInput.Length,
+					this.AdditionalInputReseed, (uint)this.AdditionalInputReseed.Length);
 				result = (CRYPTO_STATUS)computeStatus;
 			}
-			catch (Exception e)
+			catch (Exception exc)
 			{
-
+				LogManager.ShowMessageBox("Error", "DrbgReseed failed", exc.Message);
 			}
 			return result;
 		}
 
-		private CRYPTO_STATUS Generate(List<byte> entropy, List<byte> additionalInput)
+		private CRYPTO_STATUS Generate(byte[] entropy, byte[] additionalInput)
 		{
 			CRYPTO_STATUS result = CRYPTO_STATUS.CRYPTO_ERROR;
 			crypto_buffer_t randomData = new crypto_buffer_t();
 			try
 			{
-				uint entropyCount = (entropy == null) ? 0 : (uint)entropy.Count;
-				uint additionalInputCount = (additionalInput == null) ? 0 : (uint)additionalInput.Count;
+				uint entropyCount = (entropy == null) ? 0 : (uint)entropy.Length;
+				uint additionalInputCount = (additionalInput == null) ? 0 : (uint)additionalInput.Length;
 				int computeStatus = computeHmacDrbg_Generate(this.ReturnedBytes,
-					entropy.ToArray(), entropyCount,
-					additionalInput.ToArray(), additionalInputCount,
+					entropy, entropyCount,
+					additionalInput, additionalInputCount,
 					out randomData);
 				result = (CRYPTO_STATUS)computeStatus;
 			}
-			catch (Exception e)
+			catch (Exception exc)
 			{
-
+				LogManager.ShowMessageBox("Error", "DrbgGenerate failed", exc.Message);
 			}
 			if (result == CRYPTO_STATUS.CRYPTO_SUCCESS)
 			{
-				this.m_randomData = new List<byte>(randomData.buffer.Take((int)randomData.bytes));
+				this.RandomData = randomData.buffer.Take((int)randomData.bytes).ToArray();
 			}
 			return result;
 		}
@@ -132,9 +131,9 @@ namespace openssl_app.algorithms
 				int computeStatus = computeHmacDrbg_Uninstantiate();
 				result = (CRYPTO_STATUS)computeStatus;
 			}
-			catch (Exception e)
+			catch (Exception exc)
 			{
-
+				LogManager.ShowMessageBox("Error", "DrbgUninstantiate failed", exc.Message);
 			}
 			return result;
 		}

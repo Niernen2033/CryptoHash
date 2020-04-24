@@ -111,7 +111,6 @@ EXPORT_C int computeSha(int shaType, uint8_t* msg, uint32_t msgBytes, crypto_buf
 {
 	NLog_Info("computeSha(...):");
 	NLog_Info("shaType = " + std::to_string(shaType));
-	NLog_Info("msg = " + make_hex_string(msg, msgBytes));
 	NLog_Info("msgBytes = " + std::to_string(msgBytes));
 
 	sha_type_e tmpShaType = (sha_type_e)shaType;
@@ -127,11 +126,8 @@ EXPORT_C int computeHmacDrbg_Instantiate(bool requestPredictionResistance, int s
 	NLog_Info("computeHmacDrbg_Instantiate(...):");
 	NLog_Info("requestPredictionResistance = " + std::to_string(requestPredictionResistance));
 	NLog_Info("shaType = " + std::to_string(shaType));
-	NLog_Info("personalizationString = " + make_hex_string(personalizationString, personalizationStringBytes));
 	NLog_Info("personalizationStringBytes = " + std::to_string(personalizationStringBytes));
-	NLog_Info("entropy = " + make_hex_string(entropy, entropyBytes));
 	NLog_Info("entropyBytes = " + std::to_string(entropyBytes));
-	NLog_Info("nonce = " + make_hex_string(nonce, nonceBytes));
 	NLog_Info("nonceBytes = " + std::to_string(nonceBytes));
 
 	sha_type_e tmpShaType = (sha_type_e)shaType;
@@ -148,9 +144,7 @@ EXPORT_C int computeHmacDrbg_Reseed(bool requestPredictionResistance,
 {
 	NLog_Info("computeHmacDrbg_Reseed(...):");
 	NLog_Info("requestPredictionResistance = " + std::to_string(requestPredictionResistance));
-	NLog_Info("entropy = " + make_hex_string(entropy, entropyBytes));
 	NLog_Info("entropyBytes = " + std::to_string(entropyBytes));
-	NLog_Info("additionalInput = " + make_hex_string(additionalInput, additionalInputBytes));
 	NLog_Info("additionalInputBytes = " + std::to_string(additionalInputBytes));
 
 	int result = (int)Hmac_Drbg_Reseed(requestPredictionResistance,
@@ -166,9 +160,7 @@ EXPORT_C int computeHmacDrbg_Generate(uint32_t bytesRequested,
 {
 	NLog_Info("computeHmacDrbg_Generate(...):");
 	NLog_Info("bytesRequested = " + std::to_string(bytesRequested));
-	NLog_Info("entropy = " + make_hex_string(entropy, entropyBytes));
 	NLog_Info("entropyBytes = " + std::to_string(entropyBytes));
-	NLog_Info("additionalInput = " + make_hex_string(additionalInput, additionalInputBytes));
 	NLog_Info("additionalInputBytes = " + std::to_string(additionalInputBytes));
 
 	int result = (int)Hmac_Drbg_Generate(bytesRequested,
@@ -190,9 +182,7 @@ EXPORT_C int computeHmacSha(int shaType, uint8_t msg[], uint32_t msgBytes, uint8
 {
 	NLog_Info("computeHmacSha(...):");
 	NLog_Info("shaType = " + std::to_string(shaType));
-	NLog_Info("msg = " + make_hex_string(msg, msgBytes));
 	NLog_Info("msgBytes = " + std::to_string(msgBytes));
-	NLog_Info("key = " + make_hex_string(key, keyBytes));
 	NLog_Info("keyBytes = " + std::to_string(keyBytes));
 
 	sha_type_e tmpShaType = (sha_type_e)shaType;
@@ -205,13 +195,9 @@ EXPORT_C int computeRsaVerify(int shaType, uint8_t msg[], uint32_t msgBytes, uin
 {
 	NLog_Info("computeRsaVerify(...):");
 	NLog_Info("shaType = " + std::to_string(shaType));
-	NLog_Info("msg = " + make_hex_string(msg, msgBytes));
 	NLog_Info("msgBytes = " + std::to_string(msgBytes));
-	NLog_Info("e = " + make_hex_string(e, eBytes));
 	NLog_Info("eBytes = " + std::to_string(eBytes));
-	NLog_Info("n = " + make_hex_string(n, nBytes));
 	NLog_Info("nBytes = " + std::to_string(nBytes));
-	NLog_Info("s = " + make_hex_string(s, sBytes));
 	NLog_Info("sBytes = " + std::to_string(sBytes));
 
 	sha_type_e tmpShaType = (sha_type_e)shaType;
@@ -224,13 +210,9 @@ EXPORT_C int computeRsaSign(int shaType, uint8_t msg[], uint32_t msgBytes, uint8
 {
 	NLog_Info("computeRsaSign(...):");
 	NLog_Info("shaType = " + std::to_string(shaType));
-	NLog_Info("msg = " + make_hex_string(msg, msgBytes));
 	NLog_Info("msgBytes = " + std::to_string(msgBytes));
-	NLog_Info("e = " + make_hex_string(e, eBytes));
 	NLog_Info("eBytes = " + std::to_string(eBytes));
-	NLog_Info("n = " + make_hex_string(n, nBytes));
 	NLog_Info("nBytes = " + std::to_string(nBytes));
-	NLog_Info("d = " + make_hex_string(d, dBytes));
 	NLog_Info("dBytes = " + std::to_string(dBytes));
 
 	sha_type_e tmpShaType = (sha_type_e)shaType;
@@ -242,9 +224,7 @@ EXPORT_C int computeHkdf(int shaType, uint8_t key[], uint32_t keyBytes, uint8_t 
 {
 	NLog_Info("computeHkdf(...):");
 	NLog_Info("shaType = " + std::to_string(shaType));
-	NLog_Info("key = " + make_hex_string(key, keyBytes));
 	NLog_Info("keyBytes = " + std::to_string(keyBytes));
-	NLog_Info("fixedData = " + make_hex_string(fixedData, fixedDataBytes));
 	NLog_Info("fixedDataBytes = " + std::to_string(fixedDataBytes));
 	NLog_Info("outputKeyBytes = " + std::to_string(outputKeyBytes));
 
@@ -258,11 +238,8 @@ EXPORT_C int computeAesEncrypt(int aesType, uint8_t key[], uint32_t keyBytes, ui
 {
 	NLog_Info("computeAesEncrypt(...):");
 	NLog_Info("aesType = " + std::to_string(aesType));
-	NLog_Info("key = " + make_hex_string(key, keyBytes));
 	NLog_Info("keyBytes = " + std::to_string(keyBytes));
-	NLog_Info("msg = " + make_hex_string(msg, msgBytes));
 	NLog_Info("msgBytes = " + std::to_string(msgBytes));
-	NLog_Info("iv = " + make_hex_string(iv, ivBytes));
 	NLog_Info("ivBytes = " + std::to_string(ivBytes));
 
 	aes_type_e tmpAesType = (aes_type_e)aesType;
@@ -275,11 +252,8 @@ EXPORT_C int computeAesDecrypt(int aesType, uint8_t key[], uint32_t keyBytes, ui
 {
 	NLog_Info("computeAesDecrypt(...):");
 	NLog_Info("aesType = " + std::to_string(aesType));
-	NLog_Info("key = " + make_hex_string(key, keyBytes));
 	NLog_Info("keyBytes = " + std::to_string(keyBytes));
-	NLog_Info("msg = " + make_hex_string(msg, msgBytes));
 	NLog_Info("msgBytes = " + std::to_string(msgBytes));
-	NLog_Info("iv = " + make_hex_string(iv, ivBytes));
 	NLog_Info("ivBytes = " + std::to_string(ivBytes));
 
 	aes_type_e tmpAesType = (aes_type_e)aesType;
@@ -291,11 +265,8 @@ EXPORT_C int computeKeyWrap(uint8_t key[], uint32_t keyBytes, uint8_t msg[], uin
 	uint8_t iv[], uint32_t ivBytes, crypto_buffer_t* digset)
 {
 	NLog_Info("computeKeyWrap(...):");
-	NLog_Info("key = " + make_hex_string(key, keyBytes));
 	NLog_Info("keyBytes = " + std::to_string(keyBytes));
-	NLog_Info("msg = " + make_hex_string(msg, msgBytes));
 	NLog_Info("msgBytes = " + std::to_string(msgBytes));
-	NLog_Info("iv = " + make_hex_string(iv, ivBytes));
 	NLog_Info("ivBytes = " + std::to_string(ivBytes));
 
 	int result = (int)Aes_KeyWrap_Generate(key, keyBytes, msg, msgBytes, iv, ivBytes, digset);
@@ -306,11 +277,8 @@ EXPORT_C int computeKeyUnwrap(uint8_t key[], uint32_t keyBytes, uint8_t msg[], u
 	uint8_t iv[], uint32_t ivBytes, crypto_buffer_t* digset)
 {
 	NLog_Info("computeKeyUnwrap(...):");
-	NLog_Info("key = " + make_hex_string(key, keyBytes));
 	NLog_Info("keyBytes = " + std::to_string(keyBytes));
-	NLog_Info("msg = " + make_hex_string(msg, msgBytes));
 	NLog_Info("msgBytes = " + std::to_string(msgBytes));
-	NLog_Info("iv = " + make_hex_string(iv, ivBytes));
 	NLog_Info("ivBytes = " + std::to_string(ivBytes));
 
 	int result = (int)Aes_KeyUnwrap_Generate(key, keyBytes, msg, msgBytes, iv, ivBytes, digset);

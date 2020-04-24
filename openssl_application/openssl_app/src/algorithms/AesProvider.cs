@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using openssl_app.dllmanager;
-using System.Collections.ObjectModel;
+using openssl_app.logmanager;
 
 namespace openssl_app.algorithms
 {
@@ -27,29 +27,28 @@ namespace openssl_app.algorithms
 		private static extern int computeKeyUnwrap(byte[] key, uint keyBytes, byte[] msg, uint msgBytes,
 			byte[] iv, uint ivBytes, out crypto_buffer_t digset);
 
-		private List<byte> m_hash;
+		public byte[] Hash { get; private set; }
 		public AES_TYPE Type { get; set; }
-		public List<byte> Key { get; set; }
-		public List<byte> Msg { get; set; }
-		public List<byte> Iv { get; set; }
-		public ReadOnlyCollection<byte> Hash { get { return this.m_hash.AsReadOnly(); } }
+		public byte[] Key { get; set; }
+		public byte[] Msg { get; set; }
+		public byte[] Iv { get; set; }
 
 		public AesProvider()
 		{
-			this.m_hash = new List<byte>();
+			this.Hash = null;
 			this.Type = AES_TYPE.AES_CBC_256;
-			this.Msg = new List<byte>();
-			this.Key = new List<byte>();
-			this.Iv = new List<byte>();
+			this.Msg = null;
+			this.Key = null;
+			this.Iv = null;
 		}
 
 		public AesProvider(AES_TYPE type)
 		{
-			this.m_hash = new List<byte>();
+			this.Hash = null;
 			this.Type = type;
-			this.Msg = new List<byte>();
-			this.Key = new List<byte>();
-			this.Iv = new List<byte>();
+			this.Msg = null;
+			this.Key = null;
+			this.Iv = null;
 		}
 
 		public CRYPTO_STATUS ComputeDecrypt()
@@ -58,19 +57,19 @@ namespace openssl_app.algorithms
 			crypto_buffer_t hash = new crypto_buffer_t();
 			try
 			{
-				int computeStatus = computeAesDecrypt((int)this.Type, this.Key.ToArray(), (uint)this.Key.Count,
-					this.Msg.ToArray(), (uint)this.Msg.Count, 
-					this.Iv.ToArray(), (uint)this.Iv.Count, out hash);
+				int computeStatus = computeAesDecrypt((int)this.Type, this.Key, (uint)this.Key.Length,
+					this.Msg, (uint)this.Msg.Length, 
+					this.Iv, (uint)this.Iv.Length, out hash);
 				result = (CRYPTO_STATUS)computeStatus;
 			}
-			catch (Exception e)
+			catch (Exception exc)
 			{
-
+				LogManager.ShowMessageBox("Error", "Decrypt failed", exc.Message);
 			}
 
 			if (result == CRYPTO_STATUS.CRYPTO_SUCCESS)
 			{
-				this.m_hash = new List<byte>(hash.buffer.Take((int)hash.bytes));
+				this.Hash = hash.buffer.Take((int)hash.bytes).ToArray();
 			}
 
 			return result;
@@ -82,19 +81,19 @@ namespace openssl_app.algorithms
 			crypto_buffer_t hash = new crypto_buffer_t();
 			try
 			{
-				int computeStatus = computeAesEncrypt((int)this.Type, this.Key.ToArray(), (uint)this.Key.Count,
-					this.Msg.ToArray(), (uint)this.Msg.Count,
-					this.Iv.ToArray(), (uint)this.Iv.Count, out hash);
+				int computeStatus = computeAesEncrypt((int)this.Type, this.Key, (uint)this.Key.Length,
+					this.Msg, (uint)this.Msg.Length,
+					this.Iv, (uint)this.Iv.Length, out hash);
 				result = (CRYPTO_STATUS)computeStatus;
 			}
-			catch (Exception e)
+			catch (Exception exc)
 			{
-
+				LogManager.ShowMessageBox("Error", "Encrypt failed", exc.Message);
 			}
 
 			if (result == CRYPTO_STATUS.CRYPTO_SUCCESS)
 			{
-				this.m_hash = new List<byte>(hash.buffer.Take((int)hash.bytes));
+				this.Hash = hash.buffer.Take((int)hash.bytes).ToArray();
 			}
 
 			return result;
@@ -106,19 +105,19 @@ namespace openssl_app.algorithms
 			crypto_buffer_t hash = new crypto_buffer_t();
 			try
 			{
-				int computeStatus = computeKeyWrap(this.Key.ToArray(), (uint)this.Key.Count,
-					this.Msg.ToArray(), (uint)this.Msg.Count,
-					this.Iv.ToArray(), (uint)this.Iv.Count, out hash);
+				int computeStatus = computeKeyWrap(this.Key, (uint)this.Key.Length,
+					this.Msg, (uint)this.Msg.Length,
+					this.Iv, (uint)this.Iv.Length, out hash);
 				result = (CRYPTO_STATUS)computeStatus;
 			}
-			catch (Exception e)
+			catch (Exception exc)
 			{
-
+				LogManager.ShowMessageBox("Error", "KeyWrap failed", exc.Message);
 			}
 
 			if (result == CRYPTO_STATUS.CRYPTO_SUCCESS)
 			{
-				this.m_hash = new List<byte>(hash.buffer.Take((int)hash.bytes));
+				this.Hash = hash.buffer.Take((int)hash.bytes).ToArray();
 			}
 
 			return result;
@@ -130,19 +129,19 @@ namespace openssl_app.algorithms
 			crypto_buffer_t hash = new crypto_buffer_t();
 			try
 			{
-				int computeStatus = computeKeyUnwrap(this.Key.ToArray(), (uint)this.Key.Count,
-					this.Msg.ToArray(), (uint)this.Msg.Count,
-					this.Iv.ToArray(), (uint)this.Iv.Count, out hash);
+				int computeStatus = computeKeyUnwrap(this.Key, (uint)this.Key.Length,
+					this.Msg, (uint)this.Msg.Length,
+					this.Iv, (uint)this.Iv.Length, out hash);
 				result = (CRYPTO_STATUS)computeStatus;
 			}
-			catch (Exception e)
+			catch (Exception exc)
 			{
-
+				LogManager.ShowMessageBox("Error", "KeyUnwrap failed", exc.Message);
 			}
 
 			if (result == CRYPTO_STATUS.CRYPTO_SUCCESS)
 			{
-				this.m_hash = new List<byte>(hash.buffer.Take((int)hash.bytes));
+				this.Hash = hash.buffer.Take((int)hash.bytes).ToArray();
 			}
 
 			return result;

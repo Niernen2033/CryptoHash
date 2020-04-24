@@ -25,20 +25,20 @@ namespace openssl_app.appmanager
         {
             if(this.HexInput)
             {
-                this.hkdfProvider.FixedData = DataConverter.BytesFromHexString(this.FixedData.Text).ToList();
-                this.hkdfProvider.Key = DataConverter.BytesFromHexString(this.Key.Text).ToList();
+                this.hkdfProvider.FixedData = DataConverter.BytesFromHexString(this.FixedData.Text);
+                this.hkdfProvider.Key = DataConverter.BytesFromHexString(this.Key.Text);
             }
             else
             {
-                this.hkdfProvider.FixedData = DataConverter.BytesFromString(this.FixedData.Text).ToList();
-                this.hkdfProvider.Key = DataConverter.BytesFromString(this.Key.Text).ToList();
+                this.hkdfProvider.FixedData = DataConverter.BytesFromString(this.FixedData.Text);
+                this.hkdfProvider.Key = DataConverter.BytesFromString(this.Key.Text);
             }
             this.hkdfProvider.OutputKeyBytes = (uint)this.OutputKeyBytes.Value;
             this.hkdfProvider.Type = (SHA_TYPE)this.Type;
             CRYPTO_STATUS status = this.hkdfProvider.ComputeHash();
             if (status == CRYPTO_STATUS.CRYPTO_SUCCESS)
             {
-                this.SetResult(DataConverter.HexStringFromBytes(this.hkdfProvider.Hash.ToArray()));
+                this.SetResult(DataConverter.HexStringFromBytes(this.hkdfProvider.Hash));
             }
             return status;
         }

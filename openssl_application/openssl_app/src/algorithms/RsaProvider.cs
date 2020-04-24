@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using openssl_app.dllmanager;
+using openssl_app.logmanager;
 
 namespace openssl_app.algorithms
 {
@@ -27,30 +28,30 @@ namespace openssl_app.algorithms
             out crypto_buffer_t digset);
 
         public SHA_TYPE Type { get; set; }
-        public List<byte> Msg { get; set; } // msg
-        public List<byte> PublicExponent { get; set; } // e
-        public List<byte> PrivateExponent { get; set; } // d
-        public List<byte> Modulus { get; set; } // n
-        public List<byte> Signature { get; set; } // s
+        public byte[] Msg { get; set; } // msg
+        public byte[] PublicExponent { get; set; } // e
+        public byte[] PrivateExponent { get; set; } // d
+        public byte[] Modulus { get; set; } // n
+        public byte[] Signature { get; set; } // s
 
         public RsaProvider()
         {
             this.Type =  SHA_TYPE.SHA_256;
-            this.Msg = new List<byte>();
-            this.PublicExponent = new List<byte>();
-            this.PrivateExponent = new List<byte>();
-            this.Modulus = new List<byte>();
-            this.Signature = new List<byte>();
+            this.Msg = null;
+            this.PublicExponent = null;
+            this.PrivateExponent = null;
+            this.Modulus = null;
+            this.Signature = null;
         }
 
         public RsaProvider(SHA_TYPE shaType)
         {
             this.Type = shaType;
-            this.Msg = new List<byte>();
-            this.PublicExponent = new List<byte>();
-            this.PrivateExponent = new List<byte>();
-            this.Modulus = new List<byte>();
-            this.Signature = new List<byte>();
+            this.Msg = null;
+            this.PublicExponent = null;
+            this.PrivateExponent = null;
+            this.Modulus = null;
+            this.Signature = null;
         }
 
         public CRYPTO_STATUS Sign()
@@ -59,21 +60,21 @@ namespace openssl_app.algorithms
             crypto_buffer_t signature = new crypto_buffer_t();
             try
             {
-                int computeStatus = computeRsaSign((int)this.Type, this.Msg.ToArray(), (uint)this.Msg.Count,
-                    this.PublicExponent.ToArray(), (uint)this.PublicExponent.Count,
-                    this.Modulus.ToArray(), (uint)this.Modulus.Count,
-                    this.PrivateExponent.ToArray(), (uint)this.PrivateExponent.Count,
+                int computeStatus = computeRsaSign((int)this.Type, this.Msg, (uint)this.Msg.Length,
+                    this.PublicExponent, (uint)this.PublicExponent.Length,
+                    this.Modulus, (uint)this.Modulus.Length,
+                    this.PrivateExponent, (uint)this.PrivateExponent.Length,
                     out signature);
                 result = (CRYPTO_STATUS)computeStatus;
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
-                MessageBox.Show(e.Message);
+                LogManager.ShowMessageBox("Error", "RsaSign failed", exc.Message);
             }
 
             if (result == CRYPTO_STATUS.CRYPTO_SUCCESS)
             {
-                this.Signature = new List<byte>(signature.buffer.Take((int)signature.bytes));
+                this.Signature = signature.buffer.Take((int)signature.bytes).ToArray();
             }
 
             return result;
@@ -84,15 +85,15 @@ namespace openssl_app.algorithms
             CRYPTO_STATUS result = CRYPTO_STATUS.CRYPTO_ERROR;
             try
             {
-                int computeStatus = computeRsaVerify((int)this.Type, this.Msg.ToArray(), (uint)this.Msg.Count,
-                    this.PublicExponent.ToArray(), (uint)this.PublicExponent.Count,
-                    this.Modulus.ToArray(), (uint)this.Modulus.Count,
-                    this.Signature.ToArray(), (uint)this.Signature.Count);
+                int computeStatus = computeRsaVerify((int)this.Type, this.Msg, (uint)this.Msg.Length,
+                    this.PublicExponent, (uint)this.PublicExponent.Length,
+                    this.Modulus, (uint)this.Modulus.Length,
+                    this.Signature, (uint)this.Signature.Length);
                 result = (CRYPTO_STATUS)computeStatus;
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
-
+                LogManager.ShowMessageBox("Error", "RsaVerify failed", exc.Message);
             }
 
             return result;

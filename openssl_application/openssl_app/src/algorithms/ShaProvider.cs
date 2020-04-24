@@ -4,8 +4,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 using openssl_app.dllmanager;
+using openssl_app.logmanager;
 
 namespace openssl_app.algorithms
 {
@@ -14,23 +14,22 @@ namespace openssl_app.algorithms
         [DllImport(DllProperties.DLL_PATH, CallingConvention = CallingConvention.Cdecl)]
         private static extern int computeSha(int shaType, byte[] msg, uint msgBytes, out crypto_buffer_t digset);
 
-        private List<byte> m_hash;
+        public byte[] Hash { get; private set; }
         public SHA_TYPE Type { get; set; }
-        public List<byte> Msg { get; set; }
-        public ReadOnlyCollection<byte> Hash { get { return this.m_hash.AsReadOnly(); } }
+        public byte[] Msg { get; set; }
 
         public ShaProvider()
         {
-            this.m_hash = new List<byte>();
+            this.Hash = null;
             this.Type = SHA_TYPE.SHA_256;
-            this.Msg = new List<byte>();
+            this.Msg = null;
         }
 
         public ShaProvider(SHA_TYPE type)
         {
-            this.m_hash = new List<byte>();
+            this.Hash = null;
             this.Type = type;
-            this.Msg = new List<byte>();
+            this.Msg = null;
         }
 
         public CRYPTO_STATUS ComputeHash()
@@ -39,17 +38,17 @@ namespace openssl_app.algorithms
             crypto_buffer_t hash = new crypto_buffer_t();
             try
             {
-                int computeStatus = computeSha((int)this.Type, this.Msg.ToArray(), (uint)this.Msg.Count, out hash);
+                int computeStatus = computeSha((int)this.Type, this.Msg, (uint)this.Msg.Length, out hash);
                 result = (CRYPTO_STATUS)computeStatus;
             }
-            catch(Exception e)
+            catch(Exception exc)
             {
-
+                LogManager.ShowMessageBox("Error", "ShaHash failed", exc.Message);
             }
 
             if(result == CRYPTO_STATUS.CRYPTO_SUCCESS)
             {
-                this.m_hash = new List<byte>(hash.buffer.Take((int)hash.bytes));
+                this.Hash = hash.buffer.Take((int)hash.bytes).ToArray();
             }
 
             return result;

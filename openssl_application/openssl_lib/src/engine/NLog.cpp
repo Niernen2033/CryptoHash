@@ -103,7 +103,7 @@ bool NLog_Dump(uint8_t dumpId, std::string filePath)
 		try
 		{
 			file.open(filePath, std::ios::out | std::ios::app);
-			for (int i = 0; i < nlogData->size(); i++)
+			for (size_t i = 0; i < nlogData->size(); i++)
 			{
 				if (file)
 				{

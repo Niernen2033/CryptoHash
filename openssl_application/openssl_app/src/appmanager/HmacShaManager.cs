@@ -24,19 +24,19 @@ namespace openssl_app.appmanager
         {
             if (this.HexInput)
             {
-                this.hmacShaProvider.Msg = DataConverter.BytesFromHexString(this.Msg.Text).ToList();
-                this.hmacShaProvider.Key = DataConverter.BytesFromHexString(this.Key.Text).ToList();
+                this.hmacShaProvider.Msg = DataConverter.BytesFromHexString(this.Msg.Text);
+                this.hmacShaProvider.Key = DataConverter.BytesFromHexString(this.Key.Text);
             }
             else
             {
-                this.hmacShaProvider.Msg = DataConverter.BytesFromString(this.Msg.Text).ToList();
-                this.hmacShaProvider.Key = DataConverter.BytesFromString(this.Key.Text).ToList();
+                this.hmacShaProvider.Msg = DataConverter.BytesFromString(this.Msg.Text);
+                this.hmacShaProvider.Key = DataConverter.BytesFromString(this.Key.Text);
             }
             this.hmacShaProvider.Type = (SHA_TYPE)this.Type;
             CRYPTO_STATUS status = this.hmacShaProvider.ComputeHash();
             if (status == CRYPTO_STATUS.CRYPTO_SUCCESS)
             {
-                this.SetResult(DataConverter.HexStringFromBytes(this.hmacShaProvider.Hash.ToArray()));
+                this.SetResult(DataConverter.HexStringFromBytes(this.hmacShaProvider.Hash));
             }
             return status;
         }

@@ -92,6 +92,7 @@
     <Compile Include="src\appmanager\Manager.cs" />
     <Compile Include="src\appmanager\RsaManager.cs" />
     <Compile Include="src\appmanager\ShaManager.cs" />
+    <Compile Include="src\logmanager\LogManager.cs" />
     <Compile Include="src\dllmanager\DataConverter.cs" />
     <Compile Include="src\dllmanager\DllNLogManager.cs" />
     <Compile Include="src\dllmanager\DllProperties.cs" />
@@ -124,10 +125,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PreBuildEvent>xcopy /Y $(SolutionDir)openssl_app\openssl_library\x86\libcrypto-1_1.dll $(TargetDir)
 xcopy /Y $(SolutionDir)openssl_app\openssl_library\x86\openssl.dll $(TargetDir)</PreBuildEvent>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PreBuildEvent>xcopy /Y $(SolutionDir)openssl_app\openssl_library\x86\libcrypto-1_1.dll $(TargetDir)
 xcopy /Y $(SolutionDir)openssl_app\openssl_library\x86\openssl.dll $(TargetDir)</PreBuildEvent>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <PreBuildEvent>xcopy /Y $(SolutionDir)openssl_app\openssl_library\x64\libcrypto-1_1-x64.dll $(TargetDir)

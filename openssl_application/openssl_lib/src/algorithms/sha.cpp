@@ -63,9 +63,9 @@ crypto_status_e Sha_Generate(sha_type_e shaType, uint8_t* msg, uint32_t msgBytes
 
 	EVP_MD_CTX* ctx = EVP_MD_CTX_new();
 
-	if (ctx == NULL)
+	if (ctx == NULL || msg == NULL)
 	{
-		NLog_Error("ctx == NULL");
+		NLog_Error("ctx == NULL || msg == NULL");
 		CryRes_SetLastResult(&result, CRYPTO_NULL_PTR_ERROR);
 		return CRYPTO_NULL_PTR_ERROR;
 	}
@@ -86,7 +86,6 @@ crypto_status_e Sha_Generate(sha_type_e shaType, uint8_t* msg, uint32_t msgBytes
 			status = CRYPTO_ALG_ERROR;
 			break;
 		}
-
 
 		if (!EVP_DigestUpdate(ctx, msg, msgBytes))
 		{

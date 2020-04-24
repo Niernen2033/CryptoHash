@@ -21,13 +21,13 @@ namespace openssl_app.appmanager
 
         public override CRYPTO_STATUS Generate()
         {
-            if(this.HexInput)
+            if (this.HexInput)
             {
-                this.shaProvider.Msg = DataConverter.BytesFromHexString(this.Msg.Text).ToList();
+                this.shaProvider.Msg = DataConverter.BytesFromHexString(this.Msg.Text);
             }
             else
             {
-                this.shaProvider.Msg = DataConverter.BytesFromString(this.Msg.Text).ToList();
+                this.shaProvider.Msg = DataConverter.BytesFromString(this.Msg.Text);
             }
             this.shaProvider.Type = (SHA_TYPE)this.Type;
             CRYPTO_STATUS status = this.shaProvider.ComputeHash();

@@ -26,15 +26,15 @@ namespace openssl_app.appmanager
         {
             if (this.HexInput)
             {
-                this.aesProvider.Msg = DataConverter.BytesFromHexString(this.Msg.Text).ToList();
-                this.aesProvider.Key = DataConverter.BytesFromHexString(this.Key.Text).ToList();
-                this.aesProvider.Iv = DataConverter.BytesFromHexString(this.Iv.Text).ToList();
+                this.aesProvider.Msg = DataConverter.BytesFromHexString(this.Msg.Text);
+                this.aesProvider.Key = DataConverter.BytesFromHexString(this.Key.Text);
+                this.aesProvider.Iv = DataConverter.BytesFromHexString(this.Iv.Text);
             }
             else
             {
-                this.aesProvider.Msg = DataConverter.BytesFromString(this.Msg.Text).ToList();
-                this.aesProvider.Key = DataConverter.BytesFromString(this.Key.Text).ToList();
-                this.aesProvider.Iv = DataConverter.BytesFromString(this.Iv.Text).ToList();
+                this.aesProvider.Msg = DataConverter.BytesFromString(this.Msg.Text);
+                this.aesProvider.Key = DataConverter.BytesFromString(this.Key.Text);
+                this.aesProvider.Iv = DataConverter.BytesFromString(this.Iv.Text);
             }
             this.aesProvider.Type = (AES_TYPE)this.Type;
             AES_MODE aesMode = (AES_MODE)this.Mode.SelectedIndex;
@@ -59,7 +59,7 @@ namespace openssl_app.appmanager
 
             if (status == CRYPTO_STATUS.CRYPTO_SUCCESS)
             {
-                this.SetResult(DataConverter.HexStringFromBytes(this.aesProvider.Hash.ToArray()));
+                this.SetResult(DataConverter.HexStringFromBytes(this.aesProvider.Hash));
             }
             return status;
         }

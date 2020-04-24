@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using openssl_app.dllmanager;
 using openssl_app.algorithms;
 using openssl_app.appmanager;
+using openssl_app.logmanager;
 
 namespace openssl_app
 {
@@ -194,8 +195,10 @@ namespace openssl_app
 
         private void button_calculate_Click(object sender, EventArgs e)
         {
+            this.button_calculate.Enabled = false;
             this.crypto_manager.Generate();
             this.richTextBox_alg_result.Text = this.crypto_manager.Result;
+            this.button_calculate.Enabled = true;
         }
 
         private void button_nlog_dump_Click(object sender, EventArgs e)
@@ -215,7 +218,7 @@ namespace openssl_app
                         filePath = openFileDialog.FileName;
                         if (!File.Exists(filePath))
                         {
-                            MessageBox.Show("File doesnt exist");
+                            LogManager.ShowMessageBox("Error", "File doesnt exist");
                             return;
                         }
                     }
@@ -223,7 +226,7 @@ namespace openssl_app
             }
             else
             {
-                filePath = @"C:\Users\Michal\Desktop\nlog.txt";
+                filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/nlog.txt";
             }
 
             try
@@ -233,16 +236,51 @@ namespace openssl_app
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                LogManager.ShowMessageBox("Error", "DllNlogDump failed", exc.Message);
                 return;
             }
 
             if ((dumpStatus == false) && (dialogResult == DialogResult.OK))
             {
-                MessageBox.Show("Nlog dump FAILED");
+                LogManager.ShowMessageBox("Error", "DllNlogDump failed");
             }
 
 #endif // DEBUG
+        }
+
+        private void button_load_file_Click(object sender, EventArgs e)
+        {
+            string filePath = string.Empty;
+            using(OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                DialogResult dialogResult = openFileDialog.ShowDialog();
+                if(dialogResult == DialogResult.OK)
+                {
+                    filePath = openFileDialog.FileName;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            if(!File.Exists(filePath))
+            {
+                LogManager.ShowMessageBox("Error", "File doesnt exist");
+                return;
+            }
+
+            try
+            {
+                using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
+                {
+                    Clipboard.SetText(DataConverter.HexStringFromBytes(reader.ReadBytes((int)reader.BaseStream.Length)));
+                }
+            }
+            catch (Exception exc)
+            {
+                LogManager.ShowMessageBox("Error", "File doesnt exist", exc.Message);
+            }
         }
     }
 }

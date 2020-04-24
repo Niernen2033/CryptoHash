@@ -34,36 +34,36 @@ namespace openssl_app.appmanager
             if (this.HexInput)
             {
                 this.hmacDrbgProvider.PredictionResistance = this.PredictionResistance.Checked;
-                this.hmacDrbgProvider.PersonalizationString = DataConverter.BytesFromHexString(this.PersonalizationString.Text).ToList();
-                this.hmacDrbgProvider.EntropyInput = DataConverter.BytesFromHexString(this.EntropyInput.Text).ToList();
-                this.hmacDrbgProvider.Nonce = DataConverter.BytesFromHexString(this.Nonce.Text).ToList();
-                this.hmacDrbgProvider.EntropyInputReseed = DataConverter.BytesFromHexString(this.EntropyInputReseed.Text).ToList();
-                this.hmacDrbgProvider.AdditionalInputReseed = DataConverter.BytesFromHexString(this.AdditionalInputReseed.Text).ToList();
-                this.hmacDrbgProvider.AdditionalInput1 = DataConverter.BytesFromHexString(this.AdditionalInput1.Text).ToList();
-                this.hmacDrbgProvider.AdditionalInput2 = DataConverter.BytesFromHexString(this.AdditionalInput2.Text).ToList();
-                this.hmacDrbgProvider.EntropyInputPR1 = DataConverter.BytesFromHexString(this.EntropyInputPR1.Text).ToList();
-                this.hmacDrbgProvider.EntropyInputPR2 = DataConverter.BytesFromHexString(this.EntropyInputPR2.Text).ToList();
+                this.hmacDrbgProvider.PersonalizationString = DataConverter.BytesFromHexString(this.PersonalizationString.Text);
+                this.hmacDrbgProvider.EntropyInput = DataConverter.BytesFromHexString(this.EntropyInput.Text);
+                this.hmacDrbgProvider.Nonce = DataConverter.BytesFromHexString(this.Nonce.Text);
+                this.hmacDrbgProvider.EntropyInputReseed = DataConverter.BytesFromHexString(this.EntropyInputReseed.Text);
+                this.hmacDrbgProvider.AdditionalInputReseed = DataConverter.BytesFromHexString(this.AdditionalInputReseed.Text);
+                this.hmacDrbgProvider.AdditionalInput1 = DataConverter.BytesFromHexString(this.AdditionalInput1.Text);
+                this.hmacDrbgProvider.AdditionalInput2 = DataConverter.BytesFromHexString(this.AdditionalInput2.Text);
+                this.hmacDrbgProvider.EntropyInputPR1 = DataConverter.BytesFromHexString(this.EntropyInputPR1.Text);
+                this.hmacDrbgProvider.EntropyInputPR2 = DataConverter.BytesFromHexString(this.EntropyInputPR2.Text);
                 this.hmacDrbgProvider.ReturnedBytes = (uint)this.ReturnedBytes.Value;
             }
             else
             {
                 this.hmacDrbgProvider.PredictionResistance = this.PredictionResistance.Checked;
-                this.hmacDrbgProvider.PersonalizationString = DataConverter.BytesFromString(this.PersonalizationString.Text).ToList();
-                this.hmacDrbgProvider.EntropyInput = DataConverter.BytesFromString(this.EntropyInput.Text).ToList();
-                this.hmacDrbgProvider.Nonce = DataConverter.BytesFromString(this.Nonce.Text).ToList();
-                this.hmacDrbgProvider.EntropyInputReseed = DataConverter.BytesFromString(this.EntropyInputReseed.Text).ToList();
-                this.hmacDrbgProvider.AdditionalInputReseed = DataConverter.BytesFromString(this.AdditionalInputReseed.Text).ToList();
-                this.hmacDrbgProvider.AdditionalInput1 = DataConverter.BytesFromString(this.AdditionalInput1.Text).ToList();
-                this.hmacDrbgProvider.AdditionalInput2 = DataConverter.BytesFromString(this.AdditionalInput2.Text).ToList();
-                this.hmacDrbgProvider.EntropyInputPR1 = DataConverter.BytesFromString(this.EntropyInputPR1.Text).ToList();
-                this.hmacDrbgProvider.EntropyInputPR2 = DataConverter.BytesFromString(this.EntropyInputPR2.Text).ToList();
+                this.hmacDrbgProvider.PersonalizationString = DataConverter.BytesFromString(this.PersonalizationString.Text);
+                this.hmacDrbgProvider.EntropyInput = DataConverter.BytesFromString(this.EntropyInput.Text);
+                this.hmacDrbgProvider.Nonce = DataConverter.BytesFromString(this.Nonce.Text);
+                this.hmacDrbgProvider.EntropyInputReseed = DataConverter.BytesFromString(this.EntropyInputReseed.Text);
+                this.hmacDrbgProvider.AdditionalInputReseed = DataConverter.BytesFromString(this.AdditionalInputReseed.Text);
+                this.hmacDrbgProvider.AdditionalInput1 = DataConverter.BytesFromString(this.AdditionalInput1.Text);
+                this.hmacDrbgProvider.AdditionalInput2 = DataConverter.BytesFromString(this.AdditionalInput2.Text);
+                this.hmacDrbgProvider.EntropyInputPR1 = DataConverter.BytesFromString(this.EntropyInputPR1.Text);
+                this.hmacDrbgProvider.EntropyInputPR2 = DataConverter.BytesFromString(this.EntropyInputPR2.Text);
                 this.hmacDrbgProvider.ReturnedBytes = (uint)this.ReturnedBytes.Value;
             }
             this.hmacDrbgProvider.Type = (SHA_TYPE)this.Type;
             CRYPTO_STATUS status = this.hmacDrbgProvider.GenerateRandomData();
             if (status == CRYPTO_STATUS.CRYPTO_SUCCESS)
             {
-                this.SetResult(DataConverter.HexStringFromBytes(this.hmacDrbgProvider.RandomData.ToArray()));
+                this.SetResult(DataConverter.HexStringFromBytes(this.hmacDrbgProvider.RandomData));
             }
             return status;
         }
