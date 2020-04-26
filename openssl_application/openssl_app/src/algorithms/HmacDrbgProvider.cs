@@ -65,6 +65,11 @@ namespace openssl_app.algorithms
 
 		private CRYPTO_STATUS Instantiate()
 		{
+			if (this.PersonalizationString == null || this.EntropyInput == null || this.Nonce == null)
+			{
+				return CRYPTO_STATUS.CRYPTO_NULL_PTR_ERROR;
+			}
+
 			CRYPTO_STATUS result = CRYPTO_STATUS.CRYPTO_ERROR;
 			try
 			{
@@ -83,6 +88,11 @@ namespace openssl_app.algorithms
 
 		private CRYPTO_STATUS Reseed()
 		{
+			if (this.EntropyInput == null || this.AdditionalInputReseed == null)
+			{
+				return CRYPTO_STATUS.CRYPTO_NULL_PTR_ERROR;
+			}
+
 			CRYPTO_STATUS result = CRYPTO_STATUS.CRYPTO_ERROR;
 			try
 			{

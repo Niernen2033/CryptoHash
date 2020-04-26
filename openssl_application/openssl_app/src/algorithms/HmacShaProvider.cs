@@ -39,6 +39,11 @@ namespace openssl_app.algorithms
 
         public CRYPTO_STATUS ComputeHash()
         {
+            if (this.Msg == null || this.Key == null)
+            {
+                return CRYPTO_STATUS.CRYPTO_NULL_PTR_ERROR;
+            }
+
             CRYPTO_STATUS result = CRYPTO_STATUS.CRYPTO_ERROR;
             crypto_buffer_t hash = new crypto_buffer_t();
             try

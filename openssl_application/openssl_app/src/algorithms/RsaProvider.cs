@@ -56,6 +56,12 @@ namespace openssl_app.algorithms
 
         public CRYPTO_STATUS Sign()
         {
+            if (this.Msg == null || this.PublicExponent == null || this.PrivateExponent == null ||
+                this.Modulus == null)
+            {
+                return CRYPTO_STATUS.CRYPTO_NULL_PTR_ERROR;
+            }
+
             CRYPTO_STATUS result = CRYPTO_STATUS.CRYPTO_ERROR;
             crypto_buffer_t signature = new crypto_buffer_t();
             try
@@ -82,6 +88,12 @@ namespace openssl_app.algorithms
 
         public CRYPTO_STATUS Verify()
         {
+            if (this.Msg == null || this.PublicExponent == null || this.Modulus == null || 
+                this.Signature == null)
+            {
+                return CRYPTO_STATUS.CRYPTO_NULL_PTR_ERROR;
+            }
+
             CRYPTO_STATUS result = CRYPTO_STATUS.CRYPTO_ERROR;
             try
             {

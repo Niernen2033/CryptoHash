@@ -53,6 +53,11 @@ namespace openssl_app.algorithms
 
 		public CRYPTO_STATUS ComputeDecrypt()
 		{
+			if (this.Key == null || this.Msg == null || this.Iv == null)
+			{
+				return CRYPTO_STATUS.CRYPTO_NULL_PTR_ERROR;
+			}
+
 			CRYPTO_STATUS result = CRYPTO_STATUS.CRYPTO_ERROR;
 			crypto_buffer_t hash = new crypto_buffer_t();
 			try
@@ -77,6 +82,11 @@ namespace openssl_app.algorithms
 
 		public CRYPTO_STATUS ComputeEncrypt()
 		{
+			if (this.Key == null || this.Msg == null || this.Iv == null)
+			{
+				return CRYPTO_STATUS.CRYPTO_NULL_PTR_ERROR;
+			}
+
 			CRYPTO_STATUS result = CRYPTO_STATUS.CRYPTO_ERROR;
 			crypto_buffer_t hash = new crypto_buffer_t();
 			try
@@ -101,6 +111,11 @@ namespace openssl_app.algorithms
 
 		public CRYPTO_STATUS ComputeKeyWrap()
 		{
+			if (this.Key == null || this.Msg == null || this.Iv == null)
+			{
+				return CRYPTO_STATUS.CRYPTO_NULL_PTR_ERROR;
+			}
+
 			CRYPTO_STATUS result = CRYPTO_STATUS.CRYPTO_ERROR;
 			crypto_buffer_t hash = new crypto_buffer_t();
 			try
@@ -125,6 +140,11 @@ namespace openssl_app.algorithms
 
 		public CRYPTO_STATUS ComputeKeyUnwrap()
 		{
+			if (this.Key == null || this.Msg == null || this.Iv == null)
+			{
+				return CRYPTO_STATUS.CRYPTO_NULL_PTR_ERROR;
+			}
+
 			CRYPTO_STATUS result = CRYPTO_STATUS.CRYPTO_ERROR;
 			crypto_buffer_t hash = new crypto_buffer_t();
 			try
