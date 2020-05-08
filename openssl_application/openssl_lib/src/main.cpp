@@ -46,47 +46,9 @@ DLL_MAIN_C DllMain(HANDLE hModule, DWORD fdwreason, LPVOID lpReserved)
 		break;
 	case DLL_THREAD_ATTACH:
 		// A thread is created. Do any required initialization on a per thread basis
-		if (!NLog_Init())
-		{
-			return FALSE;
-		}
-		else
-		{
-			NLog_Debug("NLog_Init PASSED");
-		}
-		if (!CryRes_Init())
-		{
-			NLog_Debug("CryRes_Init FAILED");
-			return FALSE;
-		}
-		else
-		{
-			NLog_Debug("CryRes_Init PASSED");
-		}
-		if (!Hmac_Drbg_Init())
-		{
-			NLog_Debug("Hmac_Drbg_Init FAILED");
-			return FALSE;
-		}
-		else
-		{
-			NLog_Debug("Hmac_Drbg_Init PASSED");
-		}
 		break;
 	case DLL_THREAD_DETACH:
 		// Thread exits with cleanup
-		if (!NLog_Cleanup())
-		{
-			return FALSE;
-		}
-		if (!CryRes_Cleanup())
-		{
-			return FALSE;
-		}
-		if (!Hmac_Drbg_Cleanup())
-		{
-			return FALSE;
-		}
 		break;
 	case DLL_PROCESS_DETACH:
 		// The DLL unmapped from process's address space. Do necessary cleanup
