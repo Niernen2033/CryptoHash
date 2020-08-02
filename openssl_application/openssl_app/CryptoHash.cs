@@ -43,6 +43,24 @@ namespace openssl_app
             this.comboBox_alg_types.SelectedIndexChanged += ComboBox_alg_types_SelectedIndexChanged;
         }
 
+        private void FormFile_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] allfilesNames = e.Data.GetData(DataFormats.FileDrop) as string[];
+            if(allfilesNames == null || allfilesNames.Length > 1)
+            {
+                return;
+            }
+            string filePath = allfilesNames[0];
+
+            byte[] fileBytes = this.LoadFileBytes(filePath);
+            if(fileBytes != null)
+            {
+                RichTextBox tmpData = sender as RichTextBox;
+                this.crypto_manager.HexInput = true;
+                tmpData.Text = DataConverter.HexStringFromBytes(fileBytes);
+            }
+        }
+
         private void InitializeDebugComponents()
         {
             this.comboBox_nlog_id.Items.AddRange(Enum.GetNames(typeof(NLOG_ID)));
@@ -143,6 +161,9 @@ namespace openssl_app
             this.aes_manager.Iv = this.richTextBox_aes_iv;
             this.aes_manager.Msg = this.richTextBox_aes_msg;
             this.aes_manager.Mode = this.comboBox_aes_mode;
+
+            this.richTextBox_aes_msg.AllowDrop = true;
+            this.richTextBox_aes_msg.DragDrop += FormFile_DragDrop;
         }
 
         private void InitializeHmacDrbgManager()
@@ -159,6 +180,9 @@ namespace openssl_app
             this.hmacDrbg_manager.EntropyInputPR1 = this.richTextBox_hmac_drbg_entInpPR1;
             this.hmacDrbg_manager.EntropyInputPR2 = this.richTextBox_hmac_drbg_entInpPR2;
             this.hmacDrbg_manager.ReturnedBytes = this.numericUpDown_hmac_drbg_retByt;
+
+            this.richTextBox_hmac_drbg_entInpRes.AllowDrop = true;
+            this.richTextBox_hmac_drbg_entInpRes.DragDrop += FormFile_DragDrop;
         }
 
         private void InitializeRsaManager()
@@ -170,6 +194,13 @@ namespace openssl_app
             this.rsa_manager.Modulus = this.richTextBox_rsa_mod;
             this.rsa_manager.Signature = this.richTextBox_rsa_sig;
             this.rsa_manager.Mode = this.comboBox_rsa_mode;
+
+            this.richTextBox_rsa_msg.AllowDrop = true;
+            this.richTextBox_rsa_mod.AllowDrop = true;
+            this.richTextBox_rsa_sig.AllowDrop = true;
+            this.richTextBox_rsa_msg.DragDrop += FormFile_DragDrop;
+            this.richTextBox_rsa_mod.DragDrop += FormFile_DragDrop;
+            this.richTextBox_rsa_sig.DragDrop += FormFile_DragDrop;
         }
 
         private void InitializeHmacShaManager()
@@ -177,12 +208,18 @@ namespace openssl_app
             this.hmac_sha_manager = new HmacShaManager();
             this.hmac_sha_manager.Key = this.richTextBox_hmac_sha_key;
             this.hmac_sha_manager.Msg = this.richTextBox_hmac_sha_msg;
+
+            this.richTextBox_hmac_sha_msg.AllowDrop = true;
+            this.richTextBox_hmac_sha_msg.DragDrop += FormFile_DragDrop;
         }
 
         private void InitializeShaManager()
         {
             this.sha_manager = new ShaManager();
             this.sha_manager.Msg = this.richTextBox_sha_msg;
+
+            this.richTextBox_sha_msg.AllowDrop = true;
+            this.richTextBox_sha_msg.DragDrop += FormFile_DragDrop;
         }
 
         private void InitializeHkdfManager()
@@ -191,6 +228,9 @@ namespace openssl_app
             this.hkdf_manager.Key = this.richTextBox_hkdf_key;
             this.hkdf_manager.OutputKeyBytes = this.numericUpDown_hkdf_outputKeyBytes;
             this.hkdf_manager.FixedData = this.richTextBox_hkdf_fixedData;
+
+            this.richTextBox_hkdf_fixedData.AllowDrop = true;
+            this.richTextBox_hkdf_fixedData.DragDrop += FormFile_DragDrop;
         }
 
         private void button_calculate_Click(object sender, EventArgs e)
@@ -248,6 +288,31 @@ namespace openssl_app
 #endif // DEBUG
         }
 
+        private byte[] LoadFileBytes(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                LogManager.ShowMessageBox("Error", "File doesnt exist");
+                return null;
+            }
+
+            byte[] result = null;
+            try
+            {
+                using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
+                {
+                    result = reader.ReadBytes((int)reader.BaseStream.Length);
+                }
+            }
+            catch (Exception exc)
+            {
+                LogManager.ShowMessageBox("Error", "File doesnt exist", exc.Message);
+                return null;
+            }
+
+            return result;
+        }
+
         private void button_load_file_Click(object sender, EventArgs e)
         {
             string filePath = string.Empty;
@@ -264,23 +329,12 @@ namespace openssl_app
                 }
             }
 
-            if(!File.Exists(filePath))
+            byte[] fileBytes = this.LoadFileBytes(filePath);
+            if (fileBytes != null)
             {
-                LogManager.ShowMessageBox("Error", "File doesnt exist");
-                return;
-            }
-
-            try
-            {
-                using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
-                {
-                    Clipboard.SetText(DataConverter.HexStringFromBytes(reader.ReadBytes((int)reader.BaseStream.Length)));
-                }
-            }
-            catch (Exception exc)
-            {
-                LogManager.ShowMessageBox("Error", "File doesnt exist", exc.Message);
+                Clipboard.SetText(DataConverter.HexStringFromBytes(fileBytes));
             }
         }
+
     }
 }
